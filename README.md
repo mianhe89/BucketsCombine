@@ -1,4 +1,4 @@
-# Buckets Combine
+# BucketsCombine
 ## Logo
 ![buckets_combine](https://user-images.githubusercontent.com/93623572/174527985-d2498ce2-db94-425a-a277-d97539318537.jpg)
 
