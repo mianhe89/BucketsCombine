@@ -40,7 +40,28 @@
 ## 📎 배포링크
 
 ## 🛠 기술 스택
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/axios-2A1659?style=for-the-badge&logo=axios&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Styled_components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/></a>
+
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/OAuth-334455?style=for-the-badge&logo=OAuth&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=for-the-badge&logo=Amazon%20AWS&logoColor=white"/>
+
 ![Web App Reference Architecture (1)](https://user-images.githubusercontent.com/93623572/174642796-19ae23a0-0144-4125-992c-e50294373328.png)
+
+## Flow Chart
+### Front-end
+![스크린샷 2022-06-30 오후 10 58 45](https://user-images.githubusercontent.com/93623572/176696621-43afae8f-55aa-4e71-bd7d-df1ade483f16.png)
+### Back-end
+![My First Board](https://user-images.githubusercontent.com/93623572/176633736-b49b5223-cdaf-4dfc-932d-07134880adc6.jpg)
 
 ## 👨‍👦‍👦 Team 'DarkCircles'
 
