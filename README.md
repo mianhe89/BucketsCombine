@@ -57,9 +57,9 @@
 
 ![Web App Reference Architecture (1)](https://user-images.githubusercontent.com/93623572/174642796-19ae23a0-0144-4125-992c-e50294373328.png)
 
-## Flow Chart
+## ⛳️ Flow Chart
 ### Front-end
-![스크린샷 2022-06-30 오후 10 58 45](https://user-images.githubusercontent.com/93623572/176696621-43afae8f-55aa-4e71-bd7d-df1ade483f16.png)
+![스크린샷 2022-07-01 오전 10 33 26](https://user-images.githubusercontent.com/93623572/176805223-de71d62a-759c-4134-a047-e56259730310.png)
 ### Back-end
 ![My First Board](https://user-images.githubusercontent.com/93623572/176633736-b49b5223-cdaf-4dfc-932d-07134880adc6.jpg)
 
