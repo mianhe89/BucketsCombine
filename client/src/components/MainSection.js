@@ -5,7 +5,7 @@ export default function MainSection(){
     <div className='main-section'>
       <div className="main-ment">
         <div className='ment-title'>
-          사람들과 함께<br />버킷리스트를 이뤄보세요!
+          사람들과 함께<br />버킷리스트를 이뤄보세요
         </div>
         <div className='ment-description'>
         누구나 오랫동안 이루고 싶은 일들이나<br />

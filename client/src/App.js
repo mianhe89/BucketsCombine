@@ -4,7 +4,7 @@ import MainPage from './pages/MainPage';
 import MyPage from './pages/MyPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
-import GoogleSignUpPage from './pages/GoogleSignUpPage';
+import OAuthSignUpPage from './pages/OAuthSignUpPage';
 import axios from 'axios';
 import './App.css';
 
@@ -17,13 +17,13 @@ function App() {
           <Route exact path='/'>
             <MainPage />
           </Route>
-          <Route exact path='/signInpage'>
+          <Route exact path='/signin'>
             <SignInPage />
           </Route>
-          <Route exact path='/googleSignUpPage'>
-            <GoogleSignUpPage />
+          <Route exact path='/signup'>
+            <OAuthSignUpPage />
           </Route>
-          <Route exact path='/signUppage'>
+          <Route exact path='/signupoauth'>
             <SignUpPage />
           </Route>
           <Route exact path='/mypage'>

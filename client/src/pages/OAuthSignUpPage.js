@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function GoogleSignUpPage() {
+export default function OAuthSignUpPage() {
 	return (
 		<div></div>
 )

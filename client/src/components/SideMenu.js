@@ -9,13 +9,13 @@ export default function SideMenu(){
       <div className='side-titles'>
         <ul className='list'>
           <li>
-            <a>Main</a>
+            <button className='sidemenu-button'>Main</button>
           </li>
           <li>
-            <a>Cards</a>
+            <button className='sidemenu-button'>Cards</button>
           </li>
           <li>
-            <a>Stamped</a>
+            <button className='sidemenu-button'>Stamped</button>
           </li>
         </ul>
       </div>
