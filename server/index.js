@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 const https = require("https");
 const fs = require("fs");
 const app = express();
-const port = process.env.DATABASE_PORT;
+const port = 3040;
 const controllers = require("./controllers");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
