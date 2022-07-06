@@ -1,21 +1,20 @@
 require("dotenv").config();
-console.log("똑바로 말해라", process.env.DATABASE_HOST);
 module.exports = {
   development: {
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     host: process.env.DATABASE_HOST,
-    database: process.env.DATABASE_NAME, //DATABASE이름
-    dialect: "mysql", // 무슨 시스템을 쓰는지
-    port: process.env.DATABASE_HOST,
+    database: process.env.DATABASE_NAME,
+    dialect: "mysql",
+    port: process.env.DATABASE_PORT,
   },
   test: {
-    username: "admin",
-    password: "12345678",
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
     database: "test",
-    host: "bucketscombinetestdb.cj7o0vikegq1.ap-northeast-2.rds.amazonaws.com",
+    host: process.env.DATABASE_HOST,
     dialect: "mysql",
-    port: "13305",
+    port: process.env.DATABASE_PORT,
   },
   production: {
     username: process.env.DATABASE_USERNAME,

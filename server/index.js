@@ -38,10 +38,6 @@ app.get("/", function (req, res) {
     }
     res.send(result);
   });
-<<<<<<< HEAD
-=======
-
->>>>>>> 1c909339379dd36078303ec921d06d12cd36a1df
 });
 // "hello World" 를 데이터베이스에서 찾아 변수에 저장한 뒤 사용 가능
 app.listen(port, () => {
