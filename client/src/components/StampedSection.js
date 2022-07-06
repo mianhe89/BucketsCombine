@@ -1,5 +1,5 @@
 import React from 'react';
-import ScrollHorizontal from 'react-scroll-horizontal';
+import StampedList from './StampedList';
 
 export default function StampedSection(){
   return(
@@ -15,15 +15,7 @@ export default function StampedSection(){
         </div>
       </div>
       <div className='cards-list-row'>
-        <div id='scroll-horizontal' style={{ height: `45em` }}>
-        <ScrollHorizontal>
-        <img src='/images/card-01.jpg' />
-        <img src='/images/card-02.jpg' />
-        <img src='/images/card-03.jpg' />
-        <img src='/images/card-04.jpg' />
-        <img src='/images/card-05.jpg' />
-        </ScrollHorizontal>
-        </div>
+        <StampedList />
       </div>
       <div className='search-bar'>
         <input className='search-input' type="text" placeholder="제목 및 태그" />
