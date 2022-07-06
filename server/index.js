@@ -32,7 +32,7 @@ const connetdb = mysql.createConnection({
 connetdb.connect(); //
 
 app.get("/", function (req, res) {
-  connetdb.query("SELECT * FROM Hello_world", (err, result, fields) => {
+  connetdb.query("SELECT * FROM test", (err, result, fields) => {
     if (err) {
       res.send(err);
     }
