@@ -21,6 +21,11 @@ app.use(
   })
 );
 app.use(cookieParser());
+
+// if (document.location.protocol == "http:") {
+//   document.location.href = document.location.href.replace("http:", "https:");
+// }
+
 const connetdb = mysql.createConnection({
   host: process.env.DATABASE_HOST, // 내가 바라보는 DB 의 주소
   user: process.env.DATABASE_USER, // 그 DB를 사용하는 유저 (ex: user admin ...)
@@ -39,6 +44,7 @@ app.get("/", function (req, res) {
     res.send(result);
   });
 });
+
 // "hello World" 를 데이터베이스에서 찾아 변수에 저장한 뒤 사용 가능
 app.listen(port, () => {
   console.log(`서버가 ${port}번에서 작동중입니다.`);
