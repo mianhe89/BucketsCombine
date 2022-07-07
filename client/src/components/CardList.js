@@ -23,8 +23,8 @@ export default function CardList(){
         //className     = { string }
         //animValues    = { int }
       >
-        {cards.map(card => (
-          <div className='card'>
+        {cards.map((card, index) => (
+          <div key={index} className='card'>
             <div className='card-info'>
               <button className='card-insert-button'>담기</button>
               <div className='card-title'>

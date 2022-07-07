@@ -23,9 +23,8 @@ export default function CardList(){
         //className     = { string }
         //animValues    = { int }
       >
-        {cards.map(card => (
-          <div className='card'>
-
+        {cards.map((card, index) => (
+          <div key={index} className='card'>
           </div>
         ))}
       </HorizontalScroll>
