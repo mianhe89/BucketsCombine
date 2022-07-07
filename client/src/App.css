@@ -234,6 +234,8 @@
 .search-bar {
   align-self: center;
   position: relative;
+  margin-top: 48px;
+  margin-left: 120px;
   width: 30vw;
 }
 
@@ -260,4 +262,82 @@
   align-items: flex-start;
   width: 100vw - 150px;
   height: 100vh;
+}
+
+.card-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100vw - 150px;
+  height: 100vh;
+}
+
+#card-list {
+  width: calc(100vw - 240px);
+  height: 400px;
+  margin-left: 150px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  height: 330px;
+  border-radius: 15px;
+  margin: 10px;
+  background-image: url("https://source.unsplash.com/random");
+  background-size: cover;
+}
+
+.card-info {
+  margin: 10px;
+  color: white;
+}
+
+.card-insert-button {
+  width: 70px;
+  height: 30px;
+  border-radius: 10px;
+  margin-left: 130px;
+  border: none;
+  box-shadow: none;
+  font-size: 13px;
+  background-color: #FFC700;
+}
+
+.card-title {
+  font-size: 26px;
+  color: white;
+  height: 105px;
+  margin: 10px;
+}
+
+.card-tegs {
+  color: white;
+  height: 85px;
+  margin: 10px;
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-writer {
+  margin-left: 10px;
+}
+
+.card-member {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: black;
+  background-color: white;
+  font-display: flex;
+  text-align: center;
+  line-height: 60px;
 }

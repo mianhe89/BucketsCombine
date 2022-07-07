@@ -4,7 +4,7 @@ import CardList from './CardList';
 export default function CardSection(){
   return(
     <div>
-      <div className='stamped-section'>
+      <div className='card-section'>
       <div className="cards-ment">
         <div className='ment-title'>
           카드는 여러분의 목표입니다.
