@@ -54,12 +54,27 @@
 .sidemenu {
   position: fixed;
   height: 100%;
-  width: 150px;
+  width: 120px;
   background-color: rgb(41, 41, 41);
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
+}
+
+.sidemenu-button {
+  border: none;
+  box-shadow: none;
+  font-size: 18px;
+  width: 100px;
+  height: 50px;
+  color: white;
+  background-color: transparent;
+}
+
+.sidemenu-button:active, .sidemenu-button:focus {
+  border: none;
+  box-shadow: none;
 }
 
 .logo-title {
@@ -71,7 +86,7 @@
 .logo {
   display: flex;
   align-self: flex-start;
-  height: 85px;
+  height: 60px;
 }
 
 .side-titles {
@@ -79,7 +94,7 @@
   position: fixed;
   display: flex;
   color: white;
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 100;
   text-align: center;
 }
@@ -107,53 +122,33 @@
 .topmenu {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content:space-between;
   width: 100vw;
-  height: 115px;
+  height: 80px;
   align-items: center;
   position: fixed;
 }
 
 .topmenu-title {
-  font-size: 32px;
-  margin-left: 60px;
+  font-size: 28px;
+  margin-left: 140px;
 }
 
 .topmenu-button {
-  width: 120px;
-  height: 44px;
-  border-radius: 12px;
-  font-size: 18px;
-}
-
-.topmenu-list {
-  display: flex;
-  width: 100vw;
-  justify-content: flex-end;
-  margin-top: 230px;
-  position: fixed;
-}
-
-.topmenu-subbuttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 120px;
-  height: 170px;
-  background-color: #282c34;
-  border-radius: 12px;
-}
-
-.subbutton {
+  align-self: center;
+  margin-right: 30px;
+  border: none;
+  box-shadow: none;
   width: 100px;
-  height: 35px;
-  border-radius: 8px;
+  height: 36px;
+  border-radius: 12px;
+  font-size: 15px;
+  background-color: #FFC700;
 }
 
 .main-ment {
   width: 500px;
-  margin-left: 210px;
+  margin-left: 180px;
 }
 
 .ment-title {
@@ -162,8 +157,8 @@
 }
 
 .ment-description {
-  font-size: 20px;
-  line-height: 40px;
+  font-size: 16px;
+  line-height: 32px;
 }
 
 .videos {
@@ -216,7 +211,7 @@
 }
 
 .cards-ment {
-  margin-left: 60px;
+  margin-left: 180px;
 }
 
 .cards-list-row {
@@ -234,11 +229,27 @@
   border-radius: 15px;
 }
 
+
 .search-bar {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  height: 30px;
+  align-self: center;
+  position: relative;
+  width: 30vw;
+}
+
+.search-input {
+  width: 100%;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.search-icon {
+  position : absolute;
+  width: 17px;
+  top: 10px;
+  right: 0px;
+  margin: 0px;
 }
 
 .stamped-section {
@@ -248,4 +259,35 @@
   align-items: flex-start;
   width: 100vw - 150px;
   height: 100vh;
+}
+
+.modal {
+  justify-content: end;
+  width: 1000px;
+  height:1000px;
+  position:relative;
+}
+
+.modal-container {
+  display: flex;
+  justify-content: center;
+  width: 500px;
+  height:500px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+}
+
+.btn-clear-btn {
+  margin: auto;
+  padding: auto;
+  align-self: center;
+  display: flex;
+  justify-content: flex-end;
+  width: 100px;
+  height: 50px;
 }

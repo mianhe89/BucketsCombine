@@ -5,16 +5,21 @@ import MyPage from './pages/MyPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import GoogleSignUpPage from './pages/GoogleSignUpPage';
+import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Modal from './components/Modal'
 import axios from 'axios';
 import './App.css';
 
-function App() {
+const App = () => {
+  const { isOpen } = useSelector((store) => store.modal);
 
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route exact path='/'>
+            {isOpen && <Modal />}
             <MainPage />
           </Route>
           <Route exact path='/signInpage'>

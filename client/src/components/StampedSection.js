@@ -1,6 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 export default function StampedSection(){
+  const StampedModal = () => {
+    const { amount } = useSelector((state) => state.card)
+  }
   return(
     <div>
       <div className='stamped-section'>
