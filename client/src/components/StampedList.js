@@ -25,16 +25,7 @@ export default function CardList(){
       >
         {cards.map(card => (
           <div className='card'>
-            {/* <img className='card' src={card.img} alt="" /> */}
-            <button className=''>담기</button>
-            <div>
-              제목
-            </div>
-            <div>태그</div>
-            <div>
-              <div>글쓴이</div>
-              <button>2명</button>
-            </div>
+
           </div>
         ))}
       </HorizontalScroll>

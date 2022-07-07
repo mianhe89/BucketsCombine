@@ -127,6 +127,7 @@
   height: 80px;
   align-items: center;
   position: fixed;
+  z-index: 10;
 }
 
 .topmenu-title {
@@ -234,9 +235,9 @@
 .search-bar {
   align-self: center;
   position: relative;
-  margin-top: 48px;
+  margin-top: 70px;
   margin-left: 120px;
-  width: 30vw;
+  width: 40vw;
 }
 
 .search-input {
@@ -331,10 +332,11 @@
 }
 
 .card-member {
+  display: block;
   width: 60px;
   height: 60px;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 1em;
   color: black;
   background-color: white;
   font-display: flex;
