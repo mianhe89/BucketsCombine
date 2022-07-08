@@ -1,10 +1,9 @@
 import React from 'react';
 import CardList from './CardList';
 
-export default function CardSection(){
+export default function CardsSection(){
   return(
-    <div>
-      <div className='card-section'>
+    <div id='card-section'>
       <div className="cards-ment">
         <div className='ment-title'>
           카드는 여러분의 목표입니다.
@@ -20,7 +19,6 @@ export default function CardSection(){
         <input className='search-input' type="text" placeholder="제목 및 태그" />
         <img className='search-icon' src='/images/search-icon.png' />
       </div>
-    </div>
     </div>
   )
 }

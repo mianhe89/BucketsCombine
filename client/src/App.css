@@ -110,7 +110,7 @@
   
 }
 
-.main-section {
+#main-section {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -202,7 +202,7 @@
   filter: blur(10px)
 }
 
-.cards-section {
+#cards-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -256,7 +256,7 @@
   margin: 0px;
 }
 
-.stamped-section {
+#stamped-section {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -332,7 +332,6 @@
 }
 
 .card-member {
-  display: block;
   width: 60px;
   height: 60px;
   border-radius: 10px;
@@ -367,15 +366,17 @@
 
 .create-card-button {
   display: flex;
-  flex-direction: column;
   width: calc(70vw - 60px);
   height: 80px;
-  border-radius: 15px;
+  border-radius: 10px;
   border: none;
   box-shadow: none;
   font-size: 32px;
   background-color: #d2d2d2;
   margin: 5px;
+  align-self: flex-end;
+  line-height: 80px;
+  text-align: center;
 }
 
 .card-progress {
@@ -388,12 +389,43 @@
 
 .card-column-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   width: calc(70vw - 60px);
-  height: 80px;
+  height: 60px;
   border-radius: 15px;
   background-image: url("https://source.unsplash.com/random");
   background-size: cover;
+  color: white;
   margin: 5px;
+  padding: 10px;
 }
 
+.card-column-info-text {
+  margin-left: 10px;
+  width: 40vw;
+}
+
+.share-icon {
+  width: 30px;
+  top: 10px;
+  right: 0px;
+  margin: 0px;
+}
+
+.card-member-column {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  font-size: 1em;
+  color: black;
+  background-color: white;
+  font-display: flex;
+  text-align: center;
+  line-height: 60px;
+}
+
+#myprofile-section {
+  
+}

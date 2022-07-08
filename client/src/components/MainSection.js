@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function MainSection(){
   return(
-    <div className='main-section'>
+    <div id='main-section'>
       <div className="main-ment">
         <div className='ment-title'>
           사람들과 함께<br />버킷리스트를 이뤄보세요

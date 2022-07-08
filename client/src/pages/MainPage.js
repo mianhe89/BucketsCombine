@@ -2,7 +2,7 @@ import React from 'react';
 import Topmenu from '../components/TopMenu';
 import SideMenu from '../components/SideMenu';
 import MainSection from '../components/MainSection';
-import CardSection from '../components/CardSection';
+import CardsSection from '../components/CardsSection';
 import StampedSection from '../components/StampedSection';
 
 
@@ -13,7 +13,7 @@ export default function MainPage() {
       <div className='mainpage-section'>
         <Topmenu />
         <MainSection />
-        <CardSection />
+        <CardsSection />
         <StampedSection />
       </div>
     </div>

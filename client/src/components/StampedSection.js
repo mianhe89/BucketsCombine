@@ -3,8 +3,7 @@ import StampedList from './StampedList';
 
 export default function StampedSection(){
   return(
-    <div>
-      <div className='stamped-section'>
+    <div id='stamped-section'>
       <div className="cards-ment">
         <div className='ment-title'>
           여러분의 성취담을 공유해보세요.
@@ -21,7 +20,6 @@ export default function StampedSection(){
         <input className='search-input' type="text" placeholder="제목 및 태그" />
         <img className='search-icon' src='/images/search-icon.png' />
       </div>
-    </div>
     </div>
   )
 }
