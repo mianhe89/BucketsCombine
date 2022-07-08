@@ -5,7 +5,7 @@ import React from "react";
 const Modal = () => {
     const dispatch = useDispatch();
     return (
-        <aside className="modal-container">
+        <aisde className="modal-container">
             <div className="modal">
                 <h4>카드</h4>
                 <div className="btn-container">
@@ -23,7 +23,7 @@ const Modal = () => {
                     </button>
                 </div>
             </div>
-        </aside>
+        </aisde>
     );
 }
 
