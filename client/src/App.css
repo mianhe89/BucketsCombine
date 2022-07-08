@@ -427,5 +427,10 @@
 }
 
 #myprofile-section {
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100vw - 150px;
+  height: 100vh;
 }
