@@ -3,6 +3,6 @@ import modalReducer from'../modals/ModalSlice';
 
 export const store = configureStore({
     reducer: {
-        modal: modalReducer
+        modal: modalReducer,
     },
 }); 
