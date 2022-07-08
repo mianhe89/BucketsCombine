@@ -431,6 +431,42 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 100vw - 150px;
+  width: calc(100vw - 120px);
   height: 100vh;
+  margin-left: 120px;
+}
+.box-myprofile {
+  display: flex;
+  margin: 0 auto;
+  background-color: lightgray;
+  width: 85vh;
+  height: 70vh;
+  border-radius: 15px;
+  
+}
+.box-photo {
+  margin-top: 30px;
+  margin-left: 30px;
+  background-color: white;
+  border-radius: 15px;
+  width: 25vh;
+  height: 25vh;
+}
+.profile-info-section {
+  width: 25vh;
+  height: 25vh;
+  background-color: tomato;
+}
+.profile-info-nickname {
+  margin-top: 20px;
+  width: 10vh;
+  height: 100px;
+  background-color: rgb(38, 0, 255);
+}
+.profile-info-gender {
+  width: 20vh;
+  height: 100px;
+  background-color: yellow;
+
+
 }
