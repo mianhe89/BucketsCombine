@@ -343,3 +343,57 @@
   text-align: center;
   line-height: 60px;
 }
+
+#mybucket-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100vw - 120px);
+  height: 100vh;
+  margin-left: 120px;
+}
+
+.card-list-column {
+  width: 70vw;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-column {
+  display: flex;
+  flex-direction: row;
+  height: 80px;
+}
+
+.create-card-button {
+  display: flex;
+  flex-direction: column;
+  width: calc(70vw - 60px);
+  height: 80px;
+  border-radius: 15px;
+  border: none;
+  box-shadow: none;
+  font-size: 32px;
+  background-color: #d2d2d2;
+  margin: 5px;
+}
+
+.card-progress {
+  background-color: red;
+  height: 80px;
+  width: 10px;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.card-column-info {
+  display: flex;
+  flex-direction: column;
+  width: calc(70vw - 60px);
+  height: 80px;
+  border-radius: 15px;
+  background-image: url("https://source.unsplash.com/random");
+  background-size: cover;
+  margin: 5px;
+}
+
