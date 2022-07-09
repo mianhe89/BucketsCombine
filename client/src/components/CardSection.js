@@ -8,7 +8,7 @@ export default function MainSection(){
   return(
     <div>
       <button className='btn-clear-btn' onClick={()=> {dispatch(openModal())}}>
-       clear
+       담기
       </button>
     </div>
   )

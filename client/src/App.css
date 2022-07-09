@@ -262,54 +262,126 @@
 }
 
 .modal {
-  width: 200px;
-  height: 200px;
+  position: relative;
+  width: 60vw;
+  height: 60vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 20px 20px 20px 20px;
+  animation: fadein 1s;
+  -moz-animation: fadein 1s;
+  -webkit-animation: fadein 1s;
+  -o-animation: fadein 1s;
+}
 
+@keyframes fadein {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+@-moz-keyframes fadein { 
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+@-webkit-keyframes fadein { 
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
 }
 
 .modal-container {
-  width: 30vw;
-  height: 30vh;
+  width: 60vw;
+  height: 60vh;
   display: flex;
-  background-color: #FFC700;
+  border-radius: 20px 20px 20px 20px;
+  border: solid black;
   justify-content: center;
   align-items: center;
-  position: relative;
-  border: 1px solid black;
-}
-
-.btn-container {
-  display: flex;
-  justify-content: center;
-  width: 100px;
-  height: 100px;
+  position: fixed;
+  left: 25vw;
+  top: 20vh;
 }
 
 .btn-clear-btn {
   margin: auto;
   align-self: center;
   display: flex;
-  justify-content: flex-end;
-  width: 100px;
-  height: 50px;
+  justify-content: center;
+  width: 40px;
+  height: 20px;
+  border-radius: 5px 5px 5px 5px;
+  border: none;
+  background-color: yellow;
 }
 
 .btn-confirm-btn {
-  margin: auto;
-  padding: auto;
+  position: absolute;
   align-self: center;
   display: flex;
-  justify-content: flex-end;
-  width: 100px;
-  height: 50px;
+  justify-content: center;
+  background-color: yellow;
+  border-radius: 5px 5px 5px 5px;
+  width: 90px;
+  height: 25px;
+  left: 1vw;
+  top: 55vh;
 }
 
 .btn-cancel-btn {
-  margin: auto;
-  padding: auto;
+  position: absolute;
   align-self: center;
   display: flex;
-  justify-content: flex-end;
-  width: 100px;
-  height: 50px;
+  border: none;
+  width: 20px;
+  height: 20px;
+  top: 1vh;
+  right: 1vw;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.card-img {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: rgb(112, 71, 179);
+  border-radius: 10px 10px 10px 10px;
+  border: none;
+  width: 13vw;
+  height: 300px;
+  left: 45vw;
+  top: 7vh;
+}
+
+.card-info {
+  position: absolute;
+  width: 30px;
+  height: 20px;
+  left: 1vh;
+  top: 30vh;
+}
+
+.card-info-text {
+  position: absolute;
+  width: 400px;
+  height: 150px;
+  left: 1vw;
+  top: 35vh;
 }
