@@ -188,6 +188,7 @@
   margin: 10px;
   object-fit: cover;
   border-radius: 1.8vh;
+
 }
 
 .video-blur {
@@ -271,6 +272,7 @@
   -moz-animation: fadein 1s;
   -webkit-animation: fadein 1s;
   -o-animation: fadein 1s;
+
 }
 
 @keyframes fadein {
@@ -331,6 +333,25 @@
   background-color: yellow;
 }
 
+.userInfo-btn {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  background: none;
+  left: 1vw;
+  top: 20vh;
+  border: none;
+}
+
+.card-tag  {
+  position: absolute;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  left: 1vw;
+  top: 12vh;
+}
+
 .btn-confirm-btn {
   position: absolute;
   align-self: center;
@@ -353,7 +374,7 @@
   height: 20px;
   top: 1vh;
   right: 1vw;
-  background-color: rgba(255, 255, 255, 0.8);
+  background: none;
 }
 
 .card-img {
@@ -361,12 +382,12 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  background-color: rgb(112, 71, 179);
+  background-color: rgb(148, 148, 148);
   border-radius: 10px 10px 10px 10px;
   border: none;
   width: 13vw;
   height: 300px;
-  left: 45vw;
+  right: 1vw;
   top: 7vh;
 }
 
@@ -374,14 +395,19 @@
   position: absolute;
   width: 30px;
   height: 20px;
-  left: 1vh;
-  top: 30vh;
+  left: 1vw;
+  top: 25vh;
 }
 
 .card-info-text {
   position: absolute;
-  width: 400px;
-  height: 150px;
+  background-color: rgb(209, 208, 208);
+  border: solid rgb(160, 160, 160);
+  border-radius: 10px 10px 10px 10px;
+  display: flex;
+  position: absolute;
+  width: 40vw;
+  height: 180px;
   left: 1vw;
-  top: 35vh;
+  top: 30vh;
 }
