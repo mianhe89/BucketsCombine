@@ -4,7 +4,7 @@ import CardColumn from "./CardColumn";
 import Loader from "./Loader";
 
 
-const CardColumnWrap = styled.div`
+const ColumnListWrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -13,14 +13,31 @@ const CardColumnWrap = styled.div`
   text-align: center;
   align-items: center;
   overflow-y: auto;
+  padding: 10px;
 
   .Target-Element {
-    width: 100vw;
+    width: 100%;
     height: 140px;
     display: flex;
     justify-content: center;
     text-align: center;
     align-items: center;
+  }
+
+  .create-card-button {
+    width: calc(70vw - 40px);
+    max-width: 960px;
+    height: 80px;
+    border-radius: 15px;
+    border: none;
+    box-shadow: none;
+    font-size: 32px;
+    background-color: #d2d2d2;
+    margin: 5px;
+    line-height: 80px;
+    text-align: center;
+    align-self: flex-start;
+    margin-left: 30px;
   }
 `;
 
@@ -62,7 +79,7 @@ export default function ColumnList () {
 
   return (
     <>
-      <CardColumnWrap>
+      <ColumnListWrap>
       <button className='create-card-button'>+</button>
         {itemLists.map((v, i) => {
           return <CardColumn number={i + 1} key={i} />;
@@ -70,7 +87,7 @@ export default function ColumnList () {
         <div ref={setTarget} className="Target-Element">
           {isLoaded && <Loader />}
         </div>
-      </CardColumnWrap>
+      </ColumnListWrap>
     </>
   );
 };

@@ -1,59 +1,90 @@
+import React from "react";
 import styled from "styled-components";
 
-const ItemWrap = styled.div`
-  .ItemWrap {
-    width: 350px;
-    height: 370px;
+const ColumnCard = styled.div`
+  .ColumnCard {
     display: flex;
-    flex-direction: column;
-    background-color: #ffffff;
-    margin: 1rem;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border-radius: 6px;
-    
+    flex-direction: row;
+    color: white;
+    max-width: 100%;
   }
 
-  .ItemWrap-Top {
+  .ColumnCard-progress {
+    background-color: red;
+    height: 80px;
+    width: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  .ColumnCard-info {
+    width: calc(70vw - 60px);
+    max-width: 940px;
+    height: 60px;
+    border-radius: 15px;
+    background-image: url("https://source.unsplash.com/random");
+    background-size: cover;
+    margin: 5px;
+    padding: 10px;
     display: flex;
-    width: 350px;
-    height: 170px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    background-color: #e2e5e7;
-    color: #566270;
-    font-size: 2.25rem;
-    justify-content: center;
-    text-align: center;
+    flex-direction: row;
+    justify-content: flex-end;
     align-items: center;
   }
 
-  .ItemWrap-Body {
-    height: 200px;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    padding: 10px;
+  .ColumnCard-info-text {
+    margin-left: 10px;
+    width: 40vw;
+    text-align: start;
+    flex-grow: 1;
   }
 
-  .ItemWrap-Body-Title {
-    width: 300px;
-    height: 36px;
-    margin: 16px;
-    border-radius: 4px;
-    background-color: #e2e5e7;
+  .ColumnCard-title {
+    font-size: 24px;
   }
+
+  .ColumnCard-writer {
+    width: 100px;
+  }
+
+  .ColumnCard-share-icon {
+    width: 30px;
+    top: 10px;
+    right: 0px;
+    margin: 10px;
+  }
+
+  .ColumnCard-member-count {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    font-size: 1em;
+    color: black;
+    background-color: white;
+    font-display: flex;
+    text-align: center;
+    line-height: 60px;
+  }
+
 `;
 
 export default function CardColumn ({ number }) {
   return (
-    <ItemWrap>
-      <div className="ItemWrap">
-        <div className="ItemWrap-Top ">{number}</div>
-        <div className="ItemWrap-Body">
-          <div className="ItemWrap-Body-Title " />
-          <div className="ItemWrap-Body-Title " />
-          <div className="ItemWrap-Body-Title " />
+    <ColumnCard>
+      <div className="ColumnCard">
+        <div className='ColumnCard-progress'/>
+        <div className='ColumnCard-info'>
+        <div className='ColumnCard-info-text'>
+            <div className="ColumnCard-title">제목</div>
+            <div className="ColumnCard-tag">태그</div>
+        </div>
+        <div className="ColumnCard-writer">작성자작성자</div>
+        <img className='ColumnCard-share-icon' src='/images/share-icon.png' />
+        <div className='ColumnCard-member-count'>
+            4명
+        </div>
         </div>
       </div>
-    </ItemWrap>
+    </ColumnCard>
   );
 };
