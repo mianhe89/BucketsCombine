@@ -442,6 +442,7 @@
   width: 85vh;
   height: 70vh;
   border-radius: 15px;
+  flex-direction: column;
   
 }
 .box-photo {
@@ -451,22 +452,73 @@
   border-radius: 15px;
   width: 25vh;
   height: 25vh;
+  float: left;
 }
 .profile-info-section {
-  width: 25vh;
-  height: 25vh;
-  background-color: tomato;
+  display: flex;
+  width: 40vh;
+  height: 30vh;
+  float: right;
+  margin-right: 20px;
+  
+}
+.profile-info-detail {
+  margin-top: 20px;
+  margin-left: 30px
+}
+.profile-info-email{
+  width: 23vw;
+  height: 40px;
+  background-color: gray;
+  border-radius: 10px;
 }
 .profile-info-nickname {
-  margin-top: 20px;
-  width: 10vh;
-  height: 100px;
-  background-color: rgb(38, 0, 255);
+  width: 23vw;
+  height: 40px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+.profile-info-age {
+  width: 23vw;
+  height: 40px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
 }
 .profile-info-gender {
-  width: 20vh;
-  height: 100px;
-  background-color: yellow;
+  width: 23vw;
+  height: 40px;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
+}
+.box-profile-introducing 
+{
+  display: flex;
+  border-radius: 15px;
+  width: 92%;
+  height: 30vh;
+  margin-left: 26px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: white;
 
-
+}
+.profile-change-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.change-password-button {
+  display: flex;
+  margin-right: 30px;
+}
+.change-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+}
+.profile-signout {
+  margin-left: 15vw;
 }
