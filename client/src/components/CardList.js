@@ -1,11 +1,77 @@
 import React from 'react';
 import HorizontalScroll from 'react-scroll-horizontal';
-// import styled from 'styled-components;'
+import styled from 'styled-components';
 
-// let card = styled.div`
-//   width: 200px;
-//   height: 300px;
-// `
+const RowCardWrap = styled.div`
+#card-list {
+  width: calc(100vw - 240px);
+  height: 400px;
+  margin-left: 30px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  height: 330px;
+  border-radius: 15px;
+  margin: 10px;
+  background-image: url("https://source.unsplash.com/random");
+  background-size: cover;
+}
+
+.card-info {
+  margin: 10px;
+  color: white;
+}
+
+.card-insert-button {
+  width: 70px;
+  height: 30px;
+  border-radius: 10px;
+  margin-left: 130px;
+  border: none;
+  box-shadow: none;
+  font-size: 13px;
+  background-color: #FFC700;
+}
+
+.card-title {
+  font-size: 26px;
+  color: white;
+  height: 105px;
+  margin: 10px;
+}
+
+.card-tegs {
+  color: white;
+  height: 85px;
+  margin: 10px;
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-writer {
+  margin-left: 10px;
+}
+
+.card-member {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  font-size: 1em;
+  color: black;
+  background-color: white;
+  font-display: flex;
+  text-align: center;
+  line-height: 60px;
+}
+`
 
 const cards = [...new Array(10)].map((x, i) => ({
     name: `card ${i}`,
@@ -14,6 +80,7 @@ const cards = [...new Array(10)].map((x, i) => ({
 
 export default function CardList(){
   return (
+    <RowCardWrap>
     <div id='card-list'>
       <HorizontalScroll
         pageLock={true}
@@ -42,5 +109,6 @@ export default function CardList(){
         ))}
       </HorizontalScroll>
     </div>
+    </RowCardWrap>
   );
 }

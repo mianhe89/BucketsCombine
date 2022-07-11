@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import ColumnCard from "./ColumnCard";
+import CardColumn from "./CardColumn";
 import Loader from "./Loader";
 
 
@@ -82,7 +82,7 @@ export default function ColumnList () {
       <ColumnListWrap>
       <button className='create-card-button'>+</button>
         {itemLists.map((v, i) => {
-          return <ColumnCard number={i + 1} key={i} />;
+          return <CardColumn number={i + 1} key={i} />;
         })}
         <div ref={setTarget} className="Target-Element">
           {isLoaded && <Loader />}

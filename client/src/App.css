@@ -110,14 +110,7 @@
   
 }
 
-#main-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-}
+
 
 .topmenu {
   display: flex;
@@ -147,28 +140,9 @@
   background-color: #FFC700;
 }
 
-.main-ment {
-  width: 500px;
-  margin-left: 180px;
-}
 
-.ment-title {
-  font-size: 48px;
-  margin-bottom: 20px;
-}
 
-.ment-description {
-  font-size: 16px;
-  line-height: 32px;
-}
 
-.videos {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 50%;
-  margin-right: 20px;
-}
 
 .videos-blur {
   display: flex;
@@ -181,15 +155,7 @@
 }
 
 
-.video {
-  display: flex;
-  /* width: 30%; */
-  width: 30%;
-  height: 70vh;
-  margin: 10px;
-  object-fit: cover;
-  border-radius: 1.8vh;
-}
+
 
 .video-blur {
   display: flex;
@@ -202,25 +168,7 @@
   filter: blur(10px)
 }
 
-#cards-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100vw - 150px;
-  height: 100vh;
-}
 
-.cards-ment {
-  margin-left: 180px;
-  height: 150px;
-}
-
-.cards-list-row {
-  display: flex;
-  height: 40vh;
-  margin: 20px;
-}
 
 .card {
   display: flex;
@@ -231,6 +179,68 @@
   border-radius: 15px;
 }
 
+#stamped-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100vw - 150px;
+  height: 100vh;
+}
+
+
+
+
+
+#myprofile-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100vw - 120px);
+  height: 100vh;
+  margin-left: 120px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#card-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: calc(100vw - 120px);
+  height: 100vh;
+  margin-left: 120px;
+}
+
+.cards-ment {
+  margin-left: 180px;
+  height: 150px;
+}
+
+
+
+.cards-list-row {
+  display: flex;
+  height: 40vh;
+  margin: 20px;
+}
 
 .search-bar {
   align-self: center;
@@ -254,101 +264,4 @@
   top: 10px;
   right: 0px;
   margin: 0px;
-}
-
-#stamped-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100vw - 150px;
-  height: 100vh;
-}
-
-.card-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100vw - 150px;
-  height: 100vh;
-}
-
-#card-list {
-  width: calc(100vw - 240px);
-  height: 400px;
-  margin-left: 150px;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  width: 220px;
-  height: 330px;
-  border-radius: 15px;
-  margin: 10px;
-  background-image: url("https://source.unsplash.com/random");
-  background-size: cover;
-}
-
-.card-info {
-  margin: 10px;
-  color: white;
-}
-
-.card-insert-button {
-  width: 70px;
-  height: 30px;
-  border-radius: 10px;
-  margin-left: 130px;
-  border: none;
-  box-shadow: none;
-  font-size: 13px;
-  background-color: #FFC700;
-}
-
-.card-title {
-  font-size: 26px;
-  color: white;
-  height: 105px;
-  margin: 10px;
-}
-
-.card-tegs {
-  color: white;
-  height: 85px;
-  margin: 10px;
-}
-
-.card-footer {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-writer {
-  margin-left: 10px;
-}
-
-.card-member {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  font-size: 1em;
-  color: black;
-  background-color: white;
-  font-display: flex;
-  text-align: center;
-  line-height: 60px;
-}
-
-#myprofile-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: calc(100vw - 120px);
-  height: 100vh;
-  margin-left: 120px;
 }
