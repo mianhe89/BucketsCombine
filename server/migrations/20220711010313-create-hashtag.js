@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("hashtag", {
+    await queryInterface.createTable("hashtags", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,9 +19,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+    }).then(function () {
+      queryInterface.addColumn("cardHashtag", "hashtag_id", {
+        type: Sequelize.INTEGER,
+        references: {model: "hashtag", key: "id"},
+      });
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("hashtag");
+    await queryInterface.dropTable("hashtags");
   },
 };

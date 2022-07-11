@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("stamped", {
+    await queryInterface.createTable("stampeds", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -28,29 +28,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       }
-        .then(function () {
-          queryInterface.addColumn("userCardJoin", "stamped_id", {
-            type: Sequelize.INTEGER,
-            references: { model: "stamped", key: "id" },
-          });
-        })
-        .then(function () {
-          queryInterface.createTable("mybucket", {
-            card_id: {
-              type: Sequelize.INTEGER,
-              references: { model: "card", key: "id" },
-            },
-          });
-        })
-        .then(function () {
-          queryInterface.addColumn("mybucket", "usersCardJoin_id", {
-            type: Sequelize.INTEGER,
-            references: { model: "usersCardJoin", key: "id" },
-          });
-        }),
+    }).then(function () {
+      queryInterface.addColumn("userCardJoin", "stamped_id", {
+        type: Sequelize.INTEGER,
+        references: {model: "stamped", key: "id"},
+      });
+    }).then(function () {
+      queryInterface.addColumn("cardHashtag", "stamped_id", {
+        type: Sequelize.INTEGER,
+        references: {model: "stamped", key: "id"},
+      });
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("stamped");
+    await queryInterface.dropTable("stampeds");
   },
 };
