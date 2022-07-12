@@ -59,3 +59,5 @@ module.exports = {
       .then(() => queryInterface.dropTable("userCardJoin"));
   },
 };
+
+// 이것은 머지 테스트용 입니다.
