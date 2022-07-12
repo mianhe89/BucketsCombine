@@ -449,17 +449,18 @@
   margin-top: 30px;
   margin-left: 30px;
   background-color: white;
-  border-radius: 15px;
+  border-radius: 10px;
   width: 25vh;
   height: 25vh;
   float: left;
+  box-shadow: gray 1px 5px 5px;
 }
 .profile-info-section {
   display: flex;
   width: 40vh;
   height: 30vh;
   float: right;
-  margin-right: 20px;
+  margin-right: 30px;
   
 }
 .profile-info-detail {
@@ -467,58 +468,76 @@
   margin-left: 30px
 }
 .profile-info-email{
-  width: 23vw;
+  width: 285px;
   height: 40px;
   background-color: gray;
   border-radius: 10px;
+  border: none;
+  color:white;
 }
 .profile-info-nickname {
-  width: 23vw;
+  width: 285px;
   height: 40px;
   margin-top: 10px;
   background-color: white;
   border-radius: 10px;
+  border: none;
 }
 .profile-info-age {
-  width: 23vw;
+  width: 20vw;
   height: 40px;
   margin-top: 10px;
   background-color: white;
   border-radius: 10px;
+  border: none;
 }
 .profile-info-gender {
-  width: 23vw;
+  width: 20vw;
   height: 40px;
   margin-top: 10px;
   background-color: white;
   border-radius: 10px;
+  border: none;
 }
 .box-profile-introducing 
 {
   display: flex;
-  border-radius: 15px;
+  border-radius: 10px;
   width: 92%;
   height: 30vh;
   margin-left: 26px;
   margin-top: 20px;
   margin-bottom: 20px;
   background-color: white;
+  border: none;
+  box-shadow: gray 5px 5px 5px;
 
 }
 .profile-change-button {
   display: flex;
   justify-content: flex-end;
   margin-right: 20px;
+  margin-top: 10px;
 }
 .change-password-button {
   display: flex;
   margin-right: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: black;
+  color: white;
 }
 .change-button {
   display: flex;
   justify-content: flex-end;
   margin-right: 20px;
+  border-radius: 10px;
+  border:none;
+  background-color: black;
+  color: white;
+
 }
 .profile-signout {
-  margin-left: 15vw;
+  margin-top: 5px;
+  margin-left: 24vw;
 }
