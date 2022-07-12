@@ -59,3 +59,7 @@ module.exports = {
       .then(() => queryInterface.dropTable("userCardJoin"));
   },
 };
+//
+//asdfasdfasdfasdf
+//asdfasdfasdf
+//asdfasdf
