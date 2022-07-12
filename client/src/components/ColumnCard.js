@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const ColumnCard = styled.div`
+const ColumnCardWrap = styled.div`
   .ColumnCard {
     display: flex;
     flex-direction: row;
@@ -68,9 +68,9 @@ const ColumnCard = styled.div`
 
 `;
 
-export default function CardColumn ({ number }) {
+export default function ColumnCard ({ number }) {
   return (
-    <ColumnCard>
+    <ColumnCardWrap>
       <div className="ColumnCard">
         <div className='ColumnCard-progress'/>
         <div className='ColumnCard-info'>
@@ -85,6 +85,6 @@ export default function CardColumn ({ number }) {
         </div>
         </div>
       </div>
-    </ColumnCard>
+    </ColumnCardWrap>
   );
 };

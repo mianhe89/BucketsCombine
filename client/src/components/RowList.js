@@ -1,19 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import CardColumn from "./CardColumn";
+import HorizontalScroll from 'react-scroll-horizontal';
+import RowCard from "./RowCard";
 import Loader from "./Loader";
 
 
-const ColumnListWrap = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  text-align: center;
-  align-items: center;
-  overflow-y: auto;
-  padding: 10px;
+const RowListWrap = styled.div`
+  #card-list {
+    width: calc(100vw - 240px);
+    height: 400px;
+    margin-left: 30px;
+  }
 
   .Target-Element {
     width: 100%;
@@ -23,28 +20,12 @@ const ColumnListWrap = styled.div`
     text-align: center;
     align-items: center;
   }
-
-  .create-card-button {
-    width: calc(70vw - 40px);
-    max-width: 960px;
-    height: 80px;
-    border-radius: 15px;
-    border: none;
-    box-shadow: none;
-    font-size: 32px;
-    background-color: #d2d2d2;
-    margin: 5px;
-    line-height: 80px;
-    text-align: center;
-    align-self: flex-start;
-    margin-left: 30px;
-  }
 `;
 
 export default function ColumnList () {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState([1]);
+  const [itemLists, setItemLists] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
   useEffect(() => {
     console.log(itemLists);
@@ -53,7 +34,7 @@ export default function ColumnList () {
   const getMoreItem = async () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    let Items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let Items = [1, 2];
     setItemLists((itemLists) => itemLists.concat(Items));
     setIsLoaded(false);
   };
@@ -70,7 +51,7 @@ export default function ColumnList () {
     let observer;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
+        threshold: `0`
       });
       observer.observe(target);
     }
@@ -79,15 +60,22 @@ export default function ColumnList () {
 
   return (
     <>
-      <ColumnListWrap>
-      <button className='create-card-button'>+</button>
+      <RowListWrap >
+      <div id='card-list'>
+        <HorizontalScroll
+          pageLock={true}
+          reverseScroll={true}
+          style={{}}
+        >
         {itemLists.map((v, i) => {
-          return <CardColumn number={i + 1} key={i} />;
+          return <RowCard number={i + 1} key={i} />;
         })}
         <div ref={setTarget} className="Target-Element">
           {isLoaded && <Loader />}
         </div>
-      </ColumnListWrap>
+        </HorizontalScroll>
+        </div>
+      </RowListWrap>
     </>
   );
 };

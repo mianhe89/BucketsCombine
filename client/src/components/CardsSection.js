@@ -1,6 +1,6 @@
 import React from 'react';
-import CardList from './CardList';
 import styled from 'styled-components';
+import RowList from './RowList'
 
 const CardsWrap = styled.div`
   #card-section {
@@ -29,7 +29,7 @@ const CardsWrap = styled.div`
     line-height: 32px;
   }
 
-  .cards-list-row {
+  #cards-list-row {
     display: flex;
     height: 40%;
     margin: 20px;
@@ -71,8 +71,8 @@ export default function CardsSection(){
             카드를 공유하고 카드를 나의 버킷리스트에 담아 함께 달성해보세요.
           </div>
         </div>
-        <div className='cards-list-row'>
-          <CardList />
+        <div id='cards-list-row'>
+          <RowList/>
         </div>
         <div className='search-bar'>
           <input className='search-input' type="text" placeholder="제목 및 태그" />
