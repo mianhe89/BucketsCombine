@@ -2,7 +2,7 @@ import { closeModal } from "./modals/ModalSlice";
 import { useDispatch } from "react-redux";
 import React from "react";
 import styled from 'styled-components';
-import toggle from './Toggle'
+
 
 const ModalContainer = styled.aside`
     width: 70vw;
@@ -15,7 +15,7 @@ const ModalContainer = styled.aside`
     position: fixed;
     left: 20vw;
     top: 20vh;
-    box-shadow: 3px 3px 3px 3px rgb(194, 194, 194, 0.3);
+    box-shadow: 3px 3px 5px 5px rgb(194, 194, 194, 0.3);
     z-index: 2;
 
     .modal {
