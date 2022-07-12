@@ -1,54 +1,61 @@
-'use strict';
+"use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('users', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      username: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      password: {
-        type: Sequelize.STRING
-      },
-      usertext: {
-        type: Sequelize.TEXT
-      },
-      oauthlogin: {
-        type: Sequelize.STRING
-      },
-      userphotourl: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
-    }).then(function () {
-      queryInterface.addColumn("card", "users_id", {
-        type: Sequelize.INTEGER,
-        references: {model: "users", key: "id"},
-      });
-    }).then(function () {
-      queryInterface.createTable("userCardJoin", {
-        users_id: {
+    await queryInterface
+      .createTable("users", {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
           type: Sequelize.INTEGER,
-          references: {model: "users", key: "id"},
         },
+        username: {
+          type: Sequelize.STRING,
+        },
+        email: {
+          type: Sequelize.STRING,
+        },
+        password: {
+          type: Sequelize.STRING,
+        },
+        usertext: {
+          type: Sequelize.TEXT,
+        },
+        oauthlogin: {
+          type: Sequelize.STRING,
+        },
+        userphotourl: {
+          type: Sequelize.STRING,
+        },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE,
+        },
+      })
+      .then(function () {
+        queryInterface.createTable("userCardJoin", {
+          id: {
+            allowNull: false,
+            autoIncrement: true,
+            primaryKey: true,
+            type: Sequelize.INTEGER,
+          },
+          users_id: {
+            primaryKey: true,
+            type: Sequelize.INTEGER,
+            allowNull: false,
+            references: { model: "users", key: "id" },
+          },
+        });
       });
-    })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
-  }
+    await queryInterface
+      .dropTable("mybucket")
+      .then(() => queryInterface.dropTable("userCardJoin"));
+  },
 };
