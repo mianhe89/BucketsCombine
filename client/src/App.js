@@ -32,6 +32,7 @@ const App = () => {
             <SignUpPage />
           </Route>
           <Route exact path='/mypage'>
+            {isOpen && <Modal />}
             <MyPage />
           </Route>
         </Switch>
