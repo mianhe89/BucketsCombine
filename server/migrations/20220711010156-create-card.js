@@ -4,7 +4,7 @@ const { sequelize } = require("../models");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("card", {
+    await queryInterface.createTable("cards", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -44,9 +44,26 @@ module.exports = {
           references: {model: "card", key: "id"},
         },
       });
+    }).then(function () {
+      queryInterface.addColumn("userCardJoin", "card_id", {
+        type: Sequelize.INTEGER,
+        references: {model: "card", key: "id"},
+      });
+    }).then(function () {
+      queryInterface.addColumn("userCardJoin", "mybucket_id", {
+        type: Sequelize.INTEGER,
+        references: {model: "mybucket", key: "id"},
+      });
+    }).then(function () {
+      queryInterface.createTable("cardHashtag", {
+        card_id: {
+          type: Sequelize.INTEGER,
+          references: {model: "card", key: "id"},
+        },
+      });
     })
   },  
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("card");
+    await queryInterface.dropTable("cards");
   },
 };

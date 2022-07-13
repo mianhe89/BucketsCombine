@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  stamped.init(
-  {
+  stamped.init({
+    id: DataTypes.INTEGER,
     title: DataTypes.STRING,
     cardtext: DataTypes.STRING,
     imageurl: DataTypes.STRING
