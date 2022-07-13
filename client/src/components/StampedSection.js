@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import styled from 'styled-components';
 import StampedList from './StampedList'
 
@@ -58,8 +59,13 @@ const CardsWrap = styled.div`
     margin: 0px;
   }
 `
+=======
+import { useSelector } from 'react-redux';
+>>>>>>> feature/modal
 
-export default function StampedSection(){
+
+const StampedModal = () => {
+  const  amount  = useSelector((state) => state.card);
   return(
     <CardsWrap>
       <div id='card-section'>
@@ -83,3 +89,4 @@ export default function StampedSection(){
     </CardsWrap>
   )
 }
+export default StampedModal;

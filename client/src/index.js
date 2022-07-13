@@ -3,10 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { store } from './components/store/Store'
+import { Provider } from 'react-redux'
 
+<<<<<<< HEAD
 ReactDOM.render(
   <React.StrictMode>
         <App />
+=======
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+>>>>>>> feature/modal
   </React.StrictMode>,
   document.getElementById('root')
 );
