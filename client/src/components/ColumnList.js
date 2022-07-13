@@ -38,6 +38,7 @@ const ColumnListWrap = styled.div`
     text-align: center;
     align-self: flex-start;
     margin-left: 30px;
+    margin-top: 20px;
   }
 `;
 

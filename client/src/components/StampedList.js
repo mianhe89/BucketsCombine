@@ -12,6 +12,11 @@ const StampedListWrap = styled.div`
     margin-left: 30px;
   }
 
+  .dummy {
+    width: 200px;
+    height: 100px;
+  }
+
   .Target-Element {
     width: 100%;
     height: 140px;
@@ -67,6 +72,7 @@ export default function ColumnList () {
           reverseScroll={true}
           style={{}}
         >
+          <div className="dummy"/>
         {itemLists.map((v, i) => {
           return <StampedCard number={i + 1} key={i} />;
         })}

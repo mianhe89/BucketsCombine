@@ -10,6 +10,13 @@ const RowListWrap = styled.div`
     width: calc(100vw - 240px);
     height: 400px;
     margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .dummy {
+    width: 200px;
+    height: 100px;
   }
 
   .Target-Element {
@@ -62,11 +69,13 @@ export default function ColumnList () {
     <>
       <RowListWrap >
       <div id='card-list'>
+        
         <HorizontalScroll
           pageLock={true}
           reverseScroll={true}
           style={{}}
         >
+          <div className="dummy"/>
         {itemLists.map((v, i) => {
           return <RowCard number={i + 1} key={i} />;
         })}

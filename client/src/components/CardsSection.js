@@ -57,6 +57,24 @@ const CardsWrap = styled.div`
     right: 0px;
     margin: 0px;
   }
+
+  .fog-left {
+    z-index: 1;
+    position: absolute;
+    left: 170px;
+    width: 30px;
+    height: 35%;
+    background: -webkit-linear-gradient(left,white 0%,rgba(0,0,0,0) 100%);
+  }
+
+  .fog-right {
+    z-index: 1;
+    position: absolute;
+    right: 70px;
+    width: 40px;
+    height: 35%;
+    background: -webkit-linear-gradient(right,white 0%,rgba(0,0,0,0) 100%);
+  }
 `
 
 export default function CardsSection(){
@@ -72,6 +90,8 @@ export default function CardsSection(){
           </div>
         </div>
         <div id='cards-list-row'>
+        <div className='fog-left'/>
+        <div className='fog-right'/>
           <RowList/>
         </div>
         <div className='search-bar'>
