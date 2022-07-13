@@ -2,48 +2,59 @@ import React from 'react';
 import styled from 'styled-components';
 
 const MainSectionWrap = styled.div`
-#main-section {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: calc(100vw - 120px);
-  height: 100vh;
-  min-height: 700px;
-  margin-left: 120px;
-}
-.main-ment {
-  width: 500px;
-  margin-left: 60px;
-  position: absolute;
-  top: 150px;
-}
-.ment-title {
-  font-size: 48px;
-  margin-bottom: 20px;
-}
+  #main-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100vw - 120px);
+    height: 100vh;
+    min-height: 700px;
+    margin-left: 120px;
+  }
+  .main-ment {
+    width: 500px;
+    margin-left: 60px;
+    position: absolute;
+    top: 150px;
+  }
+  .ment-title {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
 
-.ment-description {
-  font-size: 16px;
-  line-height: 32px;
-}
-.videos {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 50%;
-  height: 70%;
-  margin-left: calc(53vw - 120px);
-}
-.video {
-  display: flex;
-  /* width: 30%; */
-  width: 30%;
-  height: 100%;
-  margin: 10px;
-  object-fit: cover;
-  border-radius: 1.8vh;
-}
+  .ment-description {
+    font-size: 16px;
+    line-height: 32px;
+  }
+  .videos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 50%;
+    height: 70%;
+    margin-left: calc(53vw - 120px);
+  }
+  .video {
+    display: flex;
+    /* width: 30%; */
+    width: 30%;
+    height: 100%;
+    margin: 10px;
+    object-fit: cover;
+    border-radius: 1.8vh;
+  }
+
+  .video-blur {
+    display: flex;
+    /* width: 30%; */
+    width: 25%;
+    height: 70vh;
+    margin: 10px;
+    object-fit: cover;
+    border-radius: 1.8vh;
+    filter: blur(10px)
+  }
 `
 
 export default function MainSection(){
