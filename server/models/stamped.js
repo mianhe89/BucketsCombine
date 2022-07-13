@@ -13,9 +13,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   stamped.init(
     {
-      title: DataTypes.STRING,
-      cardtext: DataTypes.STRING,
-      imageurl: DataTypes.STRING,
     },
     {
       sequelize,
