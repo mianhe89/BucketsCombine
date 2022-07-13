@@ -14,29 +14,49 @@ const MyProfileWrap = styled.div`
   .box-myprofile {
     display: flex;
     margin: 0 auto;
-    background-color: lightgray;
+    background-color: #ededed;
     width: 85vh;
     height: 70vh;
-    border-radius: 15px;
+    border-radius: 20px;
     flex-direction: column;
+    height: 588px;
+    width: 847px;
+    left: 372px;
+    top: 177px;
+    border-radius: 20px;
+
     
   }
   .box-photo {
-    margin-top: 30px;
-    margin-left: 30px;
+    margin-top: 23px;
+    margin-left: 23px;
     background-color: white;
-    border-radius: 10px;
-    width: 25vh;
-    height: 25vh;
+    width: 148px;
+    height: 148px;
     float: left;
-    box-shadow: gray 1px 5px 5px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    height: 148px;
+    width: 148px;
+    left: 395px;
+    top: 200px;
+    border-radius: 15px;
+    border: 1px solid #969696;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #969696;
+    
   }
   .profile-info-section {
     display: flex;
-    width: 40vh;
+    width: 350px;
     height: 30vh;
     float: right;
     margin-right: 30px;
+    margin-top:28
     
   }
   .profile-info-detail {
@@ -44,78 +64,151 @@ const MyProfileWrap = styled.div`
     margin-left: 30px
   }
   .profile-info-email{
-    width: 285px;
     height: 40px;
-    background-color: gray;
-    border-radius: 10px;
+    width: 330px;
+    left: 861px;
+    top: 205px;
+    border-radius: 5px;
+    background: #8F8F8F;
     border: none;
-    color:white;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #FFFFFF;
   }
   .profile-info-nickname {
-    width: 285px;
     height: 40px;
-    margin-top: 10px;
+    width: 330px;
+    left: 861px;
+    top: 257px;
+    border-radius: 5px;
+    margin-top: 12px;
     background-color: white;
     border-radius: 10px;
     border: none;
   }
   .profile-info-age {
-    width: 20vw;
     height: 40px;
-    margin-top: 10px;
+    width: 330px;
+    left: 861px;
+    top: 257px;
+    border-radius: 5px;
+    margin-top: 12px;
     background-color: white;
     border-radius: 10px;
     border: none;
   }
   .profile-info-gender {
-    width: 20vw;
     height: 40px;
-    margin-top: 10px;
+    width: 330px;
+    left: 861px;
+    top: 257px;
+    border-radius: 5px;
+    margin-top: 12px;
     background-color: white;
     border-radius: 10px;
     border: none;
   }
   .box-profile-introducing 
   {
-    display: flex;
     border-radius: 10px;
-    width: 92%;
-    height: 30vh;
-    margin-left: 26px;
-    margin-top: 20px;
+    margin-left: 23px;
+    margin-right: 27px;
+    margin-top: 25px;
     margin-bottom: 20px;
     background-color: white;
-    border: none;
-    box-shadow: gray 5px 5px 5px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border: 1px solid #969696;
+    box-sizing: border-box;
+    width: 797px;
+    height: 251px;
+    left: 395px;
+    top: 432px;
 
   }
   .profile-change-button {
     display: flex;
-    justify-content: flex-end;
-    margin-right: 20px;
-    margin-top: 10px;
+    justify-content: end;
+    width: 847px;
+    height: 82px;
+
   }
   .change-password-button {
     display: flex;
-    margin-right: 30px;
+    margin-right: 15px;
     border-radius: 10px;
     border: none;
     background-color: black;
     color: white;
+    height: 31px;
+    width: 133px;
+    left: 969px;
+    top: 712px;
+    border-radius: 10px;
+
+  }
+  .change-password-btw-detail {
+    width: 116px;
+    height: 19px;
+    left: 986px;
+    top: 717px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 5px;
+
   }
   .change-button {
     display: flex;
     justify-content: flex-end;
-    margin-right: 20px;
-    border-radius: 10px;
+    margin-right: 27px;
     border:none;
-    background-color: black;
     color: white;
+    height: 31px;
+    width: 75px;
+    left: 1117px;
+    top: 712px;
+    border-radius: 10px;
+    background: #323232;
+
+    .change-button-detail {
+    width: 58px;
+    height: 19px;
+    left: 1139px;
+    top: 717px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 5px;
+    }
+
+
 
   }
   .profile-signout {
-    margin-top: 5px;
-    margin-left: 24vw;
+    width: 83px;
+height: 22px;
+left: 379px;
+top: 782px;
+
+font-family: 'Inter';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+color: #969696;
+margin-left: 250px;
+margin-top: 17px;
   }
 `
 
@@ -149,11 +242,11 @@ export default function MyProfileSection(){
           </div>
         </div>
         </div>
-        <div><input className="box-profile-introducing" type="text" placeholder="기존소개글이 적혀있고 수정가능"></input></div>
+        <div><input className="box-profile-introducing" type="text" placeholder="기존 소개글이 적혀있고 수정가능"></input></div>
         
         <div className="profile-change-button">
-          <button className="change-password-button">비밀번호 변경</button>
-          <button className="change-button">변경</button>
+          <button className="change-password-button"><div className="change-password-btw-detail">비밀번호 변경 </div></button>
+          <button className="change-button"><div className="change-button-detail">변경</div></button>
         </div>
     </div>
     <div className="profile-signout"> 회원탈퇴 </div>
