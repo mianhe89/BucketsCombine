@@ -2,6 +2,7 @@ import { closeModal } from "./modals/ModalSlice";
 import { useDispatch } from "react-redux";
 import React from "react";
 import styled from 'styled-components';
+import { Tag } from './Tag'
 
 
 const ModalContainer = styled.aside`
@@ -71,17 +72,7 @@ const ModalContainer = styled.aside`
         top: 1vh;
         left: 1vw;
     }
-    .tag-info {
-        text-align: center;
-        position: absolute;
-        text-align: center;
-        border: solid rgb(41, 41, 41);
-        border-radius: 5px 5px 5px 5px;
-        width: 5vw;
-        height: 3vh;
-        left: 1vw;
-        top: 15vh;
-    }
+
     .userInfo-btn {
         position: absolute;
         justify-content: center;
@@ -89,7 +80,7 @@ const ModalContainer = styled.aside`
         border: none;
         width: 10vw;
         left: 1vw;
-        top: 20vh;
+        top: 17vh;
     }
     
     .card-tag  {
@@ -170,8 +161,8 @@ const Modal = () => {
             <div className="modalContainer">
             <div className="modal">
                 <div className="modal blur">
-                    <h4 className=" modal-title">카드 제목</h4>                        <div className="card-tag">#태그</div>
-                    <div className="tag-info">20대</div>
+                    <h4 className=" modal-title">카드 제목</h4>                        
+                    <div className="card-tag">#태그</div>
                     <button type="button" className="userInfo-btn">참석한 유저 이름</button>
                     <button type="button" className="btn-confirm-btn"
                         onClick={()=> {
