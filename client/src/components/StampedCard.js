@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const RowCardWrap = styled.div`
+const StampedCardWrap = styled.div`
 
   .card {
     display: flex;
@@ -68,24 +68,13 @@ const RowCardWrap = styled.div`
   
 `;
 
-export default function RowCard ({ number }) {
+export default function StampedCard ({ number }) {
   return (
-    <RowCardWrap>
+    <StampedCardWrap>
       <div className='card'>
         <div className='card-info'>
-          <button className='card-insert-button'>담기</button>
-          <div className='card-title'>
-            제목
-          </div>
-          <div className='card-tegs'>
-            태그
-          </div>
-          <div className='card-footer'>
-            <div className='card-writer'>글쓴이</div>
-            <div className='card-member'>2명</div>
-          </div>
         </div>
       </div>
-    </RowCardWrap>
+    </StampedCardWrap>
   );
 };

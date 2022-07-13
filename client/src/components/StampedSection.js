@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import RowList from './RowList'
+import StampedList from './StampedList'
 
 const CardsWrap = styled.div`
   #card-section {
@@ -73,7 +73,7 @@ export default function StampedSection(){
           </div>
         </div>
         <div id='cards-list-row'>
-          <RowList/>
+          <StampedList/>
         </div>
         <div className='search-bar'>
           <input className='search-input' type="text" placeholder="제목 및 태그" />
