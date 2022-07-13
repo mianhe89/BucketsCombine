@@ -34,18 +34,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    }).then(function () {
-      queryInterface.addColumn("card", "users_id", {
-        type: Sequelize.INTEGER,
-        references: {model: "users", key: "id"},
-      });
-    }).then(function () {
-      queryInterface.createTable("userCardJoin", {
-        users_id: {
-          type: Sequelize.INTEGER,
-          references: {model: "users", key: "id"},
-        },
-      });
     })
   },
   async down(queryInterface, Sequelize) {

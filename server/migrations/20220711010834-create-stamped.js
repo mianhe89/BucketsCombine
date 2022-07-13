@@ -1,11 +1,11 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("stampeds", {
+    await queryInterface.createTable("stamped", {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: tru,
         type: Sequelize.INTEGER,
       },
       id: {
@@ -28,19 +28,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       }
-    }).then(function () {
-      queryInterface.addColumn("userCardJoin", "stamped_id", {
-        type: Sequelize.INTEGER,
-        references: {model: "stamped", key: "id"},
-      });
-    }).then(function () {
-      queryInterface.addColumn("cardHashtag", "stamped_id", {
-        type: Sequelize.INTEGER,
-        references: {model: "stamped", key: "id"},
-      });
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("stampeds");
+    await queryInterface.dropTable("stamped");
   },
 };
