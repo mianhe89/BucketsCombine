@@ -37,7 +37,7 @@ const CardsWrap = styled.div`
 
   .search-bar {
     align-self: center;
-    margin-top: 70px;
+    position: relative;
     margin-left: 0px;
     width: 40vw;
   }

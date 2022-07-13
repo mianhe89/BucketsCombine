@@ -34,7 +34,7 @@ export default function ColumnList () {
   const getMoreItem = async () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    let Items = [1, 2];
+    let Items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     setItemLists((itemLists) => itemLists.concat(Items));
     setIsLoaded(false);
   };
