@@ -4,15 +4,11 @@ import MainPage from './pages/MainPage';
 import MyPage from './pages/MyPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
-<<<<<<< HEAD
 import OAuthSignUpPage from './pages/OAuthSignUpPage';
 import RowList from './components/RowList'
-=======
-import GoogleSignUpPage from './pages/GoogleSignUpPage';
 import { connect } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from './components/Modal'
->>>>>>> feature/modal
 import axios from 'axios';
 import './App.css';
 

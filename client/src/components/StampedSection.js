@@ -1,7 +1,7 @@
 import React from 'react';
-<<<<<<< HEAD
 import styled from 'styled-components';
 import StampedList from './StampedList'
+import { useSelector } from 'react-redux';
 
 const CardsWrap = styled.div`
   #card-section {
@@ -59,9 +59,7 @@ const CardsWrap = styled.div`
     margin: 0px;
   }
 `
-=======
-import { useSelector } from 'react-redux';
->>>>>>> feature/modal
+
 
 
 const StampedModal = () => {
