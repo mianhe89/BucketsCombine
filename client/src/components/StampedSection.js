@@ -40,6 +40,7 @@ const CardsWrap = styled.div`
     position: relative;
     margin-left: 0px;
     width: 40vw;
+    top: 50px;
   }
 
   .search-input {
@@ -62,8 +63,8 @@ const CardsWrap = styled.div`
     z-index: 1;
     position: absolute;
     left: 170px;
-    width: 30px;
-    height: 35%;
+    width: 20px;
+    height: 100%;
     background: -webkit-linear-gradient(left,white 0%,rgba(0,0,0,0) 100%);
   }
 
@@ -72,7 +73,7 @@ const CardsWrap = styled.div`
     position: absolute;
     right: 70px;
     width: 40px;
-    height: 35%;
+    height: 100%;
     background: -webkit-linear-gradient(right,white 0%,rgba(0,0,0,0) 100%);
   }
 `

@@ -59,7 +59,7 @@ const SideMenuWrap = styled.div`
     
   }
 `
-console.log('werwer')
+
 export default function SideMenu(){
   return(
     <SideMenuWrap>
