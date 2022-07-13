@@ -1,16 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import HorizontalScroll from 'react-scroll-horizontal';
-import StampedCard from "./StampedCard";
+import ColumnCard from "./ColumnCard";
 import Loader from "./Loader";
 
 
-const StampedListWrap = styled.div`
-  #card-list {
-    width: calc(100vw - 240px);
-    height: 400px;
-    margin-left: 30px;
-  }
+const ColumnListWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center;
+  align-items: center;
+  overflow-y: auto;
+  padding: 10px;
 
   .Target-Element {
     width: 100%;
@@ -20,12 +23,28 @@ const StampedListWrap = styled.div`
     text-align: center;
     align-items: center;
   }
+
+  .create-card-button {
+    width: calc(70vw - 40px);
+    max-width: 960px;
+    height: 80px;
+    border-radius: 15px;
+    border: none;
+    box-shadow: none;
+    font-size: 32px;
+    background-color: #d2d2d2;
+    margin: 5px;
+    line-height: 80px;
+    text-align: center;
+    align-self: flex-start;
+    margin-left: 30px;
+  }
 `;
 
 export default function ColumnList () {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [itemLists, setItemLists] = useState([1]);
 
   useEffect(() => {
     console.log(itemLists);
@@ -51,7 +70,7 @@ export default function ColumnList () {
     let observer;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: `0`
+        threshold: 0.4,
       });
       observer.observe(target);
     }
@@ -60,22 +79,15 @@ export default function ColumnList () {
 
   return (
     <>
-      <StampedListWrap >
-      <div id='card-list'>
-        <HorizontalScroll
-          pageLock={true}
-          reverseScroll={true}
-          style={{}}
-        >
+      <ColumnListWrap>
+      <button className='create-card-button'>+</button>
         {itemLists.map((v, i) => {
-          return <StampedCard number={i + 1} key={i} />;
+          return <ColumnCard number={i + 1} key={i} />;
         })}
         <div ref={setTarget} className="Target-Element">
           {isLoaded && <Loader />}
         </div>
-        </HorizontalScroll>
-        </div>
-      </StampedListWrap>
+      </ColumnListWrap>
     </>
   );
 };

@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import HorizontalScroll from 'react-scroll-horizontal';
-import StampedCard from "./StampedCard";
+import RowCard from "./RowCard";
 import Loader from "./Loader";
 
 
-const StampedListWrap = styled.div`
+const RowListWrap = styled.div`
   #card-list {
     width: calc(100vw - 240px);
     height: 400px;
@@ -60,7 +60,7 @@ export default function ColumnList () {
 
   return (
     <>
-      <StampedListWrap >
+      <RowListWrap >
       <div id='card-list'>
         <HorizontalScroll
           pageLock={true}
@@ -68,14 +68,14 @@ export default function ColumnList () {
           style={{}}
         >
         {itemLists.map((v, i) => {
-          return <StampedCard number={i + 1} key={i} />;
+          return <RowCard number={i + 1} key={i} />;
         })}
         <div ref={setTarget} className="Target-Element">
           {isLoaded && <Loader />}
         </div>
         </HorizontalScroll>
         </div>
-      </StampedListWrap>
+      </RowListWrap>
     </>
   );
 };
