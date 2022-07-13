@@ -55,12 +55,6 @@ module.exports = {
             autoIncrement: true,
             type: Sequelize.INTEGER,
           },
-          card_id: {
-            allowNull: false,
-            foreignKey: true,
-            type: Sequelize.INTEGER,
-            references: { model: "card", key: "id" },
-          },
         });
       })
       .then(function () {
@@ -69,14 +63,6 @@ module.exports = {
           foreignKey: true,
           type: Sequelize.INTEGER,
           references: { model: "card", key: "id" },
-        });
-      })
-      .then(function () {
-        queryInterface.addColumn("mybucket", "mybucket_userCardJoin_id", {
-          allowNull: false,
-          foreignKey: true,
-          type: Sequelize.INTEGER,
-          references: { model: "userCardJoin", key: "id" },
         });
       })
       .then(function () {
