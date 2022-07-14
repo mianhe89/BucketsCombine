@@ -8,7 +8,7 @@ export default function MyPage() {
   return (
     <div className='mainpage'>
       <SideMenu />
-      <div className='mainpage-section'>
+      <div>
         <Topmenu />
         <MyBucketSection />
         <MyProfileSection />

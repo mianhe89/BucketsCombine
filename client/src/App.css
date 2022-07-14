@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+:root {
+  --top: 80px;
+  --main: 24vh;
+  --cards: 400px;
+  --stamped: 700px;
+}

@@ -14,6 +14,7 @@ const MainSectionWrap = styled.div`
   }
 
   .main-ment {
+    z-index: 3;
     width: 500px;
     margin-left: 60px;
     position: absolute;
