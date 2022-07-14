@@ -70,6 +70,7 @@ const SideMenuWrap = styled.div`
     width: 35px;
     height: 35px;
     top: 70px;
+    transition: all 300ms;
   }
 `
 
@@ -93,7 +94,7 @@ export default function SideMenu(){
     let vh = window.innerHeight
     changeLogoPosition(scrollPosition, vh)
   });
-  
+
   return(
     <SideMenuWrap>
       <div className='sidemenu'>

@@ -58,11 +58,12 @@ const SideMenuWrap = styled.div`
     width: 35px;
     height: 35px;
     top: 70px;
+    transition: all 500ms;
   }
 `
 
 export default function SideMenu(){
-  
+
   function changeLogoPosition (scrollPosition, vh) {
     const logo = document.querySelector('.logo-part2')
   
