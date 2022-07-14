@@ -10,7 +10,7 @@ const TopMenuWrap = styled.div`
     height: 80px;
     align-items: center;
     position: fixed;
-    z-index: 10;
+    z-index: 5;
   }
 
   .topmenu-title {

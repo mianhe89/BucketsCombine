@@ -17,6 +17,7 @@ const CardsWrap = styled.div`
   .cards-ment {
     margin-left: 60px;
     height: 150px;
+    z-index: 3;
   }
 
   .ment-title {
@@ -40,6 +41,7 @@ const CardsWrap = styled.div`
     position: relative;
     margin-left: 0px;
     width: 40vw;
+    top: 50px;
   }
 
   .search-input {
@@ -57,6 +59,24 @@ const CardsWrap = styled.div`
     right: 0px;
     margin: 0px;
   }
+
+  .fog-left {
+    z-index: 1;
+    position: absolute;
+    left: 170px;
+    width: 20px;
+    height: 100%;
+    background: -webkit-linear-gradient(left,white 0%,rgba(0,0,0,0) 100%);
+  }
+
+  .fog-right {
+    z-index: 1;
+    position: absolute;
+    right: 70px;
+    width: 40px;
+    height: 100%;
+    background: -webkit-linear-gradient(right,white 0%,rgba(0,0,0,0) 100%);
+  }
 `
 
 export default function StampedSection(){
@@ -68,11 +88,12 @@ export default function StampedSection(){
           여러분의 성취담을 공유해보세요.
           </div>
           <div className='ment-description'>
-          달성하신 카드는 도장을 찍어드려요.<br />
-          여러분의 후기를 담아 공유할 수 있습니다.
+          달성하신 카드는 도장을 찍어드려요. 여러분의 후기를 담아 공유할 수 있습니다.
           </div>
         </div>
         <div id='cards-list-row'>
+        <div className='fog-left'/>
+        <div className='fog-right'/>
           <StampedList/>
         </div>
         <div className='search-bar'>

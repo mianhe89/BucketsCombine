@@ -29,7 +29,8 @@ const MyBucketWrap = styled.div `
     position: relative;
     margin-left: 0px;
     height: 10px;
-    width: 40vw;
+    width: calc(70vw - 100px);
+    max-width: 700px;
   }
 
   .search-input {
@@ -47,13 +48,33 @@ const MyBucketWrap = styled.div `
     right: 0px;
     margin: 0px;
   }
+
+  .fog-top {
+    position: absolute;
+    top: 170px;
+    width: 70vw;
+    max-width: 1000px;
+    height: 30px;
+    background: -webkit-linear-gradient(top,white 0%,rgba(0,0,0,0) 100%);
+  }
+
+  .fog-bottom {
+    position: absolute;
+    bottom: 210px;
+    width: 70vw;
+    max-width: 1000px;
+    height: 40px;
+    background: -webkit-linear-gradient(bottom,white 0%,rgba(0,0,0,0) 100%);
+  }
 `
 
 export default function MyBucketSection(){
   return(
     <MyBucketWrap>
     <div id='mybucket-section'>
+      <div className='fog-top'/>
       <div className='card-list-column'>
+      <div className='fog-bottom'/>
         <ColumnList />
       </div>
       <div className='search-bar'>

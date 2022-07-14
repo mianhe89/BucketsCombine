@@ -16,9 +16,9 @@ const SideMenuWrap = styled.div`
     position: fixed;
   }
 
-  .sidemenu-button-main {
+  .sidemenu-button-mybucket {
     position: absolute;
-    top:30vh;
+    top:35vh;
     border: none;
     box-shadow: none;
     font-size: 18px;
@@ -28,21 +28,9 @@ const SideMenuWrap = styled.div`
     font-weight: 100;
   }
 
-  .sidemenu-button-cards {
+  .sidemenu-button-myprofile {
     position: absolute;
-    top:50vh;
-    border: none;
-    box-shadow: none;
-    font-size: 18px;
-    color: white;
-    background-color: transparent;
-    font-size: 20px;
-    font-weight: 100;
-  }
-
-  .sidemenu-button-stamped {
-    position: absolute;
-    top:70vh;
+    top:66vh;
     border: none;
     box-shadow: none;
     font-size: 18px;
@@ -63,29 +51,28 @@ const SideMenuWrap = styled.div`
     margin-top: 10px;
   }
 
-  .logo-part {
+  .logo-part2 {
     display: flex;
     left: 42px;
     position: absolute;
     width: 35px;
     height: 35px;
     top: 70px;
-    transition: all 300ms;
+    transition: all 500ms;
   }
 `
 
 export default function SideMenu(){
+
   function changeLogoPosition (scrollPosition, vh) {
-    const logo = document.querySelector('.logo-part')
+    const logo = document.querySelector('.logo-part2')
   
     if(scrollPosition === 0){
       logo.style.top = '70px'
     } else if(scrollPosition <= 0.75 * vh ){
-      logo.style.top = 'calc(30vh - 35px)'
-    } else if(scrollPosition <= 1.75 * vh){
-      logo.style.top = 'calc(50vh - 35px)'
+      logo.style.top = 'calc(35vh - 35px)'
     } else {
-      logo.style.top = 'calc(70vh - 35px)'
+      logo.style.top = 'calc(66vh - 35px)'
     }
   }
   
@@ -98,11 +85,10 @@ export default function SideMenu(){
   return(
     <SideMenuWrap>
       <div className='sidemenu'>
-      <img className='logo-part' src='images/logo-part.png' />
+      <img className='logo-part2' src='images/logo-part.png' />
           <img className='logo' src='images/logo-small.png' />
-          <button className='sidemenu-button-main'>Main</button>
-          <button className='sidemenu-button-cards'>Cards</button>
-          <button className='sidemenu-button-stamped'>Stamped</button>
+          <button className='sidemenu-button-mybucket'>My Bucket</button>
+          <button className='sidemenu-button-myprofile'>My Profile</button>
       </div>
     </SideMenuWrap>
   )
