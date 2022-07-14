@@ -17,6 +17,7 @@ const CardsWrap = styled.div`
   .cards-ment {
     margin-left: 60px;
     height: 150px;
+    z-index: 3;
   }
 
   .ment-title {
@@ -87,8 +88,7 @@ export default function StampedSection(){
           여러분의 성취담을 공유해보세요.
           </div>
           <div className='ment-description'>
-          달성하신 카드는 도장을 찍어드려요.<br />
-          여러분의 후기를 담아 공유할 수 있습니다.
+          달성하신 카드는 도장을 찍어드려요. 여러분의 후기를 담아 공유할 수 있습니다.
           </div>
         </div>
         <div id='cards-list-row'>
