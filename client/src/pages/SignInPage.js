@@ -1,157 +1,155 @@
 import React from 'react';
 import styled from 'styled-components';
-
+// eslint-disable-next-line
 const signInPageWrap = styled.div`
 body {
-	height: 100%;
-	overflow: hidden;
-  }
-  #login_cancle {
-   position: fixed;
-   top: 15px;
-   right: 15px;
-   width: 100px;
-   height: 30px;
-   background-color: yellow;
-   border: 0;
-   border-radius: 5px;
+  height: 100%;
+  overflow: hidden;
+}
+#login_cancle {
+ position: fixed;
+ top: 15px;
+ right: 15px;
+ width: 100px;
+ height: 30px;
+ background-color: yellow;
+ border: 0;
+ border-radius: 5px;
+}
+.signin_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: rgb(41, 41, 41);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  overflow: hidden;
+}
+.signin_section {
+  background-color: rgb(41, 41, 41);
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+.login_title {
+  font-weight: bold;
+  color: white;
+  font-size: 30px;
+  margin: 20px;
+  border-radius: 5px;
+}
+.login_signupbox{
+  display: flex;
+  flex-direction: column;
+  padding: 5px 40px;
+  margin: 2px 100px;
+  width: 250px;
+  border-radius: 5px;
   
-	
-  }
-  .signin_container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	min-height: 100vh;
-	background-color: rgb(41, 41, 41);
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-size: cover;
-	overflow: hidden;
-  }
-  .signin_section {
-	background-color: rgb(41, 41, 41);
-	height: 100vh;
-	width: 100vw;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	overflow: hidden;
-  }
-  .login_title {
-	font-weight: bold;
-	color: white;
-	font-size: 30px;
-	margin: 20px;
-	border-radius: 5px;
-  }
-  .login_signupbox{
-	display: flex;
-	flex-direction: column;
-	padding: 5px 40px;
-	margin: 2px 100px;
-	width: 250px;
-	border-radius: 5px;
-	
-  }
-  .login_box {
-	background-color: orange;
-	border: none;
-	font-size: 16;
-	margin: 7px;
-	height: 30px;
-	border-radius: 5px;
-  }
-  .login_google {
-	flex: flex;
-	border: none;
-	font-size: 16;
-	justify-content: center;
-	margin: 7px;
-	height: 30px;
-	border-radius: 5px;
-	
-	
-  }
-  .login_signup {
-	flex: flex;
-	background-color: yellow;
-	border: none;
-	font-size: 16;
-	height: 30px;
-	justify-content: center;
-	margin: 4px;
-	border-radius: 5px;
-  }
-  #login_email {
-	flex: flex;
-	padding: 5px 40px;
-	margin: 10px;
-	border-radius: 5px;
-  }
-  #login_password {
-	flex: flex;
-	padding: 5px 40px;
-	margin: 10px;
-	border-radius: 5px;
-  }
-  #login_button {
-	padding: 5px 40px;
-	margin: 10px
-  }
-  .signup_container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+}
+.login_box {
+  background-color: orange;
+  border: none;
+  font-size: 16;
+  margin: 7px;
+  height: 30px;
+  border-radius: 5px;
+}
+.login_google {
+  flex: flex;
+  border: none;
+  font-size: 16;
+  justify-content: center;
+  margin: 7px;
+  height: 30px;
+  border-radius: 5px;
   
-	min-height: 100vh;
-  }
-  #signup_repassword {
-	flex: flex;
-	padding: 5px 40px;
-	margin: 10px;
-	border-radius: 5px;
-  }
-  #login_nickname {
-	flex: flex;
-	padding: 5px 40px;
-	margin: 10px;
-	border-radius: 5px;
-  }
-  .btn_gender {
-	display: flex;
-	padding: 5px 40px;
-	margin: 10px;
-	width: 15.5%;
-	border-radius: 5px;
-  }
-  .btn_old {
-	display: flex;
-	padding: 5px 40px;
-	margin: 10px;
-	width: 15.5%;
-	border-radius: 5px;
-  }
-  .signup_signup {
-	flex: flex;
-	background-color: yellow;
-	border: none;
-	font-size: 16;
-	height: 25px;
-	justify-content: center;
-	margin: 4px;
-	width: 15.5%;
-	border-radius: 5px;
-  }
-  #singup_email {
-	flex: flex;
-	padding: 5px 40px;
-	margin: 10px;
-	border-radius: 5px;
-	background-color: gray;
-  }
+  
+}
+.login_signup {
+  flex: flex;
+  background-color: yellow;
+  border: none;
+  font-size: 16;
+  height: 30px;
+  justify-content: center;
+  margin: 4px;
+  border-radius: 5px;
+}
+#login_email {
+  flex: flex;
+  padding: 5px 40px;
+  margin: 10px;
+  border-radius: 5px;
+}
+#login_password {
+  flex: flex;
+  padding: 5px 40px;
+  margin: 10px;
+  border-radius: 5px;
+}
+#login_button {
+  padding: 5px 40px;
+  margin: 10px
+}
+.signup_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  min-height: 100vh;
+}
+#signup_repassword {
+  flex: flex;
+  padding: 5px 40px;
+  margin: 10px;
+  border-radius: 5px;
+}
+#login_nickname {
+  flex: flex;
+  padding: 5px 40px;
+  margin: 10px;
+  border-radius: 5px;
+}
+.btn_gender {
+  display: flex;
+  padding: 5px 40px;
+  margin: 10px;
+  width: 15.5%;
+  border-radius: 5px;
+}
+.btn_old {
+  display: flex;
+  padding: 5px 40px;
+  margin: 10px;
+  width: 15.5%;
+  border-radius: 5px;
+}
+.signup_signup {
+  flex: flex;
+  background-color: yellow;
+  border: none;
+  font-size: 16;
+  height: 25px;
+  justify-content: center;
+  margin: 4px;
+  width: 15.5%;
+  border-radius: 5px;
+}
+#singup_email {
+  flex: flex;
+  padding: 5px 40px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: gray;
+}
   `
 
 export default function SignInPage() {
