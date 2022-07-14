@@ -8,7 +8,7 @@ import OAuthSignUpPage from './pages/OAuthSignUpPage';
 import RowList from './components/RowList'
 import { connect } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from './components/Modal'
+import Modal from './components/modals/MainPageModal'
 import axios from 'axios';
 import './App.css';
 

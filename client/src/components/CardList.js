@@ -1,6 +1,8 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import HorizontalScroll from 'react-scroll-horizontal';
 import styled from 'styled-components';
+import { openModal } from './modals/ModalSlice';
 
 const RowCardWrap = styled.div`
 #card-list {
@@ -93,7 +95,9 @@ export default function CardList(){
         {cards.map((card, index) => (
           <div key={index} className='card'>
             <div className='card-info'>
-              <button className='card-insert-button'>담기</button>
+              <button onClick={()=> {dispatch(openModal())}}>
+                담기
+              </button>
               <div className='card-title'>
                 제목
               </div>

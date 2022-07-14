@@ -1,8 +1,8 @@
-import { closeModal } from "./modals/ModalSlice";
+import { closeModal } from "./ModalSlice";
 import { useDispatch } from "react-redux";
 import React from "react";
 import styled from 'styled-components';
-import { Tag } from './Tag'
+import { Tag } from '../Tag'
 
 
 const ModalContainer = styled.aside`
