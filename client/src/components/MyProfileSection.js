@@ -87,7 +87,6 @@ const MyProfileWrap = styled.div`
     border-radius: 5px;
     margin-top: 12px;
     background-color: white;
-    border-radius: 10px;
     border: none;
   }
   .profile-info-age {
@@ -98,7 +97,6 @@ const MyProfileWrap = styled.div`
     border-radius: 5px;
     margin-top: 12px;
     background-color: white;
-    border-radius: 10px;
     border: none;
   }
   .profile-info-gender {
@@ -109,7 +107,6 @@ const MyProfileWrap = styled.div`
     border-radius: 5px;
     margin-top: 12px;
     background-color: white;
-    border-radius: 10px;
     border: none;
   }
   .box-profile-introducing 
@@ -196,19 +193,19 @@ const MyProfileWrap = styled.div`
   }
   .profile-signout {
     width: 83px;
-height: 22px;
-left: 379px;
-top: 782px;
+    height: 22px;
+    left: 379px;
+    top: 782px;
 
-font-family: 'Inter';
-font-style: normal;
-font-weight: 700;
-font-size: 18px;
-line-height: 22px;
-/* identical to box height */
-color: #969696;
-margin-left: 250px;
-margin-top: 17px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+    color: #969696;
+    margin-left: 250px;
+    margin-top: 17px;
   }
 `
 
