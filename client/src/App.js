@@ -5,7 +5,6 @@ import MyPage from './pages/MyPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import OAuthSignUpPage from './pages/OAuthSignUpPage';
-import RowList from './components/RowList'
 import axios from 'axios';
 import './App.css';
 
@@ -29,9 +28,6 @@ function App() {
           </Route>
           <Route exact path='/mypage'>
             <MyPage />
-          </Route>
-          <Route exact path='/test'>
-            <RowList />
           </Route>
         </Switch>
       </BrowserRouter>

@@ -17,7 +17,7 @@ const MyProfileWrap = styled.div`
     border-radius: 20px;
     flex-direction: column;
     height: 588px;
-    width: 847px;
+    width: 750px;
     border-radius: 20px;
     border: 10px dotted white;
   }
@@ -149,7 +149,7 @@ const MyProfileWrap = styled.div`
     background-color: transparent;
     border: none;
     margin-top: 20px;
-    margin-right : 750px;
+    margin-right : 680px;
   }
 `
 

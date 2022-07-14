@@ -124,7 +124,7 @@ body {
 	background-color: gray;
 }
 `
-export default function GoogleSignUpPage() {
+export default function OAuthSignUpPage() {
 	return (
 		<GoogleSignUpWrap>
 	<div className="body">
