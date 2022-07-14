@@ -1,26 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
 
+
 const SideMenuWrap = styled.div`
+  
   .sidemenu {
     position: fixed;
     height: 100%;
     width: 120px;
     background-color: rgb(41, 41, 41);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     position: fixed;
   }
 
-  .sidemenu-button {
+  .sidemenu-button-mybucket {
+    position: absolute;
+    top:35vh;
     border: none;
     box-shadow: none;
     font-size: 18px;
-    width: 100px;
-    height: 50px;
     color: white;
     background-color: transparent;
+    font-size: 20px;
+    font-weight: 100;
+  }
+
+  .sidemenu-button-myprofile {
+    position: absolute;
+    top:66vh;
+    border: none;
+    box-shadow: none;
+    font-size: 18px;
+    color: white;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 100;
   }
 
   .sidemenu-button:active, .sidemenu-button:focus {
@@ -28,58 +45,49 @@ const SideMenuWrap = styled.div`
     box-shadow: none;
   }
 
-  .logo-title {
-    display: flex;
-    align-self: flex-start;
-    margin-top: 15px;
-  }
-
   .logo {
     display: flex;
-    align-self: flex-start;
     height: 60px;
+    margin-top: 10px;
   }
 
-  .side-titles {
-    height: 50vh;
-    position: fixed;
+  .logo-part2 {
     display: flex;
-    color: white;
-    font-size: 20px;
-    font-weight: 100;
-    text-align: center;
-  }
-
-  .list {
-    list-style: none;
-    padding-left: 0px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    
+    left: 42px;
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 70px;
   }
 `
 
 export default function SideMenu(){
+  
+  function changeLogoPosition (scrollPosition, vh) {
+    const logo = document.querySelector('.logo-part2')
+  
+    if(scrollPosition === 0){
+      logo.style.top = '70px'
+    } else if(scrollPosition <= 0.75 * vh ){
+      logo.style.top = 'calc(35vh - 35px)'
+    } else {
+      logo.style.top = 'calc(66vh - 35px)'
+    }
+  }
+  
+  window.addEventListener("scroll" || "resize", (event) => {
+    let scrollPosition = window.scrollY
+    let vh = window.innerHeight
+    changeLogoPosition(scrollPosition, vh)
+  });
+
   return(
     <SideMenuWrap>
       <div className='sidemenu'>
-        <div className='logo-title'>
+      <img className='logo-part2' src='images/logo-part.png' />
           <img className='logo' src='images/logo-small.png' />
-        </div>
-        <div className='side-titles'>
-          <ul className='list'>
-            <li>
-              <button className='sidemenu-button'>Main</button>
-            </li>
-            <li>
-              <button className='sidemenu-button'>Cards</button>
-            </li>
-            <li>
-              <button className='sidemenu-button'>Stamped</button>
-            </li>
-          </ul>
-        </div>
+          <button className='sidemenu-button-mybucket'>My Bucket</button>
+          <button className='sidemenu-button-myprofile'>My Profile</button>
       </div>
     </SideMenuWrap>
   )

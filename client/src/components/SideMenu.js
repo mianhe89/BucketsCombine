@@ -73,28 +73,27 @@ const SideMenuWrap = styled.div`
   }
 `
 
-function changeLogoPosition (scrollPosition, vh) {
-  const logo = document.querySelector('.logo-part')
-
-  if(scrollPosition === 0){
-    logo.style.top = '70px'
-  } else if(scrollPosition <= 2 * vh / 3 ){
-    logo.style.top = 'calc(30vh - 35px)'
-  } else if(scrollPosition <= 5 * vh / 3){
-    logo.style.top = 'calc(50vh - 35px)'
-  } else {
-    logo.style.top = 'calc(70vh - 35px)'
-  }
-}
-
-window.addEventListener("scroll" || "resize", (event) => {
-  let scrollPosition = window.scrollY
-  let vh = window.innerHeight
-  changeLogoPosition(scrollPosition, vh)
-});
-
-
 export default function SideMenu(){
+  function changeLogoPosition (scrollPosition, vh) {
+    const logo = document.querySelector('.logo-part')
+  
+    if(scrollPosition === 0){
+      logo.style.top = '70px'
+    } else if(scrollPosition <= 0.75 * vh ){
+      logo.style.top = 'calc(30vh - 35px)'
+    } else if(scrollPosition <= 1.75 * vh){
+      logo.style.top = 'calc(50vh - 35px)'
+    } else {
+      logo.style.top = 'calc(70vh - 35px)'
+    }
+  }
+  
+  window.addEventListener("scroll" || "resize", (event) => {
+    let scrollPosition = window.scrollY
+    let vh = window.innerHeight
+    changeLogoPosition(scrollPosition, vh)
+  });
+  
   return(
     <SideMenuWrap>
       <div className='sidemenu'>
