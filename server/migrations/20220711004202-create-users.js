@@ -59,7 +59,15 @@ module.exports = {
       .then(() => queryInterface.dropTable("userCardJoin"));
   },
 };
+
+// 이것은 머지 테스트용 입니다.
 //
-//asdfasdfasdfasdf
-//asdfasdfasdf
-//asdfasdf
+//
+//
+//
+//
+//
+//
+//
+
+// 여기는 충돌이 없는 부분입니다.
