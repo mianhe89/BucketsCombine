@@ -30,18 +30,27 @@ const RowListWrap = styled.div`
 `;
 
 export default function ColumnList () {
+  const test = ['1','2','3','4','5','6','7','8','9','10']
+  const testmap = test.map(e=>{
+    return {
+      title: 'title'+e,
+      tags: [e,e+e,e+e+e],
+      writer: 'writer'+e,
+      memberCount: 0,
+      background: 'card-' + e,
+    }
+  })
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [itemLists, setItemLists] = useState(testmap);
 
   useEffect(() => {
-    console.log(itemLists);
   }, [itemLists]);
 
   const getMoreItem = async () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    let Items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let Items = testmap;
     setItemLists((itemLists) => itemLists.concat(Items));
     setIsLoaded(false);
   };
@@ -66,25 +75,22 @@ export default function ColumnList () {
   }, [target  ]);
 
   return (
-    <>
       <RowListWrap >
-      <div id='card-list'>
-        
-        <HorizontalScroll
-          pageLock={true}
-          reverseScroll={true}
-          style={{}}
-        >
-          <div className="dummy"/>
-        {itemLists.map((v, i) => {
-          return <RowCard number={i + 1} key={i} />;
-        })}
-        <div ref={setTarget} className="Target-Element">
-          {isLoaded && <Loader />}
-        </div>
-        </HorizontalScroll>
+        <div id='card-list'>
+          <HorizontalScroll
+            pageLock={true}
+            reverseScroll={true}
+            style={{}}
+          >
+            <div className="dummy"/>
+            {itemLists.map((item, i) => {
+              return <RowCard title={item.title} tags={item.tags} writer={item.writer} memberCount={item.memberCount} background={item.background} key={i} />;
+            })}
+            <div ref={setTarget} className="Target-Element">
+              {isLoaded && <Loader />}
+            </div>
+          </HorizontalScroll>
         </div>
       </RowListWrap>
-    </>
   );
 };

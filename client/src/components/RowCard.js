@@ -10,7 +10,6 @@ const RowCardWrap = styled.div`
     height: 330px;
     border-radius: 15px;
     margin: 10px;
-    background-image: url("https://source.unsplash.com/random");
     background-size: cover;
   }
 
@@ -68,21 +67,30 @@ const RowCardWrap = styled.div`
   
 `;
 
-export default function RowCard ({ number }) {
+export default function RowCard ({title, tags, writer, memberCount, background}) {
+  
+  const tagLine = tags.map(tag => {
+     return `#${tag}`
+  })
+  
+  let backgroundImageStyle = {
+    backgroundImage: "url(/images/" + background + ".jpg)"
+  }
+
   return (
     <RowCardWrap>
-      <div className='card'>
+      <div className='card' style={backgroundImageStyle}>
         <div className='card-info'>
           <button className='card-insert-button'>담기</button>
           <div className='card-title'>
-            제목
+            {title}
           </div>
           <div className='card-tegs'>
-            태그
+            {tagLine.join(' ')}
           </div>
           <div className='card-footer'>
-            <div className='card-writer'>글쓴이</div>
-            <div className='card-member'>2명</div>
+            <div className='card-writer'>{writer}</div>
+            <div className='card-member'>{memberCount}명</div>
           </div>
         </div>
       </div>
