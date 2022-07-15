@@ -1,4 +1,4 @@
-import { closeModal } from "./ModalSlice";
+import { closeModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 import React from "react";
 import styled from 'styled-components';

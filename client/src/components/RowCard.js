@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { openModal } from "./modals/ModalSlice";
+import { openModal } from "../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 
 const RowCardWrap = styled.div`
@@ -89,8 +89,8 @@ export default function RowCard ({ number }) {
   const dispatch = useDispatch();
   return (
     <RowCardWrap>
-      <button className="card" onClick={()=> {dispatch(openModal())}}>
-        <div className='card-info'>
+      <button className="card">
+        <div className='card-info' onClick={()=> {dispatch(openModal())}}>
           <button className="card-insert-button">
             담기
           </button>
