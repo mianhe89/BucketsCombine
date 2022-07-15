@@ -1,35 +1,23 @@
-import { closeModal } from "./modals/ModalSlice";
+import { closeModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 import React from "react";
 import styled from 'styled-components';
-import { Tag } from './Tag'
+import ModalFrame from './ModalContainer'
 
 
-const ModalContainer = styled.aside`
-    width: 70vw;
-    height: 60vh;
-    display: flex;
-    border-radius: 20px 20px 20px 20px;
-    border: solid rgb(170, 170, 170);
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 20vw;
-    top: 20vh;
-    box-shadow: 3px 3px 5px 5px rgb(194, 194, 194, 0.3);
-    z-index: 2;
 
-    .modal {
+const MainPageModal = styled.div`
     position: relative;
     width: 70vw;
     height: 60vh;
     background-color: rgba(255, 255, 255, 0.8);
+    border: solid rgb(170, 170, 170);
     border-radius: 20px 20px 20px 20px;
     animation: fadein 0.5s;
     -moz-animation: fadein 0.5s;
     -webkit-animation: fadein 0.5s;
     -o-animation: fadein 0.5s;
-    }
+    
     @keyframes fadein {
         from {
             opacity: 0;
@@ -61,9 +49,6 @@ const ModalContainer = styled.aside`
         to {
             opacity: 1;
         }
-    }
-    .blur {
-        backdrop-filter: blur(2px);
     }
     .modal-title {
         margin: 15px;
@@ -106,18 +91,6 @@ const ModalContainer = styled.aside`
         top: 55vh;
     }
     
-    .btn-cancel-btn {
-        margin: 1px;
-        position: absolute;
-        display: flex;
-        border: none;
-        width: 20px;
-        height: 20px;
-        top: 1vh;
-        right: 1vw;
-        background: none;
-    }
-    
     .card-img {
         margin: 10px;
         position: absolute;
@@ -152,38 +125,27 @@ const ModalContainer = styled.aside`
         height: 20vh;
         left: 1vw;
         top: 30vh;
-    }`;
+    };`
 
-const Modal = () => {
+const MainPageCardModal = ({ onClose }) => {
     const dispatch = useDispatch();
     return (
-        <ModalContainer>
-            <div className="modalContainer">
-            <div className="modal">
-                <div className="modal blur">
-                    <h4 className=" modal-title">카드 제목</h4>                        
-                    <div className="card-tag">#태그</div>
-                    <button type="button" className="userInfo-btn">참석한 유저 이름</button>
-                    <button type="button" className="btn-confirm-btn"
-                        onClick={()=> {
-                            dispatch(closeModal());
-                        }}>
-                        담기 및 참가
-                    </button>
-                    <button type="button" className="btn-cancel-btn"
-                        onClick={()=>{
-                            dispatch(closeModal());
-                    }}>
-                        X
-                    </button>
-                    <img className="card-img" src="images/card-img.jpg" alt="card" />
-                    <div className="card-info">설명</div>
-                    <div className="card-info-text">버킷 내용</div>
-                </div>
-            </div>
-            </div>
-        </ModalContainer>
+        <ModalFrame onClose={onClose}>
+            <MainPageModal>
+                <h4 className=" modal-title">카드 제목</h4>                        
+                <div className="card-tag">#태그</div>
+                <button type="button" className="userInfo-btn">참석한 유저 이름</button>
+                <button type="button" className="btn-confirm-btn"
+                     onClick={()=> {
+                     dispatch(closeModal())}}>
+                    담기 및 참가
+                </button>
+                <img className="card-img" src="images/card-img.jpg" alt="card" />
+                <div className="card-info">설명</div>
+                <div className="card-info-text">버킷 내용</div>
+            </MainPageModal>
+        </ModalFrame>
     );
 }
 
-export default Modal
+export default MainPageCardModal;

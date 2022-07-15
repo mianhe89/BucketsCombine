@@ -12,6 +12,10 @@ import MyPage from "./pages/MyPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import OAuthSignUpPage from "./pages/OAuthSignUpPage";
+import RowList from "./components/RowList";
+import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import MainPageCardModal from "./components/modals/MainPageCardModal";
 import axios from "axios";
 import "./App.css";
 
@@ -23,7 +27,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            {isOpen && <Modal />}
+            {isOpen && <MainPageCardModal />}
             <MainPage />
           </Route>
           <Route exact path="/signin">
@@ -36,7 +40,6 @@ const App = () => {
             <SignUpPage />
           </Route>
           <Route exact path="/mypage">
-            {isOpen && <Modal />}
             <MyPage />
           </Route>
         </Switch>

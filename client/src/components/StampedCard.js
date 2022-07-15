@@ -1,5 +1,7 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { openModal } from "../redux/reducers/ModalReducer";
 
 const StampedCardWrap = styled.div`
 
@@ -69,11 +71,12 @@ const StampedCardWrap = styled.div`
 `;
 
 export default function StampedCard ({ number }) {
+  const dispatch = useDispatch();
   return (
     <StampedCardWrap>
       <div className='card'>
-        <div className='card-info'>
-        </div>
+        <button className='card-info' onClick={() => {dispatch(openModal())}}>
+        </button>
       </div>
     </StampedCardWrap>
   );
