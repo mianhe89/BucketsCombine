@@ -12,6 +12,9 @@ const mysql = require("mysql");
 const cookieParser = require("cookie-parser");
 const { result } = require("lodash");
 require("dotenv").config();
+
+const indexRouter = require("./routes/index");
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(
@@ -21,12 +24,13 @@ app.use(
   })
 );
 app.use(cookieParser());
+app.use("/", indexRouter);
 
 // if (document.location.protocol == "http:") {
 //   document.location.href = document.location.href.replace("http:", "https:");
 // }
 
-const connetdb = mysql.createConnection({
+const connetdb = mysql.createConnection({ // mysql에 이러한 조건들로 연결할 수 있는 기능을 connectdb에 선언한다
   host: process.env.DATABASE_HOST, // 내가 바라보는 DB 의 주소
   user: process.env.DATABASE_USER, // 그 DB를 사용하는 유저 (ex: user admin ...)
   password: process.env.DATABASE_PASSWORD,
