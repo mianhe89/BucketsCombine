@@ -83,71 +83,67 @@ const SignUpPageWrap = styled.div`
     border-radius: 5px;
   }
   #login_email {
-    flex: flex;
-    padding: 5px 40px;
+	width: 246px;
+	height: 32px;
+    padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
+	border: none;
   }
   #login_password {
-    flex: flex;
-    padding: 5px 40px;
+	width: 246px;
+	height: 32px;
+    padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
-  }
-  #login_button {
-    padding: 5px 40px;
-    margin: 10px
+	border: none;
   }
   .signup_container {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
   }
   #signup_repassword {
-    flex: flex;
-    padding: 5px 40px;
+	width: 246px;
+	height: 32px;
+    padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
+	border: none;
   }
   #login_nickname {
-    flex: flex;
+	width: 246px;
+	height: 32px;
+    padding: 2px 40px;
+    margin: 10px;
+    border-radius: 5px;
+	border: none;
+  }
+  .btn_old {
     padding: 5px 40px;
     margin: 10px;
+    width: 330px;
+	height: 40px;
     border-radius: 5px;
   }
   .btn_gender {
-    display: flex;
     padding: 5px 40px;
     margin: 10px;
-    width: 15.5%;
+    width: 330px;
+	height: 40px;
     border-radius: 5px;
   }
-  .btn_old {
-    display: flex;
-    padding: 5px 40px;
-    margin: 10px;
-    width: 15.5%;
-    border-radius: 5px;
-  }
+
   .signup_signup {
-    flex: flex;
     border: none;
     font-size: 16;
-    height: 25px;
+    height: 40px;
     justify-content: center;
     margin: 4px;
-    width: 15.5%;
+    width: 330px;
     background: #FFC700;
     border-radius: 5px;
-  }
-  #singup_email {
-    flex: flex;
-    padding: 5px 40px;
-    margin: 10px;
-    border-radius: 5px;
-    background-color: gray;
   }
 `
 export default function SignUpPage() {
@@ -158,7 +154,7 @@ export default function SignUpPage() {
 <div className="signin_section">
 <button id="login_cancle">취소</button>
 	<div className="signin_container">
-	<img src="bucketscombine_logo.png" alt="no" width="100px" height="100px"></img>
+	<img src="images/bucketscombine_logo.png" alt="no" width="120px" height="120px"></img>
 		<div className="login_title">BucketsCombine</div>
 	   	<input id="login_email" type="text" placeholder="이메일" />
 		  <input id="login_password" type="password" placeholder="비밀번호" />
