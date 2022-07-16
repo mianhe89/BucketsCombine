@@ -34,6 +34,7 @@ const handleResponseSuccess = () => {
 };
 const App = () => {
   const { isOpen } = useSelector((store) => store.modal);
+  };
   const handleLogout = () => {
     axios.post('https://localhost:3000/signout').then((res) => {
       setUserinfo(null);
@@ -44,13 +45,13 @@ const App = () => {
   useEffect(() => {
     isAuthenticated();
   }, []);
-  };
+  
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route exact path='/'>
-            {isOpen && <MainPageCardModal />}
+            {<MainPageCardModal />}
             <MainPage />
           </Route>
           <Route exact path='/signin'>
