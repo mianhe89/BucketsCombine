@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { openModal } from "../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 
+
 const RowCardWrap = styled.div`
   .card {
     position: relative;
@@ -17,7 +18,6 @@ const RowCardWrap = styled.div`
   z-index: 1;
   border: none;
   }
-  
   .card-info {
     margin: 10px;
     color: white;
@@ -32,7 +32,7 @@ const RowCardWrap = styled.div`
     box-shadow: none;
     font-size: 13px;
     background-color: #FFC700;
-    z-index: 2;
+    z-index: 10;
   }
 
   .card-title {
@@ -72,26 +72,17 @@ const RowCardWrap = styled.div`
   }
 `;
 
-const StyledButton = styled.button`
-  display: flex;
-  flex-direction: column;
-  width: 220px;
-  height: 330px;
-  border-radius: 15px;
-  margin: 10px;
-  background-image: url("https://source.unsplash.com/random");
-  background-size: cover;
-  z-index: -2;
-  border: none;
-`
 
 export default function RowCard ({ number }) {
   const dispatch = useDispatch();
+  const joinClick = (e) => {
+    e.stopPropagation();
+  }
   return (
     <RowCardWrap>
-      <button className="card">
-        <div className='card-info' onClick={()=> {dispatch(openModal())}}>
-          <button className="card-insert-button">
+      <div className="card" onClick={()=> {dispatch(openModal())}}>
+        <div className='card-info'>
+          <button className="card-insert-button" onClick={joinClick}>
             담기
           </button>
           <div className='card-title'>
@@ -105,7 +96,7 @@ export default function RowCard ({ number }) {
             <div className='card-member'>2명</div>
           </div>
         </div>
-      </button>
+      </div>
     </RowCardWrap>
   );
 };

@@ -2,7 +2,7 @@ import { closeModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 import React from "react";
 import styled from 'styled-components';
-import ModalFrame from './ModalContainer'
+import ModalFrame from './ModalContainer';
 
 
 
@@ -127,14 +127,14 @@ const MainPageModal = styled.div`
         top: 30vh;
     };`
 
-const MainPageCardModal = ({ onClose }) => {
+const MainPageCardModal = () => {
     const dispatch = useDispatch();
     return (
-        <ModalFrame onClose={onClose}>
+        <ModalFrame>
             <MainPageModal>
-                <h4 className=" modal-title">카드 제목</h4>                        
+                <h4 className=" modal-title">카드 제목</h4>                      
                 <div className="card-tag">#태그</div>
-                <button type="button" className="userInfo-btn">참석한 유저 이름</button>
+                <button className="userInfo-btn">참석한 유저 정보</button>
                 <button type="button" className="btn-confirm-btn"
                      onClick={()=> {
                      dispatch(closeModal())}}>
