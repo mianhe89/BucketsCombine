@@ -85,7 +85,6 @@ const CardsWrap = styled.div`
 `
 
 export default function CardsSection(){
-
   const [search, setSearch] = useState("");
   
   return(

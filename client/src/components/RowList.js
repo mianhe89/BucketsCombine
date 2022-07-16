@@ -3,6 +3,9 @@ import styled, { createGlobalStyle } from "styled-components";
 import HorizontalScroll from 'react-scroll-horizontal';
 import RowCard from "./RowCard";
 import Loader from "./Loader";
+import { useSelector, useDispatch } from 'react-redux'
+import { setCards }  from '../redux/reducers/CardsReducer'
+import { cardsAction } from '../redux/actions/CardAction'
 
 
 const RowListWrap = styled.div`
@@ -29,14 +32,35 @@ const RowListWrap = styled.div`
   }
 `;
 
-export default function ColumnList () {
+export default function RowList () {
+
+  const cardState = useSelector((state) => state.cards);
+  // const stampedsState = useSelector((state) => state.card);
+  // const bucketState = useSelector((state) => state.cartReducer);
+  // const { items } = cardState;
+  // const { cartItems } = cartState;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(cardsAction.fetchData('', cardsAction.setCards));
+  }, []);
+
+  // const handleClick = (item) => {
+  //   if (!cartItems.map((el) => el.itemId).includes(item.id)) {
+  //     dispatch(addToCart(item.id));
+  //     dispatch(notify(`장바구니에 ${item.name}이(가) 추가되었습니다.`));
+  //   } else {
+  //     dispatch(notify('이미 추가된 상품입니다.'));
+  //   }
+  // };
+
   const test = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']
   const testmap = test.map(e=>{
     return {
       title: 'title'+e,
       tags: [e,e+e,e+e+e],
       writer: 'writer'+e,
-      memberCount: 0,
+      member: ['user1','user2'],
       background: 'card-' + e,
     }
   })
@@ -77,15 +101,23 @@ export default function ColumnList () {
 
   return (
       <RowListWrap >
-        <div id='card-list'>
+        <div id='card-list' onClick={cardsAction.testfunction}>
           <HorizontalScroll
             pageLock={true}
             reverseScroll={true}
             style={{}}
           >
             <div className="dummy"/>
-            {itemLists.map((item, i) => {
-              return <RowCard title={item.title} tags={item.tags} writer={item.writer} memberCount={item.memberCount} background={item.background} key={i} />;
+            {itemLists.map((card, i) => {
+              return <RowCard 
+              key={i}
+              id={i}
+              title={card.title}
+              tags={card.tags}
+              writer={card.writer}
+              member={card.member}
+              background={card.background}
+              />;
             })}
             <div ref={setTarget} className="Target-Element">
               {isLoaded && <Loader />}

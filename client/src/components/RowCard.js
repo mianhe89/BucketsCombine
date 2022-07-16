@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { openModal } from "../redux/reducers/ModalReducer.js";
-import { useDispatch } from "react-redux";
-
+import { useSelector, useDispatch } from 'react-redux'
+import { cardsAction } from '../redux/actions/CardAction'
 
 const RowCardWrap = styled.div`
   .card {
@@ -30,6 +30,19 @@ const RowCardWrap = styled.div`
     font-size: 13px;
     background-color: #FFC700;
     z-index: 10;
+  }
+
+  .card-subtract-button {
+    width: 70px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 130px;
+    border: none;
+    box-shadow: none;
+    font-size: 13px;
+    background-color: #FF5C00;
+    z-index: 10;
+    color: white;
   }
 
   .card-title {
@@ -70,28 +83,40 @@ const RowCardWrap = styled.div`
 `
 
 
-export default function RowCard ({title, tags, writer, memberCount, background}) {
+export default function RowCard ({id, title, tags, writer, member, background}) {
   
   const tagLine = tags.map(tag => {
      return `#${tag}`
   })
+  const {isInBucket, setIsInBucket} = useState(false)
+  const cardID = id
 
   const dispatch = useDispatch();
-  const joinClick = (e) => {
-    e.stopPropagation();
+  
+  const putInBucket = (id) => {
+    // dispatch(cardsAction.addToBucket(id))
+    setIsInBucket(true)
+  }
+  const pullOutBucket = (id) => {
+    // dispatch(cardsAction.addToBucket(id))
+    setIsInBucket(false)
   }
   
   let backgroundImageStyle = {
     backgroundImage: "url(/images/" + background + ".jpg)"
   }
 
+  
+  
+
   return (
     <RowCardWrap>
       <div className='card' style={backgroundImageStyle} onClick={()=> {dispatch(openModal())}}>
         <div className='card-info'>
-          <button className="card-insert-button" onClick={joinClick}>
-            담기
-          </button>
+          {isInBucket ?
+           <button className="card-subtract-button" onClick={pullOutBucket}>빼기</button>
+          : <button className="card-insert-button" onClick={putInBucket}>담기</button>
+          }
           <div className='card-title'>
             {title}
           </div>
@@ -100,7 +125,7 @@ export default function RowCard ({title, tags, writer, memberCount, background})
           </div>
           <div className='card-footer'>
             <div className='card-writer'>{writer}</div>
-            <div className='card-member'>{memberCount}명</div>
+            <div className='card-member'>{member.length}명</div>
           </div>
         </div>
       </div>
