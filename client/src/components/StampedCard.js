@@ -16,6 +16,19 @@ const StampedCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
+    transition: box-shadow 0.2s;
+  }
+
+  .card:hover {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 330px;
+    border-radius: 15px;
+    margin: 10px;
+    background-size: cover;
+    box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3) ;
+    transition: box-shadow 0.2s;
   }
 
   .card-info {

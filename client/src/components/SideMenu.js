@@ -1,6 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from "react-responsive";
 
+const Desktop = ({ children }) => {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+  return isDesktop ? children : null
+}
+
+const Mobile = ({ children }) => {
+  const isMobile = useMediaQuery({ minWidth: 100, maxWidth: 920 })
+  return isMobile ? children : null
+}
 
 const SideMenuWrap = styled.div`
   
@@ -74,19 +84,114 @@ const SideMenuWrap = styled.div`
   }
 `
 
+const SideMenuWrapMobile = styled.div`
+  
+  .sidemenu {
+    position: fixed;
+    height: 120px;
+    width: 100%;
+    background-color: rgb(41, 41, 41);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    z-index: 10;
+  }
+
+  .sidemenu-button-main {
+    position: absolute;
+    left:25vw;
+    border: none;
+    box-shadow: none;
+    font-size: 18px;
+    color: white;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 100;
+  }
+
+  .sidemenu-button-cards {
+    position: absolute;
+    left:45vw;
+    border: none;
+    box-shadow: none;
+    font-size: 18px;
+    color: white;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 100;
+  }
+
+  .sidemenu-button-stamped {
+    position: absolute;
+    left:65vw;
+    border: none;
+    box-shadow: none;
+    font-size: 18px;
+    color: white;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 100;
+  }
+
+  .sidemenu-button:active, .sidemenu-button:focus {
+    border: none;
+    box-shadow: none;
+  }
+
+  .logo {
+    display: flex;
+    height: 60px;
+    align-self: start;
+    margin-top: 10px;
+    margin-left: 30px;
+  }
+
+  .logo-part {
+    display: flex;
+    left: 42px;
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 70px;
+    transition: all 300ms;
+  }
+`
+
 export default function SideMenu(){
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+
   function changeLogoPosition (scrollPosition, vh) {
     const logo = document.querySelector('.logo-part')
-  
-    if(scrollPosition === 0){
-      logo.style.top = '70px'
-    } else if(scrollPosition <= 0.75 * vh ){
-      logo.style.top = 'calc(30vh - 35px)'
-    } else if(scrollPosition <= 1.75 * vh){
-      logo.style.top = 'calc(50vh - 35px)'
+    if(isDesktop) {
+      logo.style.left = '43px'
+      logo.style.transition = 'all 300ms'
+
+      if(scrollPosition === 0){
+        logo.style.top = '70px'
+      } else if(scrollPosition <= 0.75 * vh ){
+        logo.style.top = 'calc(30vh - 35px)'
+      } else if(scrollPosition <= 1.75 * vh){
+        logo.style.top = 'calc(50vh - 35px)'
+      } else {
+        logo.style.top = 'calc(70vh - 35px)'
+      }
     } else {
-      logo.style.top = 'calc(70vh - 35px)'
+      logo.style.top = '70px'
+      logo.style.transition = 'all 150ms'
+
+      if(scrollPosition === 0){
+        logo.style.left = '43px'
+      } else if(scrollPosition <= 0.75 * vh ){
+        logo.style.left = 'calc(25vw + 10px)'
+      } else if(scrollPosition <= 1.75 * vh){
+        logo.style.left = 'calc(45vw + 15px)'
+      } else {
+        logo.style.left = 'calc(65vw + 27px)'
+      }
     }
+    
   }
   
   window.addEventListener("scroll" || "resize", (event) => {
@@ -113,6 +218,8 @@ export default function SideMenu(){
   }
 
   return(
+    <div>
+    <Desktop>
     <SideMenuWrap>
       <div className='sidemenu'>
       <img className='logo-part' src='images/logo-part.png' />
@@ -122,5 +229,18 @@ export default function SideMenu(){
           <button className='sidemenu-button-stamped'onClick={moveToStmaped}>Stamped</button>
       </div>
     </SideMenuWrap>
+    </Desktop>
+    <Mobile>
+    <SideMenuWrapMobile>
+      <div className='sidemenu'>
+        <img className='logo-part' src='images/logo-part.png' />
+          <img className='logo' src='images/logo-small.png' />
+          <button className='sidemenu-button-main' onClick={moveToMain}>Main</button>
+          <button className='sidemenu-button-cards' onClick={moveToCards}>Cards</button>
+          <button className='sidemenu-button-stamped'onClick={moveToStmaped}>Stamped</button>
+      </div>
+    </SideMenuWrapMobile>
+    </Mobile>
+    </div>
   )
 }

@@ -6,6 +6,17 @@ import Loader from "./Loader";
 import { useSelector, useDispatch } from 'react-redux'
 import { setCards }  from '../redux/reducers/CardsReducer'
 import { cardsAction } from '../redux/actions/CardAction'
+import { useMediaQuery } from "react-responsive";
+
+const Desktop = ({ children }) => {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+  return isDesktop ? children : null
+}
+
+const Mobile = ({ children }) => {
+  const isMobile = useMediaQuery({ minWidth: 100, maxWidth: 920 })
+  return isMobile ? children : null
+}
 
 
 const RowListWrap = styled.div`
@@ -14,7 +25,7 @@ const RowListWrap = styled.div`
     height: 400px;
     margin-left: 30px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
   }
 
   .dummy {
@@ -29,6 +40,81 @@ const RowListWrap = styled.div`
     justify-content: center;
     text-align: center;
     align-items: center;
+  }
+
+  .search-bar {
+    align-self: center;
+    position: relative;
+    top: 50px;
+    margin-left: 0px;
+    width: 40vw;
+    min-width: 500px;
+    z-index: 2;
+  }
+
+  .search-input {
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .search-icon {
+    position : absolute;
+    width: 17px;
+    top: 10px;
+    right: 0px;
+    margin: 0px;
+  }
+`;
+
+const RowListWrapMobile = styled.div`
+  #card-list {
+    width: calc(100vw - 100px);
+    height: 400px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dummy {
+    width: 200px;
+    height: 100px;
+  }
+
+  .Target-Element {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+  }
+
+  .search-bar {
+    align-self: center;
+    position: relative;
+    top: 50px;
+    margin-left: 0px;
+    width: 400px;
+    z-index: 1;
+  }
+
+  .search-input {
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .search-icon {
+    position : absolute;
+    width: 17px;
+    top: 10px;
+    right: 0px;
+    margin: 0px;
   }
 `;
 
@@ -99,7 +185,11 @@ export default function RowList () {
     return () => observer && observer.disconnect();
   }, [target  ]);
 
+  const [search, setSearch] = useState("");
+
   return (
+    <div>
+      <Desktop>
       <RowListWrap >
         <div id='card-list' onClick={cardsAction.testfunction}>
           <HorizontalScroll
@@ -123,7 +213,50 @@ export default function RowList () {
               {isLoaded && <Loader />}
             </div>
           </HorizontalScroll>
+          <div className='search-bar'>
+          <input className='search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
+            console.log(search)
+            setSearch(e.target.value)
+          }}/>
+          <img className='search-icon' src='/images/search-icon.png' />
+        </div>
         </div>
       </RowListWrap>
+      </Desktop>
+      <Mobile>
+      <RowListWrapMobile >
+        <div id='card-list' onClick={cardsAction.testfunction}>
+          <HorizontalScroll
+            pageLock={true}
+            reverseScroll={true}
+            style={{}}
+          >
+            <div className="dummy"/>
+            {itemLists.map((card, i) => {
+              return <RowCard 
+              key={i}
+              id={i}
+              title={card.title}
+              tags={card.tags}
+              writer={card.writer}
+              member={card.member}
+              background={card.background}
+              />;
+            })}
+            <div ref={setTarget} className="Target-Element">
+              {isLoaded && <Loader />}
+            </div>
+          </HorizontalScroll>
+          <div className='search-bar'>
+          <input className='search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
+            console.log(search)
+            setSearch(e.target.value)
+          }}/>
+          <img className='search-icon' src='/images/search-icon.png' />
+        </div>
+        </div>
+      </RowListWrapMobile>
+      </Mobile>
+      </div>
   );
 };

@@ -37,30 +37,6 @@ const CardsWrap = styled.div`
     margin: 20px;
   }
 
-  .search-bar {
-    align-self: center;
-    position: relative;
-    margin-left: 0px;
-    width: 40vw;
-    top: 50px;
-  }
-
-  .search-input {
-    width: 100%;
-    border: 1px solid #bbb;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-
-  .search-icon {
-    position : absolute;
-    width: 17px;
-    top: 10px;
-    right: 0px;
-    margin: 0px;
-  }
-
   .fog-left {
     z-index: 1;
     position: absolute;
@@ -99,10 +75,6 @@ const StampedModal = () => {
         <div className='fog-left'/>
         <div className='fog-right'/>
           <StampedList/>
-        </div>
-        <div className='search-bar'>
-          <input className='search-input' type="text" placeholder="제목 및 태그" />
-          <img className='search-icon' src='/images/search-icon.png' />
         </div>
       </div>
     </CardsWrap>

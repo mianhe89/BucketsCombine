@@ -14,7 +14,22 @@ const RowCardWrap = styled.div`
     margin: 10px;
     background-size: cover;
     z-index: 1;
+    transition: box-shadow 0.2s;
   }
+
+  .card:hover {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 330px;
+    border-radius: 15px;
+    margin: 10px;
+    background-size: cover;
+    z-index: 1;
+    box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3) ;
+    transition: box-shadow 0.2s;
+  }
+
   .card-info {
     margin: 10px;
     color: white;
@@ -30,6 +45,20 @@ const RowCardWrap = styled.div`
     font-size: 13px;
     background-color: #FFC700;
     z-index: 10;
+    transition: box-shadow 0.2s;
+  }
+
+  .card-insert-button:hover {
+    width: 70px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 130px;
+    border: none;
+    font-size: 13px;
+    background-color: #FFC700;
+    z-index: 10;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3) ;
+    transition: box-shadow 0.2s;
   }
 
   .card-subtract-button {
@@ -42,7 +71,23 @@ const RowCardWrap = styled.div`
     font-size: 13px;
     background-color: #FF5C00;
     z-index: 10;
+    font-weight: bold;
     color: white;
+    transition: box-shadow 0.2s;
+  }
+  .card-subtract-button:hover {
+    width: 70px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 130px;
+    border: none;
+    font-size: 13px;
+    background-color: #FF5C00;
+    z-index: 10;
+    font-weight: bold;
+    color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3) ;
+    transition: box-shadow 0.2s;
   }
 
   .card-title {
@@ -88,17 +133,19 @@ export default function RowCard ({id, title, tags, writer, member, background}) 
   const tagLine = tags.map(tag => {
      return `#${tag}`
   })
-  const {isInBucket, setIsInBucket} = useState(false)
+  const [isInBucket, setIsInBucket] = useState(false)
   const cardID = id
 
   const dispatch = useDispatch();
   
   const putInBucket = (id) => {
     // dispatch(cardsAction.addToBucket(id))
+    id.stopPropagation();
     setIsInBucket(true)
   }
   const pullOutBucket = (id) => {
     // dispatch(cardsAction.addToBucket(id))
+    id.stopPropagation();
     setIsInBucket(false)
   }
   

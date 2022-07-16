@@ -10,6 +10,8 @@ const StampedListWrap = styled.div`
     width: calc(100vw - 240px);
     height: 400px;
     margin-left: 30px;
+    display: flex;
+    flex-direction: column;
   }
 
   .dummy {
@@ -24,6 +26,30 @@ const StampedListWrap = styled.div`
     justify-content: center;
     text-align: center;
     align-items: center;
+  }
+
+  .search-bar {
+    align-self: center;
+    position: relative;
+    margin-left: 0px;
+    width: 40vw;
+    top: 50px;
+  }
+
+  .search-input {
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .search-icon {
+    position : absolute;
+    width: 17px;
+    top: 10px;
+    right: 0px;
+    margin: 0px;
   }
 `;
 
@@ -87,6 +113,10 @@ export default function ColumnList () {
           {isLoaded && <Loader />}
         </div>
         </HorizontalScroll>
+        <div className='search-bar'>
+          <input className='search-input' type="text" placeholder="제목 및 태그" />
+          <img className='search-icon' src='/images/search-icon.png' />
+        </div>
         </div>
       </StampedListWrap>
     </>
