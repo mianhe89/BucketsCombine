@@ -17,6 +17,7 @@ const CardsWrap = styled.div`
   .cards-ment {
     margin-left: 60px;
     height: 150px;
+    z-index: 2;
   }
 
   .ment-title {
@@ -38,8 +39,10 @@ const CardsWrap = styled.div`
   .search-bar {
     align-self: center;
     position: relative;
+    top: 50px;
     margin-left: 0px;
     width: 40vw;
+    z-index: 2;
   }
 
   .search-input {
@@ -57,6 +60,28 @@ const CardsWrap = styled.div`
     right: 0px;
     margin: 0px;
   }
+
+  .fog-left {
+    z-index: 3;
+    position: absolute;
+    left: 170px;
+    width: 20px;
+    height: 100%;
+    background: -webkit-linear-gradient(left,white 0%,rgba(0,0,0,0) 100%);
+  }
+
+  .fog-right {
+    z-index: 3;
+    position: absolute;
+    right: 70px;
+    width: 40px;
+    height: 100%;
+    background: -webkit-linear-gradient(right,white 0%,rgba(0,0,0,0) 100%);
+  }
+
+  .list {
+    z-index: 2;
+  }
 `
 
 export default function CardsSection(){
@@ -72,7 +97,9 @@ export default function CardsSection(){
           </div>
         </div>
         <div id='cards-list-row'>
-          <RowList/>
+          <div className='fog-left'/>
+          <div className='fog-right'/>
+          <div className='list'><RowList/></div>
         </div>
         <div className='search-bar'>
           <input className='search-input' type="text" placeholder="제목 및 태그" />

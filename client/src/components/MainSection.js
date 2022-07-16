@@ -5,18 +5,21 @@ const MainSectionWrap = styled.div`
   #main-section {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: calc(100vw - 120px);
     height: 100vh;
     min-height: 700px;
     margin-left: 120px;
   }
+
   .main-ment {
+    z-index: 3;
     width: 500px;
     margin-left: 60px;
     position: absolute;
-    top: 150px;
+    top: 20%;
+    left: 120px;
   }
   .ment-title {
     font-size: 48px;
@@ -27,17 +30,18 @@ const MainSectionWrap = styled.div`
     font-size: 16px;
     line-height: 32px;
   }
-  .videos {
+  .videos-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    position: absolute;
     width: 50%;
+    max-width: 1000px;
     height: 70%;
-    margin-left: calc(53vw - 120px);
+    max-height: 1400px;
+    margin-right: 1%;
   }
   .video {
-    display: flex;
-    /* width: 30%; */
     width: 30%;
     height: 100%;
     margin: 10px;
@@ -45,15 +49,37 @@ const MainSectionWrap = styled.div`
     border-radius: 1.8vh;
   }
 
-  .video-blur {
+  .videos-blur-container {
     display: flex;
-    /* width: 30%; */
-    width: 25%;
-    height: 70vh;
+    flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+    width: 50%;
+    max-width: 1000px;
+    height: 70%;
+    max-height: 1400px;
+    margin-right: 1%;
+    top: 88%;
+  }
+
+  .video-blur {
+    width: 30%;
+    height: 100%;
     margin: 10px;
     object-fit: cover;
-    border-radius: 1.8vh;
-    filter: blur(10px)
+    border-radius: 0 0 1.8vh 1.8vh;
+    filter: blur(10px);
+    transform: scaleY(-1);
+  }
+
+  .fog {
+    z-index: 1;
+    position: absolute;
+    top:100%;
+    width: 60%;
+    height: 70%;
+    max-height: 1400px;
+    background: -webkit-linear-gradient(bottom,white 80%,rgba(0,0,0,0) 100%);
   }
 `
 
@@ -75,7 +101,8 @@ export default function MainSection(){
         여러분의 성취 Buckets Combine이 도와드립니다.
         </div>
       </div>
-      <div className='videos'>
+      <div className='fog'/>
+      <div className='videos-container'>
         <video className="video" autoPlay muted loop>
           <source src="/videos/A.mp4" type="video/mp4"></source>
         </video>
@@ -83,6 +110,17 @@ export default function MainSection(){
           <source src="/videos/B.mp4" type="video/mp4"></source>
         </video>
         <video className="video" autoPlay muted loop>
+          <source src="/videos/C.mp4" type="video/mp4"></source>
+        </video>
+      </div>
+      <div className='videos-blur-container'>
+        <video className="video-blur" autoPlay muted loop>
+          <source src="/videos/A.mp4" type="video/mp4"></source>
+        </video>
+        <video className="video-blur" autoPlay muted loop>
+          <source src="/videos/B.mp4" type="video/mp4"></source>
+        </video>
+        <video className="video-blur" autoPlay muted loop>
           <source src="/videos/C.mp4" type="video/mp4"></source>
         </video>
       </div>
