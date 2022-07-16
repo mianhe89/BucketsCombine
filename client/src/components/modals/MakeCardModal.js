@@ -2,23 +2,10 @@ import { closeModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 import React from "react";
 import styled from 'styled-components';
+import ModalFrame from './ModalContainer'
 import { Tag } from '../Tag'
 
 const MakeModalContainer = styled.aside`
-    width: 70vw;
-    height: 60vh;
-    display: flex;
-    border-radius: 20px 20px 20px 20px;
-    border: solid rgb(170, 170, 170);
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 20vw;
-    top: 20vh;
-    box-shadow: 3px 3px 5px 5px rgb(194, 194, 194, 0.3);
-    z-index: 2;
-
-    .modal {
     position: relative;
     width: 70vw;
     height: 60vh;
@@ -28,7 +15,6 @@ const MakeModalContainer = styled.aside`
     -moz-animation: fadein 0.5s;
     -webkit-animation: fadein 0.5s;
     -o-animation: fadein 0.5s;
-    }
     @keyframes fadein {
         from {
             opacity: 0;
@@ -145,27 +131,24 @@ const MakeModalContainer = styled.aside`
 const MakeModal = () => {
     const dispatch = useDispatch();
     return (
-        <MakeModalContainer>
-            <div className="modalContainer">
-                <div className="modal">
-                    <div className="modal blur">
-                        <h4 className="modal title">제목을 입력하세요</h4>
-                        <Tag></Tag>
-                        <button type="button" className="btn-confirm-btn"onClick={()=> {
-                            dispatch(closeModal());
-                        }}>카드 만들기</button>
-                        <button type="button" className="btn-cancel-btn" onClick={()=>{
-                            dispatch(closeModal());
-                            }}>
-                            X
-                        </button>
-                        <img className="card-img" src="images/card-image.jpg" alt="card" />
-                        <div className="card-info">설명</div>
-                        <div className="card-info-text">설명을 입력하세요</div>
-                    </div>
+        <ModalFrame>
+            <MakeModalContainer>
+                <div className="modal blur">
+                    <h4 className="modal title">제목을 입력하세요</h4>
+                    <button type="button" className="btn-confirm-btn"onClick={()=> {
+                        dispatch(closeModal());
+                    }}>카드 만들기</button>
+                    <button type="button" className="btn-cancel-btn" onClick={()=>{
+                        dispatch(closeModal());
+                        }}>
+                        X
+                    </button>
+                    <img className="card-img" src="images/card-image.jpg" alt="card" />
+                    <div className="card-info">설명</div>
+                    <div className="card-info-text">설명을 입력하세요</div>
                 </div>
-            </div>
-        </MakeModalContainer>
+            </MakeModalContainer>
+        </ModalFrame>
     );
 }
 

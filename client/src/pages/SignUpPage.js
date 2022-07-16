@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components'
 
 const SignUpPageWrap = styled.div`
@@ -83,89 +85,115 @@ const SignUpPageWrap = styled.div`
     border-radius: 5px;
   }
   #login_email {
-    flex: flex;
-    padding: 5px 40px;
+	width: 246px;
+	height: 32px;
+    padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
+	border: none;
   }
   #login_password {
-    flex: flex;
-    padding: 5px 40px;
+	width: 246px;
+	height: 32px;
+    padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
-  }
-  #login_button {
-    padding: 5px 40px;
-    margin: 10px
+	border: none;
   }
   .signup_container {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
   }
   #signup_repassword {
-    flex: flex;
-    padding: 5px 40px;
+	width: 246px;
+	height: 32px;
+    padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
+	border: none;
   }
   #login_nickname {
-    flex: flex;
+	width: 246px;
+	height: 32px;
+    padding: 2px 40px;
+    margin: 10px;
+    border-radius: 5px;
+	border: none;
+  }
+  .btn_old {
     padding: 5px 40px;
     margin: 10px;
+    width: 330px;
+	height: 40px;
     border-radius: 5px;
   }
   .btn_gender {
-    display: flex;
     padding: 5px 40px;
     margin: 10px;
-    width: 15.5%;
+    width: 330px;
+	height: 40px;
     border-radius: 5px;
   }
-  .btn_old {
-    display: flex;
-    padding: 5px 40px;
-    margin: 10px;
-    width: 15.5%;
-    border-radius: 5px;
-  }
+
   .signup_signup {
-    flex: flex;
     border: none;
     font-size: 16;
-    height: 25px;
+    height: 40px;
     justify-content: center;
     margin: 4px;
-    width: 15.5%;
+    width: 330px;
     background: #FFC700;
     border-radius: 5px;
   }
-  #singup_email {
-    flex: flex;
-    padding: 5px 40px;
-    margin: 10px;
-    border-radius: 5px;
-    background-color: gray;
-  }
 `
 export default function SignUpPage() {
-	
+  const [userinfo, setuserinfo] = useState({
+    login_email: '',
+    login_password: '',
+    login_username: '',
+  });
+  const [errorMessage, setErrorMessage] = useState('');
+  const history = useHistory();
+  const handleInputValue = (key) => (e) => {
+    setuserinfo({ ...userinfo, [key]: e.target.value });
+  };
+  const handleSignup = () => {
+    // TODO : 서버에 회원가입을 요청 후 로그인 페이지로 이동하세요.
+    //        회원가입 성공 후 로그인 페이지 이동은 다음 코드를 이용하세요.
+    //
+    //        history.push("/");
+    //
+    // TODO : 모든 항목을 입력하지 않았을 경우 에러를 표시해야 합니다.
+    if(userinfo.longin_email === '' || userinfo.login_password === '' || userinfo.login_nickname === '' || userinfo.login_repassword){
+      setErrorMessage('모든 항목은 필수입니다')
+    } else {
+      axios.post('ec2-52-79-247-243.ap-northeast-2.compute.amazonaws.com', {
+        login_email: userinfo.login_email,
+        login_password: userinfo.login_password,
+        signup_repassword: userinfo.signup_repassword,
+        login_nickname: userinfo.login_nickname
+      })
+      .then(res => {
+        history.push("/")
+      })
+    }
+  };
 	return (
 		<SignUpPageWrap>
 		<div className="body">
 <div className="signin_section">
 <button id="login_cancle">취소</button>
 	<div className="signin_container">
-	<img src="bucketscombine_logo.png" alt="no" width="100px" height="100px"></img>
+	<img src="images/bucketscombine_logo.png" alt="no" width="120px" height="120px"></img>
 		<div className="login_title">BucketsCombine</div>
-	   	<input id="login_email" type="text" placeholder="이메일" />
-		  <input id="login_password" type="password" placeholder="비밀번호" />
-		  <input id="signup_repassword" type="password" placeholder="비밀번호 재확인" />
+	   	<input id="login_email" type="email" placeholder="이메일" onChange={handleInputValue("login_email")} />
+		  <input id="login_password" type="password" placeholder="비밀번호" onChange={handleInputValue("login_password")} />
+		  <input id="signup_repassword" type="password" placeholder="비밀번호 재확인" onChange={handleInputValue("login_password")}/>
 		  <input id="login_nickname" type="text" placeholder="닉네임" />
 		<select className="btn_old" required>
-			<option value="" >연령대</option>
+			<option value="">연령대</option>
 			<option value="teenages">10대</option>
 			<option value="twenty">20대</option>
 			<option value="thirty">30대</option>
@@ -180,7 +208,10 @@ export default function SignUpPage() {
 			<option value="twenty">여자</option>
 			<option value="thirty">선택안함</option>
 		</select>
-		<button className="signup_signup">가입하기</button>
+		<button className="signup_signup"
+            type='submit'
+            onClick={handleSignup}>가입하기</button>
+          <div className='alert-box'>{errorMessage}</div>
 	</div>
 </div>
 </div>

@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { changeMode } from "../redux/reducers/ModalReducer";
 import { openModal } from "../redux/reducers/ModalReducer";
+import MainPageCardModal from "./modals/MainPageCardModal";
+import MainPageStampedCardModal from './modals/MainPageStampedModal'
 
 const StampedCardWrap = styled.div`
 
@@ -12,24 +15,12 @@ const StampedCardWrap = styled.div`
     height: 330px;
     border-radius: 15px;
     margin: 10px;
-    background-image: url("https://source.unsplash.com/random");
     background-size: cover;
   }
 
   .card-info {
     margin: 10px;
     color: white;
-  }
-
-  .card-insert-button {
-    width: 70px;
-    height: 30px;
-    border-radius: 10px;
-    margin-left: 130px;
-    border: none;
-    box-shadow: none;
-    font-size: 13px;
-    background-color: #FFC700;
   }
 
   .card-title {
@@ -66,17 +57,19 @@ const StampedCardWrap = styled.div`
     font-display: flex;
     text-align: center;
     line-height: 60px;
-  }
-  
-`;
+  }`
 
-export default function StampedCard ({ number }) {
-  const dispatch = useDispatch();
+
+export default function StampedCard ({ background }) {
+ const dispatch = useDispatch();
+
+ let backgroundImageStyle = {
+   backgroundImage: "url(https://source.unsplash.com/random)"
+ }
+
   return (
     <StampedCardWrap>
-      <div className='card'>
-        <button className='card-info' onClick={() => {dispatch(openModal())}}>
-        </button>
+      <div className='card' style={backgroundImageStyle} onClick={() => {dispatch(openModal())}}>
       </div>
     </StampedCardWrap>
   );

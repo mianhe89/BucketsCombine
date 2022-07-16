@@ -19,33 +19,66 @@ import MainPageCardModal from "./components/modals/MainPageCardModal";
 import axios from "axios";
 import "./App.css";
 
-const App = () => {
-  const { isOpen } = useSelector((store) => store.modal);
+export default function Application() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userinfo, setUserinfo] = useState(null);
+  const history = useHistory();
+  const isAuthenticated = () => {
+    // TODO: 이제 인증은 성공했습니다. 사용자 정보를 호출하고, 이에 성공하면 로그인 상태를 바꿉시다.
+    axios
+      .get("https://www.bucketscombine/OAuthSignUpPage")
+      .then((res) => {
+        setUserinfo({
+          email: res.data.userInfo,
+          username: res.data.username,
+        });
+      })
+      .then((res) => {
+        setIsLogin(true);
+      });
+  };
+  const handleResponseSuccess = () => {
+    isAuthenticated();
+  };
+  const App = () => {
+    const { isOpen } = useSelector((store) => store.modal);
+  };
+  const handleLogout = () => {
+    axios.post("https://localhost:3000/signout").then((res) => {
+      setUserinfo(null);
+      setIsLogin(false);
+      history.push("/");
+    });
+  };
+  useEffect(() => {
+    isAuthenticated();
+  }, []);
 
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            {isOpen && <MainPageCardModal />}
+            {<MainPageCardModal />}
             <MainPage />
           </Route>
           <Route exact path="/signin">
-            <SignInPage />
-          </Route>
-          <Route exact path="/signup">
-            <OAuthSignUpPage />
+            <SignInPage
+              isLogin={isLogin}
+              handleResponseSuccess={handleResponseSuccess}
+            />
           </Route>
           <Route exact path="/signupoauth">
-            <SignUpPage />
+            <OAuthSignUpPage />
+          </Route>
+          <Route exact path="/signup">
+            <SignUpPage isLogin={isLogin} />
           </Route>
           <Route exact path="/mypage">
-            <MyPage />
+            <MyPage userinfo={userinfo} handleLogout={handleLogout} />
           </Route>
         </Switch>
       </BrowserRouter>
     </div>
   );
-};
-
-export default App;
+}

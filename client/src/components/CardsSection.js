@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import RowList from './RowList'
 
@@ -85,6 +85,9 @@ const CardsWrap = styled.div`
 `
 
 export default function CardsSection(){
+
+  const [search, setSearch] = useState("");
+  
   return(
     <CardsWrap>
       <div id='card-section'>
@@ -102,7 +105,10 @@ export default function CardsSection(){
           <div className='list'><RowList/></div>
         </div>
         <div className='search-bar'>
-          <input className='search-input' type="text" placeholder="제목 및 태그" />
+          <input className='search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
+            console.log(search)
+            setSearch(e.target.value)
+          }}/>
           <img className='search-icon' src='/images/search-icon.png' />
         </div>
       </div>

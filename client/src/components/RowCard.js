@@ -3,21 +3,18 @@ import styled from "styled-components";
 import { openModal } from "../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 
+
 const RowCardWrap = styled.div`
   .card {
-    position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 220px;
-  height: 330px;
-  border-radius: 15px;
-  margin: 10px;
-  background-image: url("https://source.unsplash.com/random");
-  background-size: cover;
-  z-index: 1;
-  border: none;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 330px;
+    border-radius: 15px;
+    margin: 10px;
+    background-size: cover;
+    z-index: 1;
   }
-  
   .card-info {
     margin: 10px;
     color: white;
@@ -32,7 +29,7 @@ const RowCardWrap = styled.div`
     box-shadow: none;
     font-size: 13px;
     background-color: #FFC700;
-    z-index: 2;
+    z-index: 10;
   }
 
   .card-title {
@@ -70,42 +67,43 @@ const RowCardWrap = styled.div`
     text-align: center;
     line-height: 60px;
   }
-`;
-
-const StyledButton = styled.button`
-  display: flex;
-  flex-direction: column;
-  width: 220px;
-  height: 330px;
-  border-radius: 15px;
-  margin: 10px;
-  background-image: url("https://source.unsplash.com/random");
-  background-size: cover;
-  z-index: -2;
-  border: none;
 `
 
-export default function RowCard ({ number }) {
+
+export default function RowCard ({title, tags, writer, memberCount, background}) {
+  
+  const tagLine = tags.map(tag => {
+     return `#${tag}`
+  })
+
   const dispatch = useDispatch();
+  const joinClick = (e) => {
+    e.stopPropagation();
+  }
+  
+  let backgroundImageStyle = {
+    backgroundImage: "url(/images/" + background + ".jpg)"
+  }
+
   return (
     <RowCardWrap>
-      <button className="card">
-        <div className='card-info' onClick={()=> {dispatch(openModal())}}>
-          <button className="card-insert-button">
+      <div className='card' style={backgroundImageStyle} onClick={()=> {dispatch(openModal())}}>
+        <div className='card-info'>
+          <button className="card-insert-button" onClick={joinClick}>
             담기
           </button>
           <div className='card-title'>
-            제목
+            {title}
           </div>
           <div className='card-tegs'>
-            태그
+            {tagLine.join(' ')}
           </div>
           <div className='card-footer'>
-            <div className='card-writer'>글쓴이</div>
-            <div className='card-member'>2명</div>
+            <div className='card-writer'>{writer}</div>
+            <div className='card-member'>{memberCount}명</div>
           </div>
         </div>
-      </button>
+      </div>
     </RowCardWrap>
   );
 };

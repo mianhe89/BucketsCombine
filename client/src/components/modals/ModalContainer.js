@@ -17,7 +17,7 @@ const Overlay = styled.aside`
     left: 20vw;
     top: 20vh;
     box-shadow: 3px 3px 5px 5px rgb(194, 194, 194, 0.3);
-    z-index: 1;
+    z-index: 10;
     .blur {
         border-radius: 20px 20px 20px 20px;
         backdrop-filter: blur(10px);
@@ -33,7 +33,7 @@ const CloseButton = styled.button `
     top: 1vh;
     right: 1vw;
     background: none;
-    z-index: 2;
+    z-index: 15;
 `
 const ModalWrap = styled.div`
     margin: 0px;
