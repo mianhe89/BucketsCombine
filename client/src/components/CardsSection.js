@@ -68,10 +68,8 @@ const CardsWrap = styled.div`
   .list {
     z-index: 2;
   }
-`
 
-const CardsWrapMobile = styled.div`
-  #card-section {
+  #card-section-mobile {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -82,29 +80,24 @@ const CardsWrapMobile = styled.div`
     margin-top: 120px;
   }
 
-  .cards-ment {
+  .cards-ment-mobile {
     margin-left: 35px;
     height: 150px;
     z-index: 2;
   }
 
-  .ment-title {
+  .ment-title-mobile {
     font-size: 40px;
     margin-bottom: 20px;
   }
 
-  .ment-description {
-    font-size: 16px;
-    line-height: 32px;
-  }
-
-  #cards-list-row {
+  #cards-list-row-mobile {
     display: flex;
     height: 40%;
     margin: 20px;
   }
 
-  .fog-left {
+  .fog-left-mobile {
     z-index: 3;
     position: absolute;
     left: 50px;
@@ -113,7 +106,7 @@ const CardsWrapMobile = styled.div`
     background: -webkit-linear-gradient(left,white 0%,rgba(0,0,0,0) 100%);
   }
 
-  .fog-right {
+  .fog-right-mobile {
     z-index: 3;
     position: absolute;
     right: 50px;
@@ -121,55 +114,29 @@ const CardsWrapMobile = styled.div`
     height: 350px;
     background: -webkit-linear-gradient(right,white 0%,rgba(0,0,0,0) 100%);
   }
-
-  .list {
-    z-index: 2;
-  }
 `
 
 export default function CardsSection(){
+  const isDesktop = useMediaQuery({ minWidth: 921 })
   const [search, setSearch] = useState("");
   
   return(
-    <div>
-      <Desktop>
     <CardsWrap>
-      <div id='card-section'>
-        <div className="cards-ment">
-          <div className='ment-title'>
+      <div id={isDesktop?'card-section': 'card-section-mobile'}>
+        <div className={isDesktop? "cards-ment" : "cards-ment-mobile"}>
+          <div className={isDesktop? 'ment-title' : 'ment-title-mobile'}>
             카드는 여러분의 목표입니다.
           </div>
           <div className='ment-description'>
             카드를 공유하고 카드를 나의 버킷리스트에 담아 함께 달성해보세요.
           </div>
         </div>
-        <div id='cards-list-row'>
-          <div className='fog-left'/>
-          <div className='fog-right'/>
+        <div id={isDesktop? 'cards-list-row' : 'cards-list-row-mobile'}>
+          <div className={isDesktop? 'fog-left' : 'fog-left-mobile'}/>
+          <div className={isDesktop? 'fog-right' : 'fog-right-mobile'}/>
           <div className='list'><RowList/></div>
         </div>
       </div>
     </CardsWrap>
-    </Desktop>
-    <Mobile>
-    <CardsWrapMobile>
-      <div id='card-section'>
-        <div className="cards-ment">
-          <div className='ment-title'>
-            카드는 여러분의 목표입니다.
-          </div>
-          <div className='ment-description'>
-            카드를 공유하고 카드를 나의 버킷리스트에 담아 함께 달성해보세요.
-          </div>
-        </div>
-        <div id='cards-list-row'>
-          <div className='fog-left'/>
-          <div className='fog-right'/>
-          <div className='list'><RowList/></div>
-        </div>
-      </div>
-    </CardsWrapMobile>
-    </Mobile>
-    </div>
   )
 }

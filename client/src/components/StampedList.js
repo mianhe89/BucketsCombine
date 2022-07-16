@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import HorizontalScroll from 'react-scroll-horizontal';
 import StampedCard from "./StampedCard";
 import Loader from "./Loader";
+import { useMediaQuery } from "react-responsive";
 
 
 const StampedListWrap = styled.div`
@@ -51,9 +52,28 @@ const StampedListWrap = styled.div`
     right: 0px;
     margin: 0px;
   }
+
+  #card-list-mobile {
+    width: calc(100vw - 100px);
+    height: 400px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search-bar-mobile {
+    align-self: center;
+    position: relative;
+    top: 50px;
+    margin-left: 0px;
+    width: 400px;
+    z-index: 1;
+  }
 `;
 
 export default function ColumnList () {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+
   const test = ['1','2','3','4','5','6','7','8','9','10']
   const testmap = test.map(e=>{
     return {
@@ -99,7 +119,7 @@ export default function ColumnList () {
   return (
     <>
       <StampedListWrap >
-      <div id='card-list'>
+      <div id={isDesktop ? 'card-list' : 'card-list-mobile'} >
         <HorizontalScroll
           pageLock={true}
           reverseScroll={true}
@@ -113,7 +133,7 @@ export default function ColumnList () {
           {isLoaded && <Loader />}
         </div>
         </HorizontalScroll>
-        <div className='search-bar'>
+        <div className={isDesktop? 'search-bar' : 'search-bar-mobile'}>
           <input className='search-input' type="text" placeholder="제목 및 태그" />
           <img className='search-icon' src='/images/search-icon.png' />
         </div>

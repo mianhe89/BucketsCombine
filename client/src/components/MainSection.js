@@ -2,15 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
 
-const Desktop = ({ children }) => {
-  const isDesktop = useMediaQuery({ minWidth: 921 })
-  return isDesktop ? children : null
-}
-
-const Mobile = ({ children }) => {
-  const isMobile = useMediaQuery({ minWidth: 100, maxWidth: 920 })
-  return isMobile ? children : null
-}
 
 const MainSectionWrap = styled.div`
   #main-section {
@@ -101,10 +92,8 @@ const MainSectionWrap = styled.div`
     border-radius: 1.8vh;
     background-color: white;
   }
-`
 
-const MainSectionWrapMobile = styled.div`
-  #main-section {
+  #main-section-mobile {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -115,7 +104,7 @@ const MainSectionWrapMobile = styled.div`
     margin-top: 120px;
   }
 
-  .main-ment {
+  .main-ment-mobile {
     z-index: 3;
     width: 500px;
     margin-left: 60px;
@@ -123,16 +112,16 @@ const MainSectionWrapMobile = styled.div`
     top: 20%;
     left: 0px;
   }
-  .ment-title {
+  .ment-title-mobile {
     font-size: 40px;
     margin-bottom: 20px;
   }
 
-  .ment-description {
+  .ment-description-mobile {
     font-size: 16px;
     line-height: 32px;
   }
-  .videos-container {
+  .videos-container-mobile {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -140,7 +129,7 @@ const MainSectionWrapMobile = styled.div`
     height: 30%;
     margin-bottom: 50px;
   }
-  .video {
+  .video-mobile {
     width: 30%;
     height: 100%;
     margin: 10px;
@@ -150,17 +139,17 @@ const MainSectionWrapMobile = styled.div`
 `
 
 export default function MainSection(){
+  const isDesktop = useMediaQuery({ minWidth: 921 })
   const isExtend = useMediaQuery({ minWidth: 1301})
+
   return(
-    <div>
-    <Desktop>
     <MainSectionWrap>
-    <div id='main-section'>
-      <div className="main-ment">
-        <div className='ment-title'>
+    <div id={isDesktop?'main-section' : 'main-section-mobile'}>
+      <div className={isDesktop?"main-ment" : "main-ment-mobile" }>
+        <div className={isDesktop? 'ment-title' : 'ment-title-mobile' }>
           사람들과 함께<br />버킷리스트를 이뤄보세요
         </div>
-        <div className='ment-description'>
+        <div className={isDesktop ? 'ment-description' : 'ment-description-mobile'}>
         누구나 오랫동안 이루고 싶은 일들이나<br />
         시간이 지나가기 전에 해보고 싶은 일들을<br />
         마음에 품고 있습니다.<br />
@@ -171,10 +160,12 @@ export default function MainSection(){
         </div>
       </div>
       <div className='fog'/>
-      <div className='videos-container'>
+      <div className={isDesktop?'videos-container' : 'videos-container-mobile'}>
         {isExtend? <video className="video" autoPlay muted loop>
           <source src="/videos/A.mp4" type="video/mp4"></source>
-        </video> : <div className='whiteboard'/>}
+        </video> : isDesktop? <div className='whiteboard'/> :  <video className="video" autoPlay muted loop>
+          <source src="/videos/A.mp4" type="video/mp4"></source>
+        </video>}
         <video className="video" autoPlay muted loop>
           <source src="/videos/B.mp4" type="video/mp4"></source>
         </video>
@@ -182,6 +173,7 @@ export default function MainSection(){
           <source src="/videos/C.mp4" type="video/mp4"></source>
         </video>
       </div>
+      {isDesktop?
       <div className='videos-blur-container'>
       {isExtend? <video className="video-blur" autoPlay muted loop>
           <source src="/videos/A.mp4" type="video/mp4"></source>
@@ -193,40 +185,9 @@ export default function MainSection(){
           <source src="/videos/C.mp4" type="video/mp4"></source>
         </video>
       </div>
+      : <div />
+      }
     </div>
     </MainSectionWrap>
-    </Desktop>
-    <Mobile>
-    <MainSectionWrapMobile>
-    <div id='main-section'>
-      <div className="main-ment">
-        <div className='ment-title'>
-          사람들과 함께<br />버킷리스트를 이뤄보세요
-        </div>
-        <div className='ment-description'>
-        누구나 오랫동안 이루고 싶은 일들이나<br />
-        시간이 지나가기 전에 해보고 싶은 일들을<br />
-        마음에 품고 있습니다.<br />
-        혼자서도 해낼 수 있지만<br />
-        여럿과 함께한다면 성취하기 더 쉬울 것입니다.<br />
-        또한 다른 사람에게서 새로운 목표를 얻을 수도 있겠죠.<br />
-        여러분의 성취 Buckets Combine이 도와드립니다.
-        </div>
-      </div>
-      <div className='videos-container'>
-        <video className="video" autoPlay muted loop>
-          <source src="/videos/A.mp4" type="video/mp4"></source>
-        </video>
-        <video className="video" autoPlay muted loop>
-          <source src="/videos/B.mp4" type="video/mp4"></source>
-        </video>
-        <video className="video" autoPlay muted loop>
-          <source src="/videos/C.mp4" type="video/mp4"></source>
-        </video>
-      </div>
-    </div>
-    </MainSectionWrapMobile>
-    </Mobile>
-    </div>
   )
 }
