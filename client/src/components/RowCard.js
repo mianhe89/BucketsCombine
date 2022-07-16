@@ -1,19 +1,23 @@
 import React from "react";
 import styled from "styled-components";
+import { openModal } from "../redux/reducers/ModalReducer.js";
+import { useDispatch } from "react-redux";
+
 
 const RowCardWrap = styled.div`
-
   .card {
-    display: flex;
-    flex-direction: column;
-    width: 220px;
-    height: 330px;
-    border-radius: 15px;
-    margin: 10px;
-    background-image: url("https://source.unsplash.com/random");
-    background-size: cover;
+    position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  height: 330px;
+  border-radius: 15px;
+  margin: 10px;
+  background-image: url("https://source.unsplash.com/random");
+  background-size: cover;
+  z-index: 1;
+  border: none;
   }
-
   .card-info {
     margin: 10px;
     color: white;
@@ -28,6 +32,7 @@ const RowCardWrap = styled.div`
     box-shadow: none;
     font-size: 13px;
     background-color: #FFC700;
+    z-index: 10;
   }
 
   .card-title {
@@ -65,15 +70,21 @@ const RowCardWrap = styled.div`
     text-align: center;
     line-height: 60px;
   }
-  
 `;
 
+
 export default function RowCard ({ number }) {
+  const dispatch = useDispatch();
+  const joinClick = (e) => {
+    e.stopPropagation();
+  }
   return (
     <RowCardWrap>
-      <div className='card'>
+      <div className="card" onClick={()=> {dispatch(openModal())}}>
         <div className='card-info'>
-          <button className='card-insert-button'>담기</button>
+          <button className="card-insert-button" onClick={joinClick}>
+            담기
+          </button>
           <div className='card-title'>
             제목
           </div>

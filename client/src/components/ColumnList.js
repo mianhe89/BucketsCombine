@@ -2,6 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import ColumnCard from "./ColumnCard";
 import Loader from "./Loader";
+import { changeMode, openModal } from "../redux/reducers/ModalReducer.js";
+import { useDispatch, useSelector } from "react-redux";
+import MakeModal from "./modals/MakeCardModal";
+ 
 
 
 const ColumnListWrap = styled.div`
@@ -78,17 +82,19 @@ export default function ColumnList () {
     return () => observer && observer.disconnect();
   }, [target  ]);
 
-  return (
-    <>
-      <ColumnListWrap>
-      <button className='create-card-button'>+</button>
-        {itemLists.map((v, i) => {
-          return <ColumnCard number={i + 1} key={i} />;
-        })}
-        <div ref={setTarget} className="Target-Element">
-          {isLoaded && <Loader />}
-        </div>
-      </ColumnListWrap>
-    </>
-  );
-};
+  
+  const modal = useSelector((state) => state.modal.show);
+    return (
+      <>
+        <ColumnListWrap>
+        <button className='create-card-button' onClick={()=> {openModal()}}>+</button>
+          {itemLists.map((v, i) => {
+            return <ColumnCard number={i + 1} key={i} />;
+          })}
+          <div ref={setTarget} className="Target-Element">
+            {isLoaded && <Loader />}
+          </div>
+        </ColumnListWrap>
+      </>
+    );
+  };

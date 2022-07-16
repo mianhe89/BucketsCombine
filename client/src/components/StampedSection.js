@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import StampedList from './StampedList'
+import { useSelector } from 'react-redux';
 
 const CardsWrap = styled.div`
   #card-section {
@@ -79,7 +80,10 @@ const CardsWrap = styled.div`
   }
 `
 
-export default function StampedSection(){
+
+
+const StampedModal = () => {
+  const  amount  = useSelector((state) => state.card);
   return(
     <CardsWrap>
       <div id='card-section'>
@@ -104,3 +108,4 @@ export default function StampedSection(){
     </CardsWrap>
   )
 }
+export default StampedModal;
