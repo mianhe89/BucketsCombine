@@ -15,7 +15,6 @@ const StampedCardWrap = styled.div`
     height: 330px;
     border-radius: 15px;
     margin: 10px;
-    background-image: url("https://source.unsplash.com/random");
     background-size: cover;
   }
 
@@ -60,14 +59,17 @@ const StampedCardWrap = styled.div`
     line-height: 60px;
   }`
 
-export default function StampedCard ({ number }) {
-  
-  const dispatch = useDispatch();
+
+export default function StampedCard ({ background }) {
+ const dispatch = useDispatch();
+
+ let backgroundImageStyle = {
+   backgroundImage: "url(https://source.unsplash.com/random)"
+ }
+
   return (
     <StampedCardWrap>
-      <div className='card' onClick={() => {dispatch(openModal())}}>
-        <div className='card-info'>
-        </div>
+      <div className='card' style={backgroundImageStyle} onClick={() => {dispatch(openModal())}}>
       </div>
     </StampedCardWrap>
   );
