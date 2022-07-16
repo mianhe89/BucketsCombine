@@ -30,7 +30,7 @@ const RowListWrap = styled.div`
 `;
 
 export default function ColumnList () {
-  const test = ['1','2','3','4','5','6','7','8','9','10']
+  const test = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']
   const testmap = test.map(e=>{
     return {
       title: 'title'+e,
@@ -40,6 +40,7 @@ export default function ColumnList () {
       background: 'card-' + e,
     }
   })
+  
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [itemLists, setItemLists] = useState(testmap);

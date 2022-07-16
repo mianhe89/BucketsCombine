@@ -28,9 +28,16 @@ const StampedListWrap = styled.div`
 `;
 
 export default function ColumnList () {
+  const test = ['1','2','3','4','5','6','7','8','9','10']
+  const testmap = test.map(e=>{
+    return {
+      background: '',
+    }
+  })
+
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [itemLists, setItemLists] = useState(testmap);
 
   useEffect(() => {
     console.log(itemLists);
@@ -39,7 +46,7 @@ export default function ColumnList () {
   const getMoreItem = async () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    let Items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let Items = testmap;
     setItemLists((itemLists) => itemLists.concat(Items));
     setIsLoaded(false);
   };
@@ -73,8 +80,8 @@ export default function ColumnList () {
           style={{}}
         >
           <div className="dummy"/>
-        {itemLists.map((v, i) => {
-          return <StampedCard number={i + 1} key={i} />;
+        {itemLists.map((item, i) => {
+          return <StampedCard background={item.background} key={i}/>;
         })}
         <div ref={setTarget} className="Target-Element">
           {isLoaded && <Loader />}

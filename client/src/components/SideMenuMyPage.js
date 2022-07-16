@@ -82,13 +82,24 @@ export default function SideMenu(){
     changeLogoPosition(scrollPosition, vh)
   });
 
+  const moveToBucket = () => {
+    let vh = window.innerHeight
+    //window.scrollTo(0, 2 * vh);
+    window.scrollTo({ left: 0, top: 1, behavior: "smooth" });
+  }
+  const moveToProfile = () => {
+    let vh = window.innerHeight
+    //window.scrollTo(0, 2 * vh);
+    window.scrollTo({ left: 0, top: vh, behavior: "smooth" });
+  }
+
   return(
     <SideMenuWrap>
       <div className='sidemenu'>
       <img className='logo-part2' src='images/logo-part.png' />
           <img className='logo' src='images/logo-small.png' />
-          <button className='sidemenu-button-mybucket'>My Bucket</button>
-          <button className='sidemenu-button-myprofile'>My Profile</button>
+          <button className='sidemenu-button-mybucket' onClick={moveToBucket}>My Bucket</button>
+          <button className='sidemenu-button-myprofile' onClick={moveToProfile}>My Profile</button>
       </div>
     </SideMenuWrap>
   )

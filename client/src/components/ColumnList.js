@@ -43,9 +43,20 @@ const ColumnListWrap = styled.div`
 `;
 
 export default function ColumnList () {
+  const test = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']
+  const testmap = test.map(e=>{
+    return {
+      title: 'title'+e,
+      tags: [e,e+e,e+e+e],
+      writer: 'writer'+e,
+      memberCount: 0,
+      background: 'card-' + e,
+    }
+  })
+
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState([1]);
+  const [itemLists, setItemLists] = useState(testmap);
 
   useEffect(() => {
     console.log(itemLists);
@@ -54,7 +65,7 @@ export default function ColumnList () {
   const getMoreItem = async () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    let Items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let Items = testmap;
     setItemLists((itemLists) => itemLists.concat(Items));
     setIsLoaded(false);
   };
@@ -82,8 +93,8 @@ export default function ColumnList () {
     <>
       <ColumnListWrap>
       <button className='create-card-button'>+</button>
-        {itemLists.map((v, i) => {
-          return <ColumnCard number={i + 1} key={i} />;
+        {itemLists.map((item, i) => {
+          return <ColumnCard title={item.title} tags={item.tags} writer={item.writer} memberCount={item.memberCount} background={item.background} key={i} />;
         })}
         <div ref={setTarget} className="Target-Element">
           {isLoaded && <Loader />}

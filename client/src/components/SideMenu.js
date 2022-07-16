@@ -95,14 +95,31 @@ export default function SideMenu(){
     changeLogoPosition(scrollPosition, vh)
   });
 
+  const moveToMain = () => {
+    let vh = window.innerHeight
+    //window.scrollTo(0, 2 * vh);
+    window.scrollTo({ left: 0, top: 1, behavior: "smooth" });
+  }
+  const moveToCards = () => {
+    let vh = window.innerHeight
+    //window.scrollTo(0, 2 * vh);
+    window.scrollTo({ left: 0, top: vh, behavior: "smooth" });
+  }
+
+  const moveToStmaped = () => {
+    let vh = window.innerHeight
+    //window.scrollTo(0, 2 * vh);
+    window.scrollTo({ left: 0, top: 2 * vh, behavior: "smooth" });
+  }
+
   return(
     <SideMenuWrap>
       <div className='sidemenu'>
       <img className='logo-part' src='images/logo-part.png' />
           <img className='logo' src='images/logo-small.png' />
-          <button className='sidemenu-button-main'>Main</button>
-          <button className='sidemenu-button-cards'>Cards</button>
-          <button className='sidemenu-button-stamped'>Stamped</button>
+          <button className='sidemenu-button-main' onClick={moveToMain}>Main</button>
+          <button className='sidemenu-button-cards' onClick={moveToCards}>Cards</button>
+          <button className='sidemenu-button-stamped'onClick={moveToStmaped}>Stamped</button>
       </div>
     </SideMenuWrap>
   )
