@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { openModal } from "../redux/reducers/ModalReducer.js";
-import { useSelector, useDispatch } from 'react-redux'
-import { cardsAction } from '../redux/actions/CardAction'
+import { useSelector, useDispatch } from "react-redux";
+import { cardsAction } from "../redux/actions/CardAction";
 
 const RowCardWrap = styled.div`
   .card {
@@ -26,7 +26,7 @@ const RowCardWrap = styled.div`
     margin: 10px;
     background-size: cover;
     z-index: 1;
-    box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3) ;
+    box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.2s;
   }
 
@@ -43,7 +43,7 @@ const RowCardWrap = styled.div`
     border: none;
     box-shadow: none;
     font-size: 13px;
-    background-color: #FFC700;
+    background-color: #ffc700;
     z-index: 10;
     transition: box-shadow 0.2s;
   }
@@ -55,9 +55,9 @@ const RowCardWrap = styled.div`
     margin-left: 130px;
     border: none;
     font-size: 13px;
-    background-color: #FFC700;
+    background-color: #ffc700;
     z-index: 10;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3) ;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.2s;
   }
 
@@ -69,7 +69,7 @@ const RowCardWrap = styled.div`
     border: none;
     box-shadow: none;
     font-size: 13px;
-    background-color: #FF5C00;
+    background-color: #ff5c00;
     z-index: 10;
     font-weight: bold;
     color: white;
@@ -82,11 +82,11 @@ const RowCardWrap = styled.div`
     margin-left: 130px;
     border: none;
     font-size: 13px;
-    background-color: #FF5C00;
+    background-color: #ff5c00;
     z-index: 10;
     font-weight: bold;
     color: white;
-    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3) ;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.2s;
   }
 
@@ -125,57 +125,66 @@ const RowCardWrap = styled.div`
     text-align: center;
     line-height: 60px;
   }
-`
+`;
 
-
-export default function RowCard ({id, title, tags, writer, member, background}) {
-  
-  const tagLine = tags.map(tag => {
-     return `#${tag}`
-  })
-  const [isInBucket, setIsInBucket] = useState(false)
-  const cardID = id
+export default function RowCard({
+  id,
+  title,
+  tags,
+  writer,
+  member,
+  background,
+}) {
+  const tagLine = tags.map((tag) => {
+    return `#${tag}`;
+  });
+  const [isInBucket, setIsInBucket] = useState(false);
+  const cardID = id;
 
   const dispatch = useDispatch();
-  
+
   const putInBucket = (id) => {
     // dispatch(cardsAction.addToBucket(id))
     id.stopPropagation();
-    setIsInBucket(true)
-  }
+    setIsInBucket(true);
+  };
   const pullOutBucket = (id) => {
     // dispatch(cardsAction.addToBucket(id))
     id.stopPropagation();
-    setIsInBucket(false)
-  }
-  
-  let backgroundImageStyle = {
-    backgroundImage: "url(/images/" + background + ".jpg)"
-  }
+    setIsInBucket(false);
+  };
 
-  
-  
+  let backgroundImageStyle = {
+    backgroundImage: "url(/images/" + background + ".jpg)",
+  };
 
   return (
     <RowCardWrap>
-      <div className='card' style={backgroundImageStyle} onClick={()=> {dispatch(openModal())}}>
-        <div className='card-info'>
-          {isInBucket ?
-           <button className="card-subtract-button" onClick={pullOutBucket}>빼기</button>
-          : <button className="card-insert-button" onClick={putInBucket}>담기</button>
-          }
-          <div className='card-title'>
-            {title}
-          </div>
-          <div className='card-tegs'>
-            {tagLine.join(' ')}
-          </div>
-          <div className='card-footer'>
-            <div className='card-writer'>{writer}</div>
-            <div className='card-member'>{member.length}명</div>
+      <div
+        className="card"
+        style={backgroundImageStyle}
+        onClick={() => {
+          dispatch(openModal());
+        }}
+      >
+        <div className="card-info">
+          {isInBucket ? (
+            <button className="card-subtract-button" onClick={pullOutBucket}>
+              빼기
+            </button>
+          ) : (
+            <button className="card-insert-button" onClick={putInBucket}>
+              담기
+            </button>
+          )}
+          <div className="card-title">{title}</div>
+          <div className="card-tegs">{tagLine.join(" ")}</div>
+          <div className="card-footer">
+            <div className="card-writer">{writer}</div>
+            <div className="card-member">{member.length}명</div>
           </div>
         </div>
       </div>
     </RowCardWrap>
   );
-};
+}

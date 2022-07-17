@@ -11,10 +11,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
+
   cards.init(
     {
       title: DataTypes.STRING,
-      cardstext: DataTypes.TEXT,
+      cardtext: DataTypes.TEXT,
       background: DataTypes.STRING,
       member: DataTypes.BOOLEAN,
       completed: DataTypes.BOOLEAN,
