@@ -12,6 +12,6 @@ router.get("/", function (req, res) {
 
 router.use("/users", usersRouter);
 router.use("/mypages", mypagesRouter);
-router.use("/MainPage", mainRouter);
+router.use("/mainPage", mainRouter);
 //
 module.exports = router;

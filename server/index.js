@@ -25,7 +25,6 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use("/", indexRouter);
 
 app.use("/", indexRoute);
 
