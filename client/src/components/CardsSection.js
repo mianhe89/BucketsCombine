@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import RowList from './RowList'
+import { useMediaQuery } from "react-responsive";
+
+const Desktop = ({ children }) => {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+  return isDesktop ? children : null
+}
+
+const Mobile = ({ children }) => {
+  const isMobile = useMediaQuery({ minWidth: 100, maxWidth: 920 })
+  return isMobile ? children : null
+}
 
 const CardsWrap = styled.div`
   #card-section {
@@ -36,31 +47,6 @@ const CardsWrap = styled.div`
     margin: 20px;
   }
 
-  .search-bar {
-    align-self: center;
-    position: relative;
-    top: 50px;
-    margin-left: 0px;
-    width: 40vw;
-    z-index: 2;
-  }
-
-  .search-input {
-    width: 100%;
-    border: 1px solid #bbb;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 14px;
-  }
-
-  .search-icon {
-    position : absolute;
-    width: 17px;
-    top: 10px;
-    right: 0px;
-    margin: 0px;
-  }
-
   .fog-left {
     z-index: 3;
     position: absolute;
@@ -82,28 +68,73 @@ const CardsWrap = styled.div`
   .list {
     z-index: 2;
   }
+
+  #card-section-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100vw;
+    height: calc(100vh - 120px);
+    min-height: 700px;
+    margin-top: 120px;
+  }
+
+  .cards-ment-mobile {
+    margin-left: 35px;
+    height: 150px;
+    z-index: 2;
+  }
+
+  .ment-title-mobile {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  #cards-list-row-mobile {
+    display: flex;
+    height: 40%;
+    margin: 20px;
+  }
+
+  .fog-left-mobile {
+    z-index: 3;
+    position: absolute;
+    left: 50px;
+    width: 20px;
+    height: 350px;
+    background: -webkit-linear-gradient(left,white 0%,rgba(0,0,0,0) 100%);
+  }
+
+  .fog-right-mobile {
+    z-index: 3;
+    position: absolute;
+    right: 50px;
+    width: 40px;
+    height: 350px;
+    background: -webkit-linear-gradient(right,white 0%,rgba(0,0,0,0) 100%);
+  }
 `
 
 export default function CardsSection(){
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+  const [search, setSearch] = useState("");
+  
   return(
     <CardsWrap>
-      <div id='card-section'>
-        <div className="cards-ment">
-          <div className='ment-title'>
+      <div id={isDesktop?'card-section': 'card-section-mobile'}>
+        <div className={isDesktop? "cards-ment" : "cards-ment-mobile"}>
+          <div className={isDesktop? 'ment-title' : 'ment-title-mobile'}>
             카드는 여러분의 목표입니다.
           </div>
           <div className='ment-description'>
             카드를 공유하고 카드를 나의 버킷리스트에 담아 함께 달성해보세요.
           </div>
         </div>
-        <div id='cards-list-row'>
-          <div className='fog-left'/>
-          <div className='fog-right'/>
+        <div id={isDesktop? 'cards-list-row' : 'cards-list-row-mobile'}>
+          <div className={isDesktop? 'fog-left' : 'fog-left-mobile'}/>
+          <div className={isDesktop? 'fog-right' : 'fog-right-mobile'}/>
           <div className='list'><RowList/></div>
-        </div>
-        <div className='search-bar'>
-          <input className='search-input' type="text" placeholder="제목 및 태그" />
-          <img className='search-icon' src='/images/search-icon.png' />
         </div>
       </div>
     </CardsWrap>

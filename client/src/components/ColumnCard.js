@@ -68,20 +68,28 @@ const ColumnCardWrap = styled.div`
 
 `;
 
-export default function ColumnCard ({ number }) {
+export default function ColumnCard ({title, tags, writer, memberCount, background}) {
+  const tagLine = tags.map(tag => {
+    return `#${tag}`
+ })
+ 
+ let backgroundImageStyle = {
+   backgroundImage: "url(/images/" + background + ".jpg)"
+ }
+  
   return (
     <ColumnCardWrap>
       <div className="ColumnCard">
         <div className='ColumnCard-progress'/>
-        <div className='ColumnCard-info'>
+        <div className='ColumnCard-info'style={backgroundImageStyle} >
         <div className='ColumnCard-info-text'>
-            <div className="ColumnCard-title">제목</div>
-            <div className="ColumnCard-tag">태그</div>
+            <div className="ColumnCard-title">{title}</div>
+            <div className="ColumnCard-tag">{tagLine.join(' ')}</div>
         </div>
-        <div className="ColumnCard-writer">작성자작성자</div>
+        <div className="ColumnCard-writer">{writer}</div>
         <img className='ColumnCard-share-icon' src='/images/share-icon.png' />
         <div className='ColumnCard-member-count'>
-            4명
+        {memberCount}명
         </div>
         </div>
       </div>

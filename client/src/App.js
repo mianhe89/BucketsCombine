@@ -33,10 +33,10 @@ const App = () => {
           <Route exact path="/signin">
             <SignInPage />
           </Route>
-          <Route exact path="/signup">
+          <Route exact path="/signupoauth">
             <OAuthSignUpPage />
           </Route>
-          <Route exact path="/signupoauth">
+          <Route exact path="/signup">
             <SignUpPage />
           </Route>
           <Route exact path="/mypage">

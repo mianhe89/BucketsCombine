@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import HorizontalScroll from 'react-scroll-horizontal';
 import StampedCard from "./StampedCard";
 import Loader from "./Loader";
+import { useMediaQuery } from "react-responsive";
 
 
 const StampedListWrap = styled.div`
@@ -10,6 +11,8 @@ const StampedListWrap = styled.div`
     width: calc(100vw - 240px);
     height: 400px;
     margin-left: 30px;
+    display: flex;
+    flex-direction: column;
   }
 
   .dummy {
@@ -25,12 +28,62 @@ const StampedListWrap = styled.div`
     text-align: center;
     align-items: center;
   }
+
+  .search-bar {
+    align-self: center;
+    position: relative;
+    margin-left: 0px;
+    width: 40vw;
+    top: 50px;
+  }
+
+  .search-input {
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .search-icon {
+    position : absolute;
+    width: 17px;
+    top: 10px;
+    right: 0px;
+    margin: 0px;
+  }
+
+  #card-list-mobile {
+    width: calc(100vw - 100px);
+    height: 400px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search-bar-mobile {
+    align-self: center;
+    position: relative;
+    top: 20px;
+    margin-left: 0px;
+    width: 400px;
+    z-index: 1;
+  }
 `;
 
 export default function ColumnList () {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+
+  const test = ['1','2','3','4','5','6','7','8','9','10']
+  const testmap = test.map(e=>{
+    return {
+      background: '',
+    }
+  })
+
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [itemLists, setItemLists] = useState(testmap);
 
   useEffect(() => {
     console.log(itemLists);
@@ -39,7 +92,7 @@ export default function ColumnList () {
   const getMoreItem = async () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    let Items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    let Items = testmap;
     setItemLists((itemLists) => itemLists.concat(Items));
     setIsLoaded(false);
   };
@@ -66,20 +119,24 @@ export default function ColumnList () {
   return (
     <>
       <StampedListWrap >
-      <div id='card-list'>
+      <div id={isDesktop ? 'card-list' : 'card-list-mobile'} >
         <HorizontalScroll
           pageLock={true}
           reverseScroll={true}
           style={{}}
         >
           <div className="dummy"/>
-        {itemLists.map((v, i) => {
-          return <StampedCard number={i + 1} key={i} />;
+        {itemLists.map((item, i) => {
+          return <StampedCard background={item.background} key={i}/>;
         })}
         <div ref={setTarget} className="Target-Element">
           {isLoaded && <Loader />}
         </div>
         </HorizontalScroll>
+        <div className={isDesktop? 'search-bar' : 'search-bar-mobile'}>
+          <input className='search-input' type="text" placeholder="제목 및 태그" />
+          <img className='search-icon' src='/images/search-icon.png' />
+        </div>
         </div>
       </StampedListWrap>
     </>
