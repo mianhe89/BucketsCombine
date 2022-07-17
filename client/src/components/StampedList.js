@@ -86,7 +86,6 @@ export default function ColumnList () {
   const [itemLists, setItemLists] = useState(testmap);
 
   useEffect(() => {
-    console.log(itemLists);
   }, [itemLists]);
 
   const getMoreItem = async () => {

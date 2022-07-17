@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { openModal } from "../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
-import { cardsAction } from "../redux/actions/CardAction";
 
 const RowCardWrap = styled.div`
   .card {
@@ -130,14 +129,12 @@ const RowCardWrap = styled.div`
 export default function RowCard({
   id,
   title,
-  tags,
-  writer,
-  member,
   background,
 }) {
-  const tagLine = tags.map((tag) => {
-    return `#${tag}`;
-  });
+  // const tagLine = tags.map((tag) => {
+  //   return `#${tag}`;
+  // });
+  // {tagLine.join(" ")}
   const [isInBucket, setIsInBucket] = useState(false);
   const cardID = id;
 
@@ -155,9 +152,8 @@ export default function RowCard({
   };
 
   let backgroundImageStyle = {
-    backgroundImage: "url(/images/" + background + ".jpg)",
+    backgroundImage: "url(/images/card-" + background + ".jpg)",
   };
-
   return (
     <RowCardWrap>
       <div
@@ -178,10 +174,10 @@ export default function RowCard({
             </button>
           )}
           <div className="card-title">{title}</div>
-          <div className="card-tegs">{tagLine.join(" ")}</div>
+          <div className="card-tegs">#태그 #태그</div>
           <div className="card-footer">
-            <div className="card-writer">{writer}</div>
-            <div className="card-member">{member.length}명</div>
+            <div className="card-writer">글쓴이</div>
+            <div className="card-member">0명</div>
           </div>
         </div>
       </div>
