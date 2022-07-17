@@ -6,7 +6,7 @@ module.exports = {
       {
         title: "리그오브레전드 챌린저 찍기",
         cardtext: "챌린저 서포터나 정글 구합니다",
-        background: "server/src/backimg.jpeg",
+        background: "1",
         member: "1",
         completed: "1",
         share: "1",
@@ -18,7 +18,7 @@ module.exports = {
       {
         title: "광산가서 보석 채광하기",
         cardtext: "능률 좋고 빠릿빠릿 일머리 좋으신분 같이해요",
-        background: "server/src/backimg.jpeg",
+        background: "2",
         member: "1",
         completed: "1",
         share: "1",
@@ -30,7 +30,7 @@ module.exports = {
         title: "번지점프 하기",
         cardtext:
           "인간이 가장 공포를 느낀다는 11m에서 뛰어내릴 예정입니다. 장소는 논산에서 뵙겠습니다.",
-        background: "server/src/backimg.jpeg",
+        background: "3",
         member: "1",
         completed: "1",
         share: "1",
@@ -41,7 +41,7 @@ module.exports = {
       {
         title: "모히또 가서 몰디브 한잔",
         cardtext: "어이 검사양반",
-        background: "server/src/backimg.jpeg",
+        background: "4",
         member: "1",
         completed: "1",
         share: "1",
@@ -53,7 +53,7 @@ module.exports = {
         title: "향고래 보러가기",
         cardtext:
           "기러기 스위스 별똥별 인도인 역삼역 우영우 거꾸로 읽어도 우영우.",
-        background: "server/src/backimg.jpeg",
+        background: "5",
         member: "1",
         completed: "1",
         share: "1",
