@@ -93,14 +93,15 @@ export default function ColumnList () {
     return () => observer && observer.disconnect();
   }, [target  ]);
 
+  const dispatch = useDispatch();
   return (
     <>
       <ColumnListWrap>
-      <button className='create-card-button'>+</button>
+      <button className='create-card-button' onClick={() => {dispatch(openModal())}}>+</button>
         {itemLists.map((item, i) => {
           return <ColumnCard title={item.title} tags={item.tags} writer={item.writer} memberCount={item.memberCount} background={item.background} key={i} />;
         })}
-        <div ref={setTarget} className="Target-Element">
+        <div ref={setTarget} className="Target-Element" >
           {isLoaded && <Loader />}
         </div>
       </ColumnListWrap>

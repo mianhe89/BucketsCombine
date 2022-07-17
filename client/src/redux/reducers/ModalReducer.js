@@ -17,7 +17,8 @@ const modalSlice = createSlice({
         },
         changeMode: (state, action) => {
             state.mode = action.payload;
-        }
+        },
+        
     }
 });
 

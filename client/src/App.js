@@ -11,6 +11,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import MainPageCardModal from './components/modals/MainPageCardModal'
 import axios from 'axios';
 import './App.css';
+import MakeCardModal from './components/modals/MakeCardModal';
+import MainPageStampedCardModal from './components/modals/MainPageStampedModal';
+import MyCardModal from './components/modals/MyCardModal'
+import MyPageStampedCard from './components/modals/MyPageStampedCard'
+import ConfirmPasswordModal from './components/modals/ConfirmPasswordModal'
+import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
+import WithdrawalCardModal from './components/modals/WithdrawalModal';
 
 const App = () => {
   const { isOpen } = useSelector((store) => store.modal);
@@ -20,7 +27,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path='/'>
-            {isOpen && <MainPageCardModal />}
+          {isOpen && <MainPageStampedCardModal/>}
             <MainPage />
           </Route>
           <Route exact path='/signin'>
@@ -33,7 +40,7 @@ const App = () => {
             <SignUpPage />
           </Route>
           <Route exact path='/mypage'>
-
+            {isOpen && <WithdrawalCardModal/>}
             <MyPage />
           </Route>
         </Switch>

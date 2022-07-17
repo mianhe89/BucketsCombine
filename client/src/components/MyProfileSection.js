@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../redux/reducers/ModalReducer';
 import styled from 'styled-components'
 
 const MyProfileWrap = styled.div`
@@ -154,6 +156,7 @@ const MyProfileWrap = styled.div`
 `
 
 export default function MyProfileSection() {
+  const dispatch = useDispatch();
   return (
     <MyProfileWrap>
       <div id='myprofile-section'>
@@ -183,11 +186,11 @@ export default function MyProfileSection() {
           </div>
           <textarea className="profile-introducing" placeholder="소개글을 작성해주세요"/>
           <div className="change-buttons">
-            <button className="change-password-button">비밀번호 변경</button>
+            <button className="change-password-button" onClick={() => {dispatch(openModal())}} >비밀번호 변경</button>
             <button className="change-profile-button">변경</button>
           </div>
         </div>
-        <button className="withdrawal-button">회원탈퇴</button>
+        <button className="withdrawal-button" onClick={() => {dispatch(openModal())}}>회원탈퇴</button>
       </div>
     </MyProfileWrap>
   )

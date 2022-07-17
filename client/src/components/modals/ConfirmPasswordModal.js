@@ -1,11 +1,10 @@
 import { closeModal } from "../../redux/reducers/ModalReducer";
 import { useDispatch } from "react-redux";
 import ModalPortal from "./ModalPortal";
-import React, { useRef } from "react";
-import useOutSideClick from "../hook/UseOutSideClick.js";
+import React from "react";
 import styled from "styled-components";
 
-const WithdrawalModal = styled.div`
+const ConfirmPasswordModal = styled.div`
     width: 30vw;
     height: 60vh;
     display: flex;
@@ -17,7 +16,7 @@ const WithdrawalModal = styled.div`
     left: 40vw;
     top: 20vh;
     z-index: 10;
-    .withdrawalCard{
+    .confirmPasswordCard{
         position: relative;
         width: 30vw;
         height: 60vh;
@@ -83,28 +82,11 @@ const WithdrawalModal = styled.div`
         top: 7vh;
     }
 
-    .withdrawal-message{
-        position: absolute;
-        width: 20vw;
-        left: 6vw;
-        top: 25vh;
-    }
-
-    .cancel-btn{
+    .confirm-btn{
         position: absolute;
         background-color: rgb(255, 190, 0);
         border: none;
         border-radius: 5px 5px 5px 5px;
-        width: 20vw;
-        height: 7vh;
-        left: 5vw;
-        top: 35vh;
-    }
-
-    .withdrawal-btn{
-        position: absolute;
-        background-color: white;
-        border: none;
         width: 20vw;
         height: 7vh;
         left: 5vw;
@@ -119,41 +101,25 @@ const WithdrawalModal = styled.div`
         top: 30vh;
     }
 
-    .logo_img{
-        position: absolute;
-        width: 10vw;
-        height: 15vh;
-        left: 10vw;
-        top: 7vh;
-    }
 `
 
-const WithdrawalCardModal = () => {
+const ConfirmPasswordCardModal = () => {
     const dispatch = useDispatch();
-    const modalRef = useRef(null);
-    const handleClose = () => {
-        dispatch(closeModal())
-    };
-    useOutSideClick(modalRef, handleClose);
+    
     return (
         <ModalPortal>
-            <WithdrawalModal ref={modalRef}>
-                <div className="withdrawalCard">
+            <ConfirmPasswordModal>
+                <div className="confirmPasswordCard">
                 <button className="close-btn" onClick={() => {
                     dispatch(closeModal())
                 }}>X</button>                  
                 <img className="logo_img" src="images/bucketscombine_logo.png" alt="card" />
-                <div className="withdrawal-message">만드신 카드는 모두 삭제됩니다. 정말 탈퇴하시겠습니까?ㅜㅜ</div>
-                <button className="cancel-btn" onClick={() => {
-                    dispatch(closeModal())
-                }}>돌아가기</button>
-                <button className="withdrawal-btn" onClick={() => {
-                    dispatch(closeModal())
-                }}>회원탈퇴</button>
+                <input className="usingPassword" type='password' placeholder='사용중인 비밀번호'></input>
+                <button className="confirm-btn">확인</button>
                 </div>
-            </WithdrawalModal>
+            </ConfirmPasswordModal>
         </ModalPortal>
     );
 }
 
-export default WithdrawalCardModal;
+export default ConfirmPasswordCardModal;

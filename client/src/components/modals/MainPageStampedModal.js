@@ -1,73 +1,96 @@
 import { closeModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
-import React from "react";
+import React, { useRef } from "react";
+import useOutSideClick from "../hook/UseOutSideClick.js";
 import styled from 'styled-components';
-import ModalFrame from './ModalContainer';
+import ModalPortal from "./ModalPortal.js";
 
 
 
 const MainPageStampedModal = styled.div`
-    position: relative;
     width: 70vw;
     height: 60vh;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: solid rgb(170, 170, 170);
+    display: flex;
     border-radius: 20px 20px 20px 20px;
-    animation: fadein 0.5s;
-    -moz-animation: fadein 0.5s;
-    -webkit-animation: fadein 0.5s;
-    -o-animation: fadein 0.5s;
-    
-    @keyframes fadein {
-        from {
-            opacity: 0;
+    border: solid rgb(170, 170, 170);
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 20vw;
+    top: 20vh;
+    box-shadow: 3px 3px 5px 5px rgb(194, 194, 194, 0.3);
+    z-index: 10;
+    .mainPageStampedCard{
+        position: relative;
+        width: 70vw;
+        height: 60vh;
+        background-color: rgba(255, 255, 255, 0.8);
+        border: solid rgb(170, 170, 170);
+        border-radius: 20px 20px 20px 20px;
+        animation: fadein 0.5s;
+        -moz-animation: fadein 0.5s;
+        -webkit-animation: fadein 0.5s;
+        -o-animation: fadein 0.5s;
+        
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
-        to {
-            opacity: 1;
+        @-moz-keyframes fadein { 
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
-    }
-    @-moz-keyframes fadein { 
-        from {
-            opacity: 0;
+        @-webkit-keyframes fadein { 
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
-        to {
-            opacity: 1;
+        @-o-keyframes fadein {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
-    }
-    @-webkit-keyframes fadein { 
-        from {
-            opacity: 0;
+        .modal-title {
+            margin: 15px;
+            position: absolute;
+            font-size: calc(10px + 2vmin);
+            top: 1vh;
+            left: 1vw;
         }
-        to {
-            opacity: 1;
-        }
-    }
-    @-o-keyframes fadein {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
-    .modal-title {
-        margin: 15px;
-        position: absolute;
-        font-size: calc(10px + 2vmin);
-        top: 1vh;
-        left: 1vw;
     }
 
-    .userInfo-btn {
-        position: absolute;
-        justify-content: center;
-        background: none;
-        border: none;
-        width: 10vw;
-        left: 1vw;
-        top: 17vh;
+    .blur {
+        border-radius: 20px 20px 20px 20px;
+        backdrop-filter: blur(5px);
     }
-    
+
+    .close-btn {
+        margin: 1px;
+        position: absolute;
+        display: flex;
+        border: none;
+        width: 20px;
+        height: 20px;
+        top: 1vh;
+        right: 1vw;
+        background: none;
+        z-index: 15;
+    }
+
     .card-tag  {
         position: absolute;
         align-self: center;
@@ -113,18 +136,39 @@ const MainPageStampedModal = styled.div`
         top: 30vh;
     };`
 
+    const UserInfo = styled.span`
+        position: absolute;
+        margin: 1px;
+        padding: 1px 1px 1px 1px;
+        left: 1vw;
+        top: 17vh;
+    `;
+
 const MainPageStampedCardModal = () => {
+    const dispatch = useDispatch();
+    const modalRef = useRef(null);
+    const handleClose = () => {
+        dispatch(closeModal())
+    };
+    useOutSideClick(modalRef, handleClose);
     return (
-        <ModalFrame>
-            <MainPageStampedModal>
-                <h4 className=" modal-title">카드 제목</h4>                      
-                <div className="card-tag">#태그</div>
-                <button className="userInfo-btn">참석한 유저 정보</button>
-                <img className="card-img" src="images/card-img.jpg" alt="card" />
-                <div className="card-info">설명</div>
-                <div className="card-info-text">버킷 내용</div>
+        <ModalPortal>
+            <MainPageStampedModal ref={modalRef}>
+                <div className="blur">
+                    <div className="mainPageStampedCard">
+                    <h4 className=" modal-title">카드 제목</h4>
+                    <button className="close-btn" onClick={() => {
+                        dispatch(closeModal())
+                    }}>X</button>                      
+                    <div className="card-tag">#태그</div>
+                    <UserInfo>참석한 유저 정보</UserInfo>
+                    <img className="card-img" src="images/card-img.jpg" alt="card" />
+                    <div className="card-info">설명</div>
+                    <div className="card-info-text">버킷 내용</div>
+                    </div>
+                </div>
             </MainPageStampedModal>
-        </ModalFrame>
+        </ModalPortal>
     );
 }
 

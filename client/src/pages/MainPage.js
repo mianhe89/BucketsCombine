@@ -1,10 +1,14 @@
 import React from 'react';
+import  { useSelector } from 'react-redux'
 import Topmenu from '../components/TopMenu';
 import SideMenu from '../components/SideMenu';
 import MainSection from '../components/MainSection';
 import CardsSection from '../components/CardsSection';
 import StampedSection from '../components/StampedSection';
 import styled from 'styled-components';
+import MainPageCardModal from '../components/modals/MainPageCardModal'
+import MainPageStampedCardModal from '../components/modals/MainPageStampedModal';
+
 
 const MainPageWrap = styled.div`
   .mainpage {
@@ -21,6 +25,7 @@ const MainPageWrap = styled.div`
 `
 
 export default function MainPage() {
+  const { isOpen } = useSelector((store) => store.modal);
   return (
     <MainPageWrap>
       <div className='mainpage'>
@@ -28,8 +33,12 @@ export default function MainPage() {
         <div className='mainpage-section'>
           <Topmenu />
           <MainSection />
-          <CardsSection />
-          <StampedSection />
+          <CardsSection> 
+
+          </CardsSection>
+          <StampedSection>
+
+          </StampedSection>
         </div>
       </div>
     </MainPageWrap>

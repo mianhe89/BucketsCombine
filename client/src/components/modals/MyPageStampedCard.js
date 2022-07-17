@@ -3,10 +3,11 @@ import { useDispatch } from "react-redux";
 import React, { useRef } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
 import styled from 'styled-components';
-import { Tag, TagsInput } from '../Tag'
 import ModalPortal from "./ModalPortal.js";
 
-const MakeCardModalContainer = styled.div`
+
+
+const MainPageStampedModal = styled.div`
     width: 70vw;
     height: 60vh;
     display: flex;
@@ -19,16 +20,18 @@ const MakeCardModalContainer = styled.div`
     top: 20vh;
     box-shadow: 3px 3px 5px 5px rgb(194, 194, 194, 0.3);
     z-index: 10;
-    .mainPageMakeCard{
+    .mainPageStampedCard{
         position: relative;
         width: 70vw;
         height: 60vh;
         background-color: rgba(255, 255, 255, 0.8);
+        border: solid rgb(170, 170, 170);
         border-radius: 20px 20px 20px 20px;
         animation: fadein 0.5s;
         -moz-animation: fadein 0.5s;
         -webkit-animation: fadein 0.5s;
         -o-animation: fadein 0.5s;
+        
         @keyframes fadein {
             from {
                 opacity: 0;
@@ -61,19 +64,18 @@ const MakeCardModalContainer = styled.div`
                 opacity: 1;
             }
         }
+        .modal-title {
+            margin: 15px;
+            position: absolute;
+            font-size: calc(10px + 2vmin);
+            top: 1vh;
+            left: 1vw;
+        }
     }
 
     .blur {
         border-radius: 20px 20px 20px 20px;
         backdrop-filter: blur(5px);
-    }
-
-    .modal-title {
-        margin: 15px;
-        position: absolute;
-        font-size: calc(10px + 2vmin);
-        top: 1vh;
-        left: 1vw;
     }
 
     .close-btn {
@@ -89,29 +91,23 @@ const MakeCardModalContainer = styled.div`
         z-index: 15;
     }
 
-    .card-tag  {
-        width: 50vw;
-        height: 10vh;
+    .userInfo-btn {
         position: absolute;
-        align-self: center;
-        display: flex;
         justify-content: center;
+        background: none;
+        border: none;
+        width: 10vw;
         left: 1vw;
-        top: 5vh;
+        top: 17vh;
     }
     
-    .btn-confirm-btn {
+    .card-tag  {
         position: absolute;
         align-self: center;
         display: flex;
         justify-content: center;
-        background-color: rgb(251, 255, 0);
-        border-radius: 5px 5px 5px 5px;
-        border: none;
-        width: 8vw;
-        height: 2.5vh;
         left: 1vw;
-        top: 55vh;
+        top: 12vh;
     }
     
     .card-img {
@@ -148,10 +144,9 @@ const MakeCardModalContainer = styled.div`
         height: 20vh;
         left: 1vw;
         top: 30vh;
-    }`;
+    };`
 
-
-const MakeCardModal = () => {
+const MainPageStampedCardModal = () => {
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
@@ -160,24 +155,23 @@ const MakeCardModal = () => {
     useOutSideClick(modalRef, handleClose);
     return (
         <ModalPortal>
-            <MakeCardModalContainer ref={modalRef}>
+            <MainPageStampedModal ref={modalRef}>
                 <div className="blur">
-                <div className="mainPageMakeCard">
-                    <div className="modal-title">제목을 입력하세요</div>
-                    <button type="button" className="close-btn" onClick={() => {
+                    <div className="mainPageStampedCard">
+                    <h4 className=" modal-title">카드 제목</h4>
+                    <button className="close-btn" onClick={() => {
                         dispatch(closeModal())
-                    }}>X</button>
-                    <Tag></Tag>
-                    <button type="button" className="btn-confirm-btn"onClick={()=> {
-                        dispatch(closeModal())}}>카드 만들기</button>
+                    }}>X</button>                      
+                    <div className="card-tag">#태그</div>
+                    <button className="userInfo-btn">참석한 유저 정보</button>
                     <img className="card-img" src="images/card-img.jpg" alt="card" />
                     <div className="card-info">설명</div>
-                    <div className="card-info-text">설명을 입력하세요</div>
+                    <div className="card-info-text">버킷 내용</div>
+                    </div>
                 </div>
-                </div>
-            </MakeCardModalContainer>
+            </MainPageStampedModal>
         </ModalPortal>
     );
 }
 
-export default MakeCardModal;
+export default MainPageStampedCardModal;
