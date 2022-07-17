@@ -1,6 +1,7 @@
 import React from 'react';
 import ColumnList from './ColumnList';
 import styled from 'styled-components';
+import { useMediaQuery } from "react-responsive";
 
 // 스타일 컴포넌트 작성 태그전달
 
@@ -66,18 +67,64 @@ const MyBucketWrap = styled.div `
     height: 40px;
     background: -webkit-linear-gradient(bottom,white 0%,rgba(0,0,0,0) 100%);
   }
+
+  #mybucket-section-mobile {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 120px);
+    margin-top: 120px;
+  }
+
+  .card-list-column-mobile {
+  width: 100vw;
+  max-width: 1000px;
+  height: calc(100vh - 400px) ;
+  flex-direction: column;
+  align-items: center;
+  }
+
+  .search-bar-mobile {
+    margin-top: 50px;
+    align-self: center;
+    position: relative;
+    margin-left: 0px;
+    height: 10px;
+    width: calc(100vw - 100px);
+    max-width: 700px;
+  }
+
+  .fog-top-mobile {
+    position: absolute;
+    top: 230px;
+    width: 100vw;
+    height: 30px;
+    background: -webkit-linear-gradient(top,white 0%,rgba(0,0,0,0) 100%);
+  }
+
+  .fog-bottom-mobile {
+    position: absolute;
+    bottom: 150px;
+    width: 100vw;
+    height: 40px;
+    background: -webkit-linear-gradient(bottom,white 0%,rgba(0,0,0,0) 100%);
+  }
 `
 
 export default function MyBucketSection(){
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+
   return(
     <MyBucketWrap>
-    <div id='mybucket-section'>
-      <div className='fog-top'/>
-      <div className='card-list-column'>
-      <div className='fog-bottom'/>
+    <div id={isDesktop? 'mybucket-section' : 'mybucket-section-mobile'}>
+      <div className={isDesktop?'fog-top' : 'fog-top-mobile'}/>
+      <div className={isDesktop? 'card-list-column' : 'card-list-column-mobile'}>
+      <div className={isDesktop? 'fog-bottom' : 'fog-bottom-mobile'}/>
         <ColumnList />
       </div>
-      <div className='search-bar'>
+      <div className={isDesktop?'search-bar' : 'search-bar-mobile'}>
           <input className='search-input' type="text" placeholder="제목 및 태그" />
           <img className='search-icon' src='/images/search-icon.png' />
       </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
+import { useMediaQuery } from "react-responsive";
+import { isDraft } from '@reduxjs/toolkit';
 
 const MyProfileWrap = styled.div`
   #myprofile-section {
@@ -9,6 +11,7 @@ const MyProfileWrap = styled.div`
     align-items: center;
     width: calc(100vw - 120px);
     height: 100vh;
+    min-height: 700px;
     margin-left: 120px;
   }
   .myprofile-container {
@@ -17,9 +20,9 @@ const MyProfileWrap = styled.div`
     border-radius: 20px;
     flex-direction: column;
     height: 588px;
-    width: 750px;
+    width: 70vw;
+    max-width: 1000px;
     border-radius: 20px;
-    border: 10px dotted white;
   }
   .box-photo {
     background-color: white;
@@ -105,7 +108,7 @@ const MyProfileWrap = styled.div`
 
   .change-buttons {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin: 10px 32px 10px 32px;
   }
 
@@ -148,23 +151,56 @@ const MyProfileWrap = styled.div`
     color: #969696;
     background-color: transparent;
     border: none;
-    margin-top: 20px;
-    margin-right : 680px;
+    top: 70px;
+    position: relative;
+    margin-right: auto;
+  }
+
+  #myprofile-section-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 120px);
+    min-height: 700px;
+  }
+
+  .myprofile-container-mobile {
+    display: flex;
+    background-color: #ededed;
+    border-radius: 20px;
+    flex-direction: column;
+    height: 588px;
+    width: 90vw;
+    max-width: 1000px;
+    border-radius: 20px;
+    background-color: #ededed;
+  }
+
+  .profile-info-section-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 200px;
+    height: 200px;
   }
 `
 
 export default function MyProfileSection() {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+  const withdrawal = '> 회원탈퇴'
   return (
     <MyProfileWrap>
-      <div id='myprofile-section'>
-        <div className="myprofile-container">
+      <div id={isDesktop? 'myprofile-section' : 'myprofile-section-mobile'}>
+        <div className={isDesktop? "myprofile-container" : "myprofile-container-mobile"}>
           <div className='partition'>
             <div className="box-photo">사진</div>
-            <div className="profile-info-section">
+            <div className={isDesktop? "profile-info-section" : "profile-info-section-mobile"}>
                 <div className="profile-info-email">사용자@email</div>
                 <input className="profile-info-nickname" type="text" placeholder="닉네임"/>
                 <select className="profile-info-age">
-                  <option value="age" selected>연령대</option>
+                  <option value="DEFAULT" >연령대</option>
                   <option value="teenages">10대</option>
                   <option value="twenty">20대</option>
                   <option value="thirty">30대</option>
@@ -174,7 +210,7 @@ export default function MyProfileSection() {
                   <option value="seventy">70대</option>
                 </select>
                 <select className="profile-info-gender">
-                  <option value="" selected>성별</option>
+                  <option value="DEFAULT" >성별</option>
                   <option value="teenages">남자</option>
                   <option value="twenty">여자</option>
                   <option value="thirty">선택안함</option>
@@ -183,11 +219,11 @@ export default function MyProfileSection() {
           </div>
           <textarea className="profile-introducing" placeholder="소개글을 작성해주세요"/>
           <div className="change-buttons">
+            <button className="withdrawal-button">{withdrawal}</button>
             <button className="change-password-button">비밀번호 변경</button>
             <button className="change-profile-button">변경</button>
           </div>
         </div>
-        <button className="withdrawal-button">회원탈퇴</button>
       </div>
     </MyProfileWrap>
   )
