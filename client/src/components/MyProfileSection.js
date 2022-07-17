@@ -167,7 +167,7 @@ export default function MyProfileSection() {
                 <div className="profile-info-email">사용자@email</div>
                 <input className="profile-info-nickname" type="text" placeholder="닉네임"/>
                 <select className="profile-info-age">
-                  <option value="age" selected>연령대</option>
+                  <option value="DEFAULT" >연령대</option>
                   <option value="teenages">10대</option>
                   <option value="twenty">20대</option>
                   <option value="thirty">30대</option>
@@ -177,7 +177,7 @@ export default function MyProfileSection() {
                   <option value="seventy">70대</option>
                 </select>
                 <select className="profile-info-gender">
-                  <option value="" selected>성별</option>
+                  <option value="DEFAULT" >성별</option>
                   <option value="teenages">남자</option>
                   <option value="twenty">여자</option>
                   <option value="thirty">선택안함</option>
