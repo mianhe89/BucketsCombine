@@ -14,7 +14,7 @@ const cookieParser = require("cookie-parser");
 const { result } = require("lodash");
 require("dotenv").config();
 
-const indexRouter = require("./routes/index");
+const indexRouter = require("./router/index");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -26,8 +26,6 @@ app.use(
 );
 app.use(cookieParser());
 app.use("/", indexRouter);
-
-app.use("/", indexRoute);
 
 // if (document.location.protocol == "http:") {
 //   document.location.href = document.location.href.replace("http:", "https:");

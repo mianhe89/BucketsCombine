@@ -2,8 +2,7 @@ const { users } = require("../../models");
 const { generateAccessToken, sendAccessToken } = require("../tokenFunctions");
 
 module.exports = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  if (!req.body.email || !req.body.password) {
     return res.status(400).json({ message: "이메일, 비밀번호를 확인해주세요" });
   } else {
     const userinfo = await users.findOne({
