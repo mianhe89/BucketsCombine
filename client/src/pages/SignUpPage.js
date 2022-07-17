@@ -171,7 +171,7 @@ export default function SignUpPage() {
       setErrorMessage("모든 항목은 필수입니다");
     } else {
       axios
-        .post("ec2-52-79-247-243.ap-northeast-2.compute.amazonaws.com", {
+        .post("http://localhost:4000/signup", {
           email: userinfo.email,
           password: userinfo.password,
           username: userinfo.username,
