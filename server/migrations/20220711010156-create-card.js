@@ -18,7 +18,7 @@ module.exports = {
         cardtext: {
           type: Sequelize.TEXT,
         },
-        imageurl: {
+        background: {
           type: Sequelize.STRING,
         },
         member: {
