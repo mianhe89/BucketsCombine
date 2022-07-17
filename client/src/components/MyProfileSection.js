@@ -17,7 +17,8 @@ const MyProfileWrap = styled.div`
     border-radius: 20px;
     flex-direction: column;
     height: 588px;
-    width: 750px;
+    width: 70vw;
+    max-width: 1000px;
     border-radius: 20px;
     border: 10px dotted white;
   }
@@ -105,7 +106,7 @@ const MyProfileWrap = styled.div`
 
   .change-buttons {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin: 10px 32px 10px 32px;
   }
 
@@ -148,12 +149,14 @@ const MyProfileWrap = styled.div`
     color: #969696;
     background-color: transparent;
     border: none;
-    margin-top: 20px;
-    margin-right : 680px;
+    top: 70px;
+    position: relative;
+    margin-right: auto;
   }
 `
 
 export default function MyProfileSection() {
+  const withdrawal = '> 회원탈퇴'
   return (
     <MyProfileWrap>
       <div id='myprofile-section'>
@@ -183,11 +186,11 @@ export default function MyProfileSection() {
           </div>
           <textarea className="profile-introducing" placeholder="소개글을 작성해주세요"/>
           <div className="change-buttons">
+            <button className="withdrawal-button">{withdrawal}</button>
             <button className="change-password-button">비밀번호 변경</button>
             <button className="change-profile-button">변경</button>
           </div>
         </div>
-        <button className="withdrawal-button">회원탈퇴</button>
       </div>
     </MyProfileWrap>
   )
