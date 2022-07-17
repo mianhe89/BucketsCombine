@@ -5,7 +5,7 @@ import Loader from "./Loader";
 import { changeMode, openModal } from "../redux/reducers/ModalReducer.js";
 import { useDispatch, useSelector } from "react-redux";
 import MakeModal from "./modals/MakeCardModal";
- 
+import { useMediaQuery } from "react-responsive";
 
 
 const ColumnListWrap = styled.div`
@@ -44,9 +44,26 @@ const ColumnListWrap = styled.div`
     margin-left: 30px;
     margin-top: 20px;
   }
+
+  .create-card-button-mobile {
+    width: calc(95vw - 40px);
+    height: 80px;
+    border-radius: 15px;
+    border: none;
+    box-shadow: none;
+    font-size: 32px;
+    background-color: #d2d2d2;
+    margin: 5px;
+    line-height: 80px;
+    text-align: center;
+    align-self: center;
+    margin-left: 25px;
+    margin-top: 20px;
+  }
 `;
 
 export default function ColumnList () {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
   const test = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']
   const testmap = test.map(e=>{
     return {
@@ -96,7 +113,7 @@ export default function ColumnList () {
   return (
     <>
       <ColumnListWrap>
-      <button className='create-card-button'>+</button>
+      <button className={isDesktop? 'create-card-button' : 'create-card-button-mobile'}>+</button>
         {itemLists.map((item, i) => {
           return <ColumnCard title={item.title} tags={item.tags} writer={item.writer} memberCount={item.memberCount} background={item.background} key={i} />;
         })}

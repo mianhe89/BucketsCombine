@@ -3,16 +3,6 @@ import styled from 'styled-components';
 import RowList from './RowList'
 import { useMediaQuery } from "react-responsive";
 
-const Desktop = ({ children }) => {
-  const isDesktop = useMediaQuery({ minWidth: 921 })
-  return isDesktop ? children : null
-}
-
-const Mobile = ({ children }) => {
-  const isMobile = useMediaQuery({ minWidth: 100, maxWidth: 920 })
-  return isMobile ? children : null
-}
-
 const CardsWrap = styled.div`
   #card-section {
     display: flex;

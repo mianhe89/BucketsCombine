@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
+import { useMediaQuery } from "react-responsive";
+import { isDraft } from '@reduxjs/toolkit';
 
 const MyProfileWrap = styled.div`
   #myprofile-section {
@@ -9,6 +11,7 @@ const MyProfileWrap = styled.div`
     align-items: center;
     width: calc(100vw - 120px);
     height: 100vh;
+    min-height: 700px;
     margin-left: 120px;
   }
   .myprofile-container {
@@ -20,7 +23,6 @@ const MyProfileWrap = styled.div`
     width: 70vw;
     max-width: 1000px;
     border-radius: 20px;
-    border: 10px dotted white;
   }
   .box-photo {
     background-color: white;
@@ -153,17 +155,48 @@ const MyProfileWrap = styled.div`
     position: relative;
     margin-right: auto;
   }
+
+  #myprofile-section-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 120px);
+    min-height: 700px;
+  }
+
+  .myprofile-container-mobile {
+    display: flex;
+    background-color: #ededed;
+    border-radius: 20px;
+    flex-direction: column;
+    height: 588px;
+    width: 90vw;
+    max-width: 1000px;
+    border-radius: 20px;
+    background-color: #ededed;
+  }
+
+  .profile-info-section-mobile {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 200px;
+    height: 200px;
+  }
 `
 
 export default function MyProfileSection() {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
   const withdrawal = '> 회원탈퇴'
   return (
     <MyProfileWrap>
-      <div id='myprofile-section'>
-        <div className="myprofile-container">
+      <div id={isDesktop? 'myprofile-section' : 'myprofile-section-mobile'}>
+        <div className={isDesktop? "myprofile-container" : "myprofile-container-mobile"}>
           <div className='partition'>
             <div className="box-photo">사진</div>
-            <div className="profile-info-section">
+            <div className={isDesktop? "profile-info-section" : "profile-info-section-mobile"}>
                 <div className="profile-info-email">사용자@email</div>
                 <input className="profile-info-nickname" type="text" placeholder="닉네임"/>
                 <select className="profile-info-age">

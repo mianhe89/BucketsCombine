@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { useMediaQuery } from "react-responsive";
 
 const ColumnCardWrap = styled.div`
   .ColumnCard {
     display: flex;
     flex-direction: row;
     color: white;
-    max-width: 100%;
+    width: 100%;
   }
 
   .ColumnCard-progress {
@@ -66,9 +67,24 @@ const ColumnCardWrap = styled.div`
     line-height: 60px;
   }
 
+  .ColumnCard-info-mobile {
+    width: calc(95vw - 60px);
+    height: 60px;
+    border-radius: 15px;
+    background-image: url("https://source.unsplash.com/random");
+    background-size: cover;
+    margin: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
 `;
 
 export default function ColumnCard ({title, tags, writer, memberCount, background}) {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
   const tagLine = tags.map(tag => {
     return `#${tag}`
  })
@@ -81,7 +97,7 @@ export default function ColumnCard ({title, tags, writer, memberCount, backgroun
     <ColumnCardWrap>
       <div className="ColumnCard">
         <div className='ColumnCard-progress'/>
-        <div className='ColumnCard-info'style={backgroundImageStyle} >
+        <div className={isDesktop?'ColumnCard-info' : 'ColumnCard-info-mobile'}style={backgroundImageStyle} >
         <div className='ColumnCard-info-text'>
             <div className="ColumnCard-title">{title}</div>
             <div className="ColumnCard-tag">{tagLine.join(' ')}</div>
