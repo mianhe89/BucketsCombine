@@ -159,7 +159,7 @@ export default function MainSection(){
         여러분의 성취 Buckets Combine이 도와드립니다.
         </div>
       </div>
-      <div className='fog'/>
+      {isDesktop? <div className='fog'/> : <div/>}
       <div className={isDesktop?'videos-container' : 'videos-container-mobile'}>
         {isExtend? <video className="video" autoPlay muted loop>
           <source src="/videos/A.mp4" type="video/mp4"></source>

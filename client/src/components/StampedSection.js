@@ -74,7 +74,7 @@ const CardsWrap = styled.div`
   }
 
   .ment-title-mobile {
-    font-size: 36px;
+    font-size: 35px;
     margin-bottom: 20px;
   }
 

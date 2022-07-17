@@ -69,7 +69,7 @@ const RowListWrap = styled.div`
   .search-bar-mobile {
     align-self: center;
     position: relative;
-    top: 50px;
+    top: 10px;
     margin-left: 0px;
     width: 400px;
     z-index: 1;
