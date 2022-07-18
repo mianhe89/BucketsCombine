@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -81,7 +81,7 @@ const SignUpPageWrap = styled.div`
     margin: 4px;
     border-radius: 5px;
   }
-  #login_email {
+  #email {
     width: 246px;
     height: 32px;
     padding: 2px 40px;
@@ -89,7 +89,7 @@ const SignUpPageWrap = styled.div`
     border-radius: 5px;
     border: none;
   }
-  #login_password {
+  #password {
     width: 246px;
     height: 32px;
     padding: 2px 40px;
@@ -103,7 +103,7 @@ const SignUpPageWrap = styled.div`
     flex-direction: column;
     min-height: 100vh;
   }
-  #signup_repassword {
+  #repassword {
     width: 246px;
     height: 32px;
     padding: 2px 40px;
@@ -111,7 +111,7 @@ const SignUpPageWrap = styled.div`
     border-radius: 5px;
     border: none;
   }
-  #login_nickname {
+  #username {
     width: 246px;
     height: 32px;
     padding: 2px 40px;
@@ -134,7 +134,7 @@ const SignUpPageWrap = styled.div`
     border-radius: 5px;
   }
 
-  .signup_signup {
+  .signup {
     border: none;
     font-size: 16;
     height: 40px;
@@ -159,9 +159,7 @@ export default function SignUpPage() {
   const handleSignup = () => {
     // TODO : 서버에 회원가입을 요청 후 로그인 페이지로 이동하세요.
     //        회원가입 성공 후 로그인 페이지 이동은 다음 코드를 이용하세요.
-    //
     //        history.push("/");
-    //
     // TODO : 모든 항목을 입력하지 않았을 경우 에러를 표시해야 합니다.
     if (
       userinfo.email === "" ||
@@ -170,17 +168,27 @@ export default function SignUpPage() {
     ) {
       setErrorMessage("모든 항목은 필수입니다");
     } else {
-      axios
-        .post("http://localhost:4000/signup", {
-          email: userinfo.email,
-          password: userinfo.password,
-          username: userinfo.username,
-        })
-        .then((res) => {
-          history.push("/");
-        });
+       axios.post("http://localhost:4000/users/signup", {
+        email: userinfo.email,
+         password: userinfo.password,
+         username: userinfo.username
+       })
+       .then((res) => {
+        history.push("/signin");
+        console.log(res)
+       });
     }
-  };
+   };
+  // useEffect(()=> {
+  //   axios.post("http://localhost:4000/users/signup", {
+  //       email: userinfo.email,
+  //       password: userinfo.password,
+  //       username: userinfo.username,
+  //     })
+  //     // .then((res) => {
+  //     //   console.log(res)
+  //     // });
+  // }, [])
   return (
     <SignUpPageWrap>
       <div className="body">
@@ -194,49 +202,35 @@ export default function SignUpPage() {
               height="120px"
             ></img>
             <div className="login_title">BucketsCombine</div>
+            <form onSubmit={(e) => e.preventDefault()}>
             <input
-              id="login_email"
+              id="email"
               type="email"
               placeholder="이메일"
-              onChange={handleInputValue("login_email")}
+              onChange={handleInputValue("email")}
             />
             <input
-              id="login_password"
+              id="password"
               type="password"
               placeholder="비밀번호"
-              onChange={handleInputValue("login_password")}
+              onChange={handleInputValue("password")}
             />
             <input
-              id="signup_repassword"
-              type="password"
-              placeholder="비밀번호 재확인"
-              onChange={handleInputValue("login_password")}
+              id="username"
+              type="username"
+              placeholder="닉네임"
+              onChange={handleInputValue("username")}
             />
-            <input id="login_nickname" type="text" placeholder="닉네임" />
-            <select className="btn_old" required>
-              <option value="">연령대</option>
-              <option value="teenages">10대</option>
-              <option value="twenty">20대</option>
-              <option value="thirty">30대</option>
-              <option value="forty">40대</option>
-              <option value="fifty">50대</option>
-              <option value="sixty">60대</option>
-              <option value="seventy">70대</option>
-            </select>
-            <select className="btn_gender" required>
-              <option value="">성별</option>
-              <option value="teenages">남자</option>
-              <option value="twenty">여자</option>
-              <option value="thirty">선택안함</option>
-            </select>
+
             <button
-              className="signup_signup"
+              className="signup"
               type="submit"
               onClick={handleSignup}
             >
               가입하기
             </button>
             <div className="alert-box">{errorMessage}</div>
+            </form>
           </div>
         </div>
       </div>
