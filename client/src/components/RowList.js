@@ -4,6 +4,7 @@ import HorizontalScroll from 'react-scroll-horizontal';
 import RowCard from "./RowCard";
 import Loader from "./Loader";
 import { useMediaQuery } from "react-responsive";
+import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
 
 
@@ -17,7 +18,7 @@ const RowListWrap = styled.div`
   }
 
   .dummy {
-    width: 200px;
+    width: 10px;
     height: 100px;
   }
 
@@ -80,54 +81,31 @@ export default function RowList () {
 
   const [cards, setCards] = useState('');
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    axios.get('http://localhost:80')
+    axios.get('http://localhost:80/')
     .then(res => {
+      const cardsData = res.data.data.cardinfo;
+      // dispatch(setCardsData({ cardsData }));
       setCards(
-      res.data.data.cardinfo.map((card, i) => {
+        cardsData.map((card, i) => {
         return <RowCard
           key={i}
-          id={i}
+          cardID={card}
+          writerID={card.users_id}
           title={card.title}
+          cardtext={card.cardtext}
           background={card.background}
+          createdAt={card.createdAt}
+          completed={card.completed}
         />;
       }))
     })
   }, []);
-  
-  const [target, setTarget] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState('');
 
-  useEffect(() => {
-  }, [itemLists]);
+  // const userInfo = useSelector((state) => state.user);
 
-  const getMoreItem = async () => {
-    setIsLoaded(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    let Items = '';
-    setItemLists((itemLists) => itemLists.concat(Items));
-    setIsLoaded(false);
-  };
-
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoaded) {
-      observer.unobserve(entry.target);
-      await getMoreItem();
-      observer.observe(entry.target);
-    }
-  };
-
-  useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: `0`
-      });
-      observer.observe(target);
-    }
-    return () => observer && observer.disconnect();
-  }, [target]);
 
   const [search, setSearch] = useState("");
 
@@ -141,9 +119,7 @@ export default function RowList () {
         >
           <div className="dummy" />
           {cards}
-          <div ref={setTarget} className="Target-Element">
-            {isLoaded && <Loader />}
-          </div>
+          <div className="dummy" />
         </HorizontalScroll>
         <div className={isDesktop? 'search-bar' : 'search-bar-mobile'}>
           <input className='search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
