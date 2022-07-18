@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { closeModal } from "../../redux/reducers/ModalReducer";
 
 const useOutSideClick = (ref, callback) => {
     useEffect(() => {

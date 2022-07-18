@@ -5,6 +5,8 @@ import MyPage from './pages/MyPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import OAuthSignUpPage from './pages/OAuthSignUpPage';
+import CardsSection from './components/CardsSection';
+import StampedSection from './components/StampedSection'
 import RowList from './components/RowList'
 import { connect } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,7 +29,8 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path='/'>
-          {isOpen && <MainPageStampedCardModal/>}
+              {isOpen && <MainPageCardModal/>}
+              {isOpen && <MainPageStampedCardModal/>}
             <MainPage />
           </Route>
           <Route exact path='/signin'>
@@ -40,7 +43,7 @@ const App = () => {
             <SignUpPage />
           </Route>
           <Route exact path='/mypage'>
-            {isOpen && <WithdrawalCardModal/>}
+            {isOpen && <MyCardModal/>}
             <MyPage />
           </Route>
         </Switch>

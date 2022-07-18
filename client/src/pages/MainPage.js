@@ -34,10 +34,10 @@ export default function MainPage() {
           <Topmenu />
           <MainSection />
           <CardsSection> 
-
+            {isOpen && <MainPageCardModal/>}
           </CardsSection>
           <StampedSection>
-
+            {isOpen && <MainPageStampedCardModal/>}
           </StampedSection>
         </div>
       </div>

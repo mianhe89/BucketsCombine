@@ -152,7 +152,7 @@ const MainPageStampedCardModal = () => {
     };
     useOutSideClick(modalRef, handleClose);
     return (
-        <ModalPortal>
+
             <MainPageStampedModal ref={modalRef}>
                 <div className="blur">
                     <div className="mainPageStampedCard">
@@ -168,7 +168,7 @@ const MainPageStampedCardModal = () => {
                     </div>
                 </div>
             </MainPageStampedModal>
-        </ModalPortal>
+
     );
 }
 
