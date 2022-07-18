@@ -5,7 +5,7 @@ const { sequelize } = require("../models");
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface
-      .createTable("card", {
+      .createTable("cards", {
         id: {
           allowNull: false,
           autoIncrement: true,
@@ -40,7 +40,7 @@ module.exports = {
         },
       })
       .then(function () {
-        queryInterface.addColumn("card", "users_id", {
+        queryInterface.addColumn("cards", "users_id", {
           type: Sequelize.INTEGER,
           allowNull: false,
           foreignKey: true,
@@ -62,7 +62,7 @@ module.exports = {
           allowNull: false,
           foreignKey: true,
           type: Sequelize.INTEGER,
-          references: { model: "card", key: "id" },
+          references: { model: "cards", key: "id" },
         });
       })
       .then(function () {
@@ -85,14 +85,14 @@ module.exports = {
             allowNull: false,
             foreignKey: true,
             type: Sequelize.INTEGER,
-            references: { model: "card", key: "id" },
+            references: { model: "cards", key: "id" },
           },
         });
       });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface
-      .dropTable("card")
+      .dropTable("cards")
       .then(() =>
         queryInterface.bulkdelet(
           "mybucket",
@@ -104,7 +104,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface
       .dropTable("mybucket")
-      .then(() => queryInterface.dropTable("card"))
+      .then(() => queryInterface.dropTable("cards"))
       .then(() => queryInterface.dropTable("cardHashtag"))
       .then(() => queryInterface.dropTable("users"));
   },
