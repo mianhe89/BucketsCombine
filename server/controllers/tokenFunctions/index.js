@@ -10,5 +10,11 @@ module.exports = {
     res.cookie("jwtAccessToken", accessToken);
   },
 
-  isAuthorized: (req) => {},
+  isAuthorized: (req) => {
+    const authorization = req.haders["cookie"];
+    const token = authorization.split(";");
+    const token2 = token.slice(15);
+    const data = verify(token2, process.env.ACCESS_SECRET);
+    return data;
+  },
 };

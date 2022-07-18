@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const https = require("https");
 const fs = require("fs");
 const app = express();
-const port = 80;
+const port = 4000;
 const indexRoute = "./route";
 const mysql = require("mysql");
 // const controllers = require("./controllers");
@@ -20,8 +20,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: ["http://localhost:3000"],
+    // origin: true,
     credentials: true,
+    methods: ["GET", "POST", "OPTIONS"],
   })
 );
 app.use(cookieParser());

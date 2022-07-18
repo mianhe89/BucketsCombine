@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const usersRouter = require("./users");
-const mypagesRouter = require("./mypage");
-const mainRouter = require("./mainpage");
+// const mypagesRouter = require("./mypage");
+// const mainRouter = require("./mainpage");
 
 router.get("/", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -11,7 +11,7 @@ router.get("/", function (req, res) {
 });
 
 router.use("/users", usersRouter);
-router.use("/mypages", mypagesRouter);
-router.use("/mainpage", mainRouter);
+// router.use("/mypages", mypagesRouter);
+// router.use("/mainpage", mainRouter);
 //
 module.exports = router;
