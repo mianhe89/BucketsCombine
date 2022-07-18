@@ -10,7 +10,8 @@ const initialState = {
     isOpenConfirmPassword: false,
     isOpenWithdrawal: false,
     mode:"",
-    modalInfo:[],
+    cardsData: [],
+    modalCardID: 0,
 };
 
 const modalSlice = createSlice({
@@ -65,8 +66,11 @@ const modalSlice = createSlice({
         closeWithdrawalModal: (state, action) => {
             state.isOpenWithdrawal = false;
         },
-        setModalInfo: (state, action) => {
-            state.modalInfo = action.payload;
+        setCardsData: (state, action) => {
+            state.cardsData = action.payload;
+        },
+        setModalCardID: (state, action) => {
+            state.modalCardID = action.payload;
         }
     }
 });
