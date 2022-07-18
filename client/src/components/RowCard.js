@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { openCardModal } from "../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import {setModalCardID } from '../redux/reducers/ModalReducer'
 
 const RowCardWrap = styled.div`
   .card {
@@ -163,6 +164,7 @@ export default function RowCard({
         style={backgroundImageStyle}
         onClick={() => {
           dispatch(openCardModal());
+          dispatch(setModalCardID(cardID));
         }}
       >
         <div className="card-info">

@@ -73,8 +73,8 @@ const modalSlice = createSlice({
             state.modalCardID = action.payload;
         }
     }
+    
 });
-
 export const { 
     openCardModal, 
     openStampedModal,
@@ -92,6 +92,8 @@ export const {
     closeChangePasswordModal,
     closeConfirmPasswordModal,
     closeWithdrawalModal,
-    setModalInfo
+    setModalInfo,
+    setCardsData,
+    setModalCardID,
     } = modalSlice.actions;
 export default modalSlice.reducer;

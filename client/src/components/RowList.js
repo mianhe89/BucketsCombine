@@ -6,6 +6,7 @@ import Loader from "./Loader";
 import { useMediaQuery } from "react-responsive";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
+import {setCardsData } from '../redux/reducers/ModalReducer'
 
 
 const RowListWrap = styled.div`
@@ -87,12 +88,12 @@ export default function RowList () {
     axios.get('http://localhost:80/')
     .then(res => {
       const cardsData = res.data.data.cardinfo;
-      // dispatch(setCardsData({ cardsData }));
+      dispatch(setCardsData({ cardsData }));
       setCards(
         cardsData.map((card, i) => {
         return <RowCard
           key={i}
-          cardID={card}
+          cardID={card.id}
           writerID={card.users_id}
           title={card.title}
           cardtext={card.cardtext}
@@ -103,9 +104,6 @@ export default function RowList () {
       }))
     })
   }, []);
-
-  // const userInfo = useSelector((state) => state.user);
-
 
   const [search, setSearch] = useState("");
 
