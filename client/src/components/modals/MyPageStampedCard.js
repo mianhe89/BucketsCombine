@@ -91,6 +91,16 @@ const MainPageStampedModal = styled.div`
         z-index: 15;
     }
 
+    .userInfo-btn {
+        position: absolute;
+        justify-content: center;
+        background: none;
+        border: none;
+        width: 10vw;
+        left: 1vw;
+        top: 17vh;
+    }
+    
     .card-tag  {
         position: absolute;
         align-self: center;
@@ -136,14 +146,6 @@ const MainPageStampedModal = styled.div`
         top: 30vh;
     };`
 
-    const UserInfo = styled.span`
-        position: absolute;
-        margin: 1px;
-        padding: 1px 1px 1px 1px;
-        left: 1vw;
-        top: 17vh;
-    `;
-
 const MainPageStampedCardModal = () => {
     const dispatch = useDispatch();
     const modalRef = useRef(null);
@@ -152,7 +154,7 @@ const MainPageStampedCardModal = () => {
     };
     useOutSideClick(modalRef, handleClose);
     return (
-
+        <ModalPortal>
             <MainPageStampedModal ref={modalRef}>
                 <div className="blur">
                     <div className="mainPageStampedCard">
@@ -161,14 +163,14 @@ const MainPageStampedCardModal = () => {
                         dispatch(closeModal())
                     }}>X</button>                      
                     <div className="card-tag">#태그</div>
-                    <UserInfo>참석한 유저 정보</UserInfo>
+                    <button className="userInfo-btn">참석한 유저 정보</button>
                     <img className="card-img" src="images/card-img.jpg" alt="card" />
                     <div className="card-info">설명</div>
                     <div className="card-info-text">버킷 내용</div>
                     </div>
                 </div>
             </MainPageStampedModal>
-
+        </ModalPortal>
     );
 }
 

@@ -1,6 +1,8 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
+import { openModal } from "../redux/reducers/ModalReducer";
 
 const ColumnCardWrap = styled.div`
   .ColumnCard {
@@ -92,10 +94,12 @@ export default function ColumnCard ({title, tags, writer, memberCount, backgroun
  let backgroundImageStyle = {
    backgroundImage: "url(/images/" + background + ".jpg)"
  }
+
+ const dispatch = useDispatch();
   
   return (
     <ColumnCardWrap>
-      <div className="ColumnCard">
+      <div className="ColumnCard" onClick={() => dispatch(openModal())}>
         <div className='ColumnCard-progress'/>
         <div className={isDesktop?'ColumnCard-info' : 'ColumnCard-info-mobile'}style={backgroundImageStyle} >
         <div className='ColumnCard-info-text'>

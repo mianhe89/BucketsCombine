@@ -3,15 +3,19 @@ import styled from 'styled-components';
 
 
 export const TagsInput = styled.div`
-  margin: 8rem auto;
+  position: absolute;
+  margin: 2px;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
   min-height: 48px;
-  width: 480px;
+  width: 40vw;
+  height: 5vh;
   padding: 0 8px;
   border: 1px solid rgb(214, 216, 218);
   border-radius: 6px;
+  left: 3vw;
+  top: 15vh;
 
   > ul {
     display: flex;
@@ -48,14 +52,18 @@ export const TagsInput = styled.div`
     }
   }
 
-  > input {    
+  > input {
+    width: 40vw;
+    height: 5vh;    
     flex: 1;
     border: none;
+    border-radius: inherit;
     height: 46px;
-    font-size: 14px;
+    font-size: 13px;
     padding: 4px 0 0 0;
     :focus {
     outline: transparent;
+    background: none;
   }
   }
 
