@@ -1,26 +1,93 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = { 
-    isOpen: false,
-    mode:""
+    isOpenCard: false,
+    isOpenStamped: false,
+    isOpenMakeCard: false,
+    isOpenMyCard: false,
+    isOpenMyStamped: false,
+    isOpenChangePassword: false,
+    isOpenConfirmPassword: false,
+    isOpenWithdrawal: false,
+    mode:"",
+    modalInfo:[],
 };
 
 const modalSlice = createSlice({
     name: 'modal',
     initialState,
     reducers: {
-        openModal: (state, action) => {
-            state.isOpen = true;
+        openCardModal: (state, action) => {
+            state.isOpenCard = true;
         },
-        closeModal: (state, action) => {
-            state.isOpen = false;
+        openStampedModal: (state, action) => {
+            state.isOpenStamped = true;
         },
-        changeMode: (state, action) => {
-            state.mode = action.payload;
+        openMakeCardModal: (state, action) => {
+            state.isOpenMakeCard = true;
         },
-        
+        openMyCardModal: (state, action) => {
+            state.isOpenMyCard = true;
+        },
+        openMyStampedModal: (state, action) => {
+            state.isOpenMyStamped = true;
+        },
+        openChangePasswordModal: (state, action) => {
+            state.isOpenChangePassword = true;
+        },
+        openConfirmPasswordModal: (state, action) => {
+            state.isOpenConfirmPassword = true;
+        },
+        openWithdrawalModal: (state, action) => {
+            state. isOpenWithdrawal = true;
+        },
+        closeMainPageCardModal: (state, action) => {
+            state.isOpenCard = false;
+        },
+        closeMainStampedCardModal: (state, action) => {
+            state.isOpenStamped = false;
+        },
+        closeMakeCardModal: (state, action) => {
+            state.isOpenMakeCard = false;
+        },
+        closeMyCardModal: (state, action) => {
+            state.isOpenMyCard = false;
+        },
+        closeMyStampedModal: (state, action) => {
+            state.isOpenMyStamped = false;
+        },
+        closeChangePasswordModal: (state, action) => {
+            state.isOpenChangePassword = false;
+        },
+        closeConfirmPasswordModal: (state, action) => {
+            state.isOpenConfirmPassword = false;
+        },
+        closeWithdrawalModal: (state, action) => {
+            state.isOpenWithdrawal = false;
+        },
+        setModalInfo: (state, action) => {
+            state.modalInfo = action.payload;
+        }
     }
 });
 
-export const { openModal, closeModal, changeMode } = modalSlice.actions;
+export const { 
+    openCardModal, 
+    openStampedModal,
+    openMakeCardModal,
+    openMyCardModal,
+    openMyStampedModal,
+    openChangePasswordModal,
+    openConfirmPasswordModal,
+    openWithdrawalModal,
+    closeMainPageCardModal,
+    closeMainStampedCardModal,
+    closeMakeCardModal,
+    closeMyCardModal,
+    closeMyStampedModal,
+    closeChangePasswordModal,
+    closeConfirmPasswordModal,
+    closeWithdrawalModal,
+    setModalInfo
+    } = modalSlice.actions;
 export default modalSlice.reducer;

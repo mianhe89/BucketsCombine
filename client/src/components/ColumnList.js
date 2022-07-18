@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import ColumnCard from "./ColumnCard";
 import Loader from "./Loader";
-import { changeMode, openModal } from "../redux/reducers/ModalReducer.js";
+import { openMakeCardModal } from "../redux/reducers/ModalReducer.js";
 import { useDispatch, useSelector } from "react-redux";
 import MakeModal from "./modals/MakeCardModal";
 import { useMediaQuery } from "react-responsive";
@@ -114,7 +114,7 @@ export default function ColumnList () {
   return (
     <>
       <ColumnListWrap>
-      <button className={isDesktop? 'create-card-button' : 'create-card-button-mobile'} onClick={() => {dispatch(openModal())}}>+</button>
+      <button className={isDesktop? 'create-card-button' : 'create-card-button-mobile'} onClick={() => {dispatch(openMakeCardModal())}}>+</button>
         {itemLists.map((item, i) => {
           return <ColumnCard title={item.title} tags={item.tags} writer={item.writer} memberCount={item.memberCount} background={item.background} key={i} />;
         })}

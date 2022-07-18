@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { changeMode } from "../redux/reducers/ModalReducer";
-import { openModal } from "../redux/reducers/ModalReducer";
+import { openStampedModal } from "../redux/reducers/ModalReducer";
 import MainPageCardModal from "./modals/MainPageCardModal";
 import MainPageStampedCardModal from './modals/MainPageStampedModal'
 
@@ -82,7 +82,7 @@ export default function StampedCard ({ background }) {
 
   return (
     <StampedCardWrap>
-      <div className='card' style={backgroundImageStyle} onClick={() => {dispatch(openModal())}}>
+      <div className='card' style={backgroundImageStyle} onClick={() => {dispatch(openStampedModal())}}>
       </div>
     </StampedCardWrap>
   );
