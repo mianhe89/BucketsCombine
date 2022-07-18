@@ -1,4 +1,4 @@
-import { closeModal } from "../../redux/reducers/ModalReducer.js";
+import { closeMainPageCardModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 import React, { useRef } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
@@ -165,11 +165,13 @@ const MainPageModal = styled.div`
     top: 17vh;
     `;
 
-const MainPageCardModal = () => {
+const MainPageCardModal = ({
+    
+    }) => {
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
-        dispatch(closeModal())
+        dispatch(closeMainPageCardModal())
     };
     useOutSideClick(modalRef, handleClose);
     return (
@@ -181,11 +183,11 @@ const MainPageCardModal = () => {
                         <div className="card-tag">#태그</div>
                         <UserInfo>참석한 유저 정보</UserInfo>
                         <button className="close-btn" onClick={() => {
-                            dispatch(closeModal())
+                            dispatch(closeMainPageCardModal())
                         }}>X</button>
                         <button type="button" className="btn-confirm-btn"
                             onClick={()=> {
-                            dispatch(closeModal())}}>
+                            dispatch(closeMainPageCardModal())}}>
                             담기 및 참가
                         </button>
                         <img className="card-img" src="images/card-img.jpg" alt="card" />

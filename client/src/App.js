@@ -22,15 +22,23 @@ import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
 import WithdrawalCardModal from './components/modals/WithdrawalModal';
 
 const App = () => {
-  const { isOpen } = useSelector((store) => store.modal);
+  const { isOpenCard } = useSelector((store) => store.modal);
+  const { isOpenStamped } = useSelector((store) => store.modal);
+  const { isOpenMakeCard } = useSelector((store) => store.modal);
+  const { isOpenMyCard } = useSelector((store) => store.modal);
+  const { isOpenMyStamped } = useSelector((store) => store.modal);
+  const { isOpenChangePassword } = useSelector((store) => store.modal);
+  const { isOpenConfirmPassword } = useSelector((store) => store.modal);
+  const { isOpenWithdrawal } = useSelector((store) => store.modal);
 
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            {isOpen && <MainPageCardModal />}
             <MainPage />
+            {isOpenCard && <MainPageCardModal />}
+            {isOpenStamped && <MainPageStampedCardModal />}
           </Route>
           <Route exact path="/signin">
             <SignInPage />
@@ -42,7 +50,12 @@ const App = () => {
             <SignUpPage />
           </Route>
           <Route exact path='/mypage'>
-            {isOpen && <MyCardModal/>}
+            {isOpenMakeCard && <MakeCardModal/>}
+            {isOpenMyCard && <MyCardModal/>}
+            {isOpenMyStamped && <MyPageStampedCard/>}
+            {isOpenChangePassword && <ChangePasswordCardModal/>}
+            {isOpenConfirmPassword && <ConfirmPasswordModal/>}
+            {isOpenWithdrawal && <WithdrawalCardModal/>}
             <MyPage />
           </Route>
         </Switch>

@@ -1,4 +1,4 @@
-import { closeModal } from "../../redux/reducers/ModalReducer";
+import { closeChangePasswordModal } from "../../redux/reducers/ModalReducer";
 import { useDispatch } from "react-redux";
 import ModalPortal from "./ModalPortal";
 import useOutSideClick from "../hook/UseOutSideClick";
@@ -110,11 +110,13 @@ const ChangePasswordModal = styled.div`
         top: 45vh;
     }
 `
+
+
 const ChangePasswordCardModal = () => {
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
-        dispatch(closeModal())
+        dispatch(closeChangePasswordModal())
     };
     useOutSideClick(modalRef, handleClose);
     return (
@@ -122,13 +124,13 @@ const ChangePasswordCardModal = () => {
             <ChangePasswordModal>
                     <div className="changePasswordCard" ref={modalRef}>
                         <button className="close-btn" onClick={() => {
-                            dispatch(closeModal())
+                            dispatch(closeChangePasswordModal())
                         }}>X</button>                  
                         <img className="logo_img" src="images/bucketscombine_logo.png" alt="card" />
                         <input className='newPassword' type='password' placeholder='새로운 비밀번호'></input>
                         <input className="newPasswordComfirm" type='password' placeholder='새로운 비밀번호 재확인'></input>   
                         <button className="passwordchange-btn" onClick={() => {
-                            dispatch(closeModal())
+                            dispatch(closeChangePasswordModal())
                         }}>비밀번호 변경</button>
                     </div>
             </ChangePasswordModal>

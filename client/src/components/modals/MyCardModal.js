@@ -1,4 +1,4 @@
-import { closeModal } from "../../redux/reducers/ModalReducer.js";
+import { closeMyCardModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 import React, { useRef } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
@@ -175,7 +175,7 @@ const MainPageStampedCardModal = () => {
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
-        dispatch(closeModal())
+        dispatch(closeMyCardModal())
     };
     useOutSideClick(modalRef, handleClose);
     return (
@@ -185,7 +185,7 @@ const MainPageStampedCardModal = () => {
                     <div className="mainPageStampedCard">
                     <h4 className=" modal-title">카드 제목</h4>
                     <button className="close-btn" onClick={() => {
-                        dispatch(closeModal())
+                        dispatch(closeMyCardModal())
                     }}>X</button>
                     <select className="card-info-state">
                         <option value="state" selected>진행중</option>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { openModal } from "../redux/reducers/ModalReducer.js";
+import { openCardModal } from "../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -162,8 +162,7 @@ export default function RowCard({
         className="card"
         style={backgroundImageStyle}
         onClick={() => {
-          dispatch(openModal());
-          // dispatch(setCardID( cardID ));
+          dispatch(openCardModal());
         }}
       >
         <div className="card-info">
