@@ -39,6 +39,7 @@ const App = () => {
             <MainPage />
             {isOpenCard && <MainPageCardModal />}
             {isOpenStamped && <MainPageStampedCardModal />}
+            {isOpenUserInfo && <UserInfoModal />}
           </Route>
           <Route exact path="/signin">
             <SignInPage />
@@ -56,6 +57,7 @@ const App = () => {
             {isOpenChangePassword && <ChangePasswordCardModal/>}
             {isOpenConfirmPassword && <ConfirmPasswordModal/>}
             {isOpenWithdrawal && <WithdrawalCardModal/>}
+            {isOpenUserInfo && <UserInfoModal />}
             <MyPage />
           </Route>
         </Switch>

@@ -9,6 +9,7 @@ const initialState = {
     isOpenChangePassword: false,
     isOpenConfirmPassword: false,
     isOpenWithdrawal: false,
+    isOpenUserInfo: false,
     mode:"",
     cardsData: [],
     modalCardID: 0,
@@ -40,7 +41,10 @@ const modalSlice = createSlice({
             state.isOpenConfirmPassword = true;
         },
         openWithdrawalModal: (state, action) => {
-            state. isOpenWithdrawal = true;
+            state.isOpenWithdrawal = true;
+        },
+        openUserInfoModal: (state, action) => {
+            state.isOpenUserInfo = true;
         },
         closeMainPageCardModal: (state, action) => {
             state.isOpenCard = false;
@@ -66,6 +70,9 @@ const modalSlice = createSlice({
         closeWithdrawalModal: (state, action) => {
             state.isOpenWithdrawal = false;
         },
+        closeUserInfoModal: (state, action) => {
+            state.isOpenUserInfo = false;
+        },
         setCardsData: (state, action) => {
             state.cardsData = action.payload;
         },
@@ -73,7 +80,6 @@ const modalSlice = createSlice({
             state.modalCardID = action.payload;
         }
     }
-    
 });
 export const { 
     openCardModal, 
@@ -84,6 +90,7 @@ export const {
     openChangePasswordModal,
     openConfirmPasswordModal,
     openWithdrawalModal,
+    openUserInfoModal,
     closeMainPageCardModal,
     closeMainStampedCardModal,
     closeMakeCardModal,
@@ -92,8 +99,8 @@ export const {
     closeChangePasswordModal,
     closeConfirmPasswordModal,
     closeWithdrawalModal,
-    setModalInfo,
+    closeUserInfoModal,
     setCardsData,
-    setModalCardID,
+    setModalCardID
     } = modalSlice.actions;
 export default modalSlice.reducer;
