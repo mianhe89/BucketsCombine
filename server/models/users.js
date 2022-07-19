@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "users_id",
         sourceKey: "id",
       });
-      users.belongsToMany(users, { through: "userCardJoin" });
+      users.belongsToMany(models.cards, { through: "userCardJoin" });
     }
   }
   users.init(

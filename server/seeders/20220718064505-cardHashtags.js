@@ -3,34 +3,34 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     {
-      await queryInterface.bulkInsert("cardHashtag", [
+      await queryInterface.bulkInsert("cardHashtags", [
         {
-          card_id: 1,
-          hashtag_id: 1,
+          cards_id: 1,
+          hashtags_id: 1,
         },
         {
-          card_id: 2,
-          hashtag_id: 1,
+          cards_id: 2,
+          hashtags_id: 1,
         },
         {
-          card_id: 15,
-          hashtag_id: 2,
+          cards_id: 15,
+          hashtags_id: 2,
         },
         {
-          card_id: 7,
-          hashtag_id: 3,
+          cards_id: 7,
+          hashtags_id: 3,
         },
         {
-          card_id: 7,
-          hashtag_id: 4,
+          cards_id: 7,
+          hashtags_id: 4,
         },
         {
-          card_id: 19,
-          hashtag_id: 1,
+          cards_id: 19,
+          hashtags_id: 1,
         },
         {
-          card_id: 5,
-          hashtag_id: 1,
+          cards_id: 5,
+          hashtags_id: 1,
         },
       ]);
     }
@@ -46,7 +46,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("cardHashtag", null, {});
+    return queryInterface.bulkDelete("cardHashtags", null, {});
     /**
      * Add commands to revert seed here.
      *

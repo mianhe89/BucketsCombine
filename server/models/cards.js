@@ -1,7 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const users = require("./users");
-const hashtags = require("./hashtags");
 module.exports = (sequelize, DataTypes) => {
   class cards extends Model {
     /**
@@ -13,19 +11,17 @@ module.exports = (sequelize, DataTypes) => {
       //models 는 db 객체 testdb.users 의미
 
       // define association here
-      cards.belongsToMany(hashtags, {
-        through: models.cardHashTag,
-        foreignKey: "cards_id",
-      }),
-        cards.belongsTo(models.users, {
-          foreignKey: { name: "users_id", allowNull: true },
-          onDelete: "CASCADE",
-        });
 
-      cards.belongsToMany(models.users, {
-        through: models.userCardJoin,
-        foreignKey: "cards_id",
+      cards.belongsTo(models.users, {
+        foreignKey: { name: "users_id", allowNull: true },
+        onDelete: "CASCADE",
       });
+      cards.belongsToMany(models.hashtags, {
+        through: "cardHashTag",
+      }),
+        cards.belongsToMany(models.users, {
+          through: "userCardJoin",
+        });
     }
   }
   //n:m관계에서 Query문을 날릴 땐, through와 구체적인 attributes를 명시
