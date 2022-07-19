@@ -85,7 +85,7 @@ export default function RowList () {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get('http://localhost:80/')
+    axios.get('http://localhost:80/mainpage/cardinfo')
     .then(res => {
       const cardsData = res.data.data.cardinfo;
       dispatch(setCardsData({ cardsData }));
