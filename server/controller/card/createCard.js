@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   //Client 에서 users_id 에 users의id를 넣어줘야함
   const newCard = {
     title: req.body.title,
-    cardtext: req.body.TEXT,
+    cardtext: req.body.cardtext,
     users_id: req.body.users_id,
     hashname: req.body.hashname,
     background: req.body.background,
