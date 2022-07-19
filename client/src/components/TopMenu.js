@@ -2,16 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
 
-const Desktop = ({ children }) => {
-  const isDesktop = useMediaQuery({ minWidth: 921 })
-  return isDesktop ? children : null
-}
-
-const Mobile = ({ children }) => {
-  const isMobile = useMediaQuery({ minWidth: 100, maxWidth: 920 })
-  return isMobile ? children : null
-}
-
 const TopMenuWrap = styled.div`
   .topmenu {
     display: flex;
@@ -29,7 +19,7 @@ const TopMenuWrap = styled.div`
     margin-left: 140px;
   }
 
-  .top-button {
+  .topmenu-button {
     align-self: center;
     margin-right: 30px;
     border: none;
@@ -39,10 +29,9 @@ const TopMenuWrap = styled.div`
     border-radius: 12px;
     font-size: 15px;
     background-color: #FFC700;
-    transition: all 300ms;
   }
 
-  .top-button:hover {
+  .topmenu-button:hover {
     align-self: center;
     margin-right: 30px;
     border: none;
@@ -94,9 +83,8 @@ const TopMenuWrap = styled.div`
     background-color: #323232;
     margin: 10px;
   }
-`
-const TopMenuWrapMobile = styled.div`
-  .topmenu {
+
+  .topmenu-mobile {
     display: flex;
     flex-direction: row;
     justify-content:flex-end;
@@ -109,24 +97,36 @@ const TopMenuWrapMobile = styled.div`
     top:0px
   }
 
-  .topmenu-button {
+  .topmenu-button-mobile {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 45px;
+    right: 20px;
     align-self: center;
     border: none;
-    box-shadow: none;
-    width: 36px;
-    height: 100px;
-    border-radius: 12px;
-    font-size: 15px;
-    background-color: #FFC700;
+    width: 30px;
+    height: 30px;
   }
+
+  .topmenu-button-mobile:hover {
+    position: absolute;
+    top: 45px;
+    right: 20px;
+    align-self: center;
+    border: none;
+    width: 30px;
+    height: 30px;
+  }
+`
+const TopMenuWrapMobile = styled.div`
+  
   
   
 `
 
 export default function Topmenu(){
+
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+
   const [isSignIn, setIsSignIn] = useState(false)
   const [isBoardOpen, setIsBoardOpen] = useState(false)
 
@@ -137,50 +137,26 @@ export default function Topmenu(){
   const usernamelick = () => {
     setIsBoardOpen(!isBoardOpen)
   }
-
-  // const dd = document.querySelector(".username-board")
-
-  // const modalEl = useRef();
-  // const handleClickOutside = ({ target }) => {
-    
-  //   if (modalEl.current.contains(dd)){
-  //     setIsBoardOpen(false);
-  //     console.log('dd')
-  //   } else {
-  //     console.log('ee')
-  //   }
-  // };
-  // useEffect(() => {
-  //   window.addEventListener("click", handleClickOutside);
-  //   return () => {
-  //     window.removeEventListener("click", handleClickOutside);
-  //   };
-  // }, []);
-
+  
   return(
-    <div>
-    <Desktop>
     <TopMenuWrap>
-    <div className='topmenu'>
-      <div className='topmenu-title' >Buckets Combine</div>
-      {isSignIn?  <button className='top-button' onClick={usernamelick}>유저닉네임</button> : 
-      <button className='top-button'onClick={signinClick}>Sign In</button>}
-    </div>
-    {isBoardOpen? <div className='username-board'>
-      <button className='board-button'>My Bucket</button>
-      <button className='board-button'>My Profile</button>
-      <button className='board-button'>Sign Out</button>
-      </div> :
-      <div/>}
-    </TopMenuWrap>
-    </Desktop>
-    <Mobile>
-    <TopMenuWrapMobile>
-      <div className='topmenu'>
-        <button className='topmenu-button'>Log<br/> In</button>
+      <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
+        {isDesktop ?
+          <div className='topmenu-title' >Buckets Combine</div>
+          : <div />}
+        {isSignIn ? 
+          isDesktop? <button className='topmenu-button' onClick={usernamelick}>유저닉네임</button>
+          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernamelick}/>
+          : isDesktop? <button className='topmenu-button' onClick={signinClick}>Sign In</button>
+            : <img className='topmenu-button-mobile' src='/images/sign-in-icon.png' onClick={signinClick}/>
+          }
       </div>
-    </TopMenuWrapMobile>
-    </Mobile>
-    </div>
+      {isBoardOpen ? <div className='username-board'>
+        <button className='board-button'>My Bucket</button>
+        <button className='board-button'>My Profile</button>
+        <button className='board-button'>Sign Out</button>
+      </div> :
+        <div />}
+    </TopMenuWrap>
   )
 }

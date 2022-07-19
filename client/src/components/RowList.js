@@ -107,6 +107,26 @@ export default function RowList () {
 
   const [search, setSearch] = useState("");
 
+  const {cardsData} = useSelector((state) => state.modal.cardsData);
+
+  const searchCard = () => {
+    const searchedData = cardsData.filter((card) => card.title.includes(search))
+    const searchedCards = searchedData.map((card, i) => {
+      return <RowCard
+        key={i}
+        cardID={card.id}
+        writerID={card.users_id}
+        title={card.title}
+        cardtext={card.cardtext}
+        background={card.background}
+        createdAt={card.createdAt}
+        completed={card.completed}
+      />;
+    })
+    setCards(searchedCards)
+  }
+  
+
   return (
     <RowListWrap >
       <div id={isDesktop ? 'card-list' : 'card-list-mobile'} >
@@ -121,10 +141,9 @@ export default function RowList () {
         </HorizontalScroll>
         <div className={isDesktop? 'search-bar' : 'search-bar-mobile'}>
           <input className='search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
-            console.log(search)
             setSearch(e.target.value)
           }} />
-          <img className='search-icon' src='/images/search-icon.png' />
+          <img className='search-icon' src='/images/search-icon.png' onClick={searchCard}/>
         </div>
       </div>
     </RowListWrap>
