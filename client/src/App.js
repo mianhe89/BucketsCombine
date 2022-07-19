@@ -40,6 +40,7 @@ const App = () => {
             <SignUpPage />
           </Route>
           <Route exact path="/mypage">
+            
             <MyPage />
           </Route>
         </Switch>

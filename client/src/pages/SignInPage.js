@@ -137,7 +137,6 @@ export default function SignInPage({ handleResponseSuccess }) {
       })
       .then((res) => {
         history.push("/");
-        console.log(res)
        });
     }
   };
@@ -150,7 +149,8 @@ export default function SignInPage({ handleResponseSuccess }) {
       <div className="signin_section">
       <button id="login_cancle">취소</button>
       <div className="signin_container">
-        <img src="images/bucketscombine_logo.png" alt="no" width="120px" height="120px"></img>
+        <img 
+src="images/bucketscombine_logo.png" alt="no" width="120px" height="120px"></img>
         <p />
           <div className="login_title">BucketsCombine</div>
           <form onSubmit={(e) => e.preventDefault()}>
@@ -179,6 +179,7 @@ export default function SignInPage({ handleResponseSuccess }) {
           </div>
           </form>
         </div>
+        
       </div>
       </div>
       </div>
