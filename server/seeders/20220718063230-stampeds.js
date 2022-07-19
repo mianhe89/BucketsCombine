@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     {
-      await queryInterface.bulkInsert("stamped", [
+      await queryInterface.bulkInsert("stampeds", [
         {
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -13,7 +13,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("stamped", null, {});
+    return queryInterface.bulkDelete("stampeds", null, {});
     /**
      * Add commands to revert seed here.
      *

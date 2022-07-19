@@ -9,21 +9,19 @@ module.exports = {
         card_id: 1,
         // 접속한 유저와 카드아이디의 유저아이디가 같거나 userCardJoin의 users_id가 같으면
         //해당userCardJoin id 마이버켓에 추가
-        stamped_id: 1, // 카드 컴플리트 / url 다 충족시 해당userCardJoin id 스템프에 추가
+        // 카드 컴플리트 / url 다 충족시 해당userCardJoin id 스템프에 추가
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         users_id: 2,
         card_id: 1,
-        stamped_id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
       {
         users_id: 3,
         card_id: 1,
-        stamped_id: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

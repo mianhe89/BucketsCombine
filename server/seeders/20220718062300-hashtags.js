@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert("hashtag", [
+    await queryInterface.bulkInsert("hashtags", [
       {
         hashname: "휴식",
         createdAt: new Date(),
@@ -37,7 +37,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("hashtag", null, {});
+    return queryInterface.bulkDelete("hashtags", null, {});
     /**
      * Add commands to revert seed here.
      *
