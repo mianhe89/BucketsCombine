@@ -31,6 +31,7 @@ const App = () => {
   const { isOpenChangePassword } = useSelector((store) => store.modal);
   const { isOpenConfirmPassword } = useSelector((store) => store.modal);
   const { isOpenWithdrawal } = useSelector((store) => store.modal);
+  // const { isOpenUserInfo } = useSelector((store) => store.modal);
 
   return (
     <div>
@@ -40,7 +41,7 @@ const App = () => {
             <MainPage />
             {isOpenCard && <MainPageCardModal />}
             {isOpenStamped && <MainPageStampedCardModal />}
-            {isOpenUserInfo && <UserInfoModal />}
+            {/* {isOpenUserInfo && <UserInfoModal />} */}
           </Route>
           <Route exact path="/signin">
             <SignInPage />
@@ -58,7 +59,7 @@ const App = () => {
             {isOpenChangePassword && <ChangePasswordCardModal/>}
             {isOpenConfirmPassword && <ConfirmPasswordModal/>}
             {isOpenWithdrawal && <WithdrawalCardModal/>}
-            {isOpenUserInfo && <UserInfoModal />}
+            {/* {isOpenUserInfo && <UserInfoModal />} */}
             <MyPage />
           </Route>
         </Switch>

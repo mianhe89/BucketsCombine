@@ -168,7 +168,7 @@ export default function SignUpPage() {
     ) {
       setErrorMessage("모든 항목은 필수입니다");
     } else {
-       axios.post("http://localhost:4000/users/signup", {
+       axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
         email: userinfo.email,
          password: userinfo.password,
          username: userinfo.username
