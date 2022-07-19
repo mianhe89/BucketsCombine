@@ -4,6 +4,8 @@ import React, { useRef } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
 import styled from 'styled-components';
 import ModalPortal from "./ModalPortal.js";
+import HorizontalScroll from 'react-scroll-horizontal';
+import { useMediaQuery } from "react-responsive";
 
 const MainPageModal = styled.div`
     .modal-container {
@@ -60,7 +62,7 @@ const MainPageModal = styled.div`
     .modal-title {
         position: absolute;
         width: calc(100% - 370px);
-        font-size: 30px;
+        font-size: 28px;
         font-weight: 1000;
         top: 60px;
         left: 60px;
@@ -79,10 +81,16 @@ const MainPageModal = styled.div`
         display: flex;
         flex-direction: row;
         position: absolute;
+        height: 40px;
         width: calc(100% - 370px);
         left: 60px;
         top: 160px;
         font-size: 18px;
+        overflow: auto;
+        white-space: nowrap;
+        ::-webkit-scrollbar {
+        display: none;
+        }
     }
 
     .card-description {
@@ -145,6 +153,88 @@ const MainPageModal = styled.div`
         margin-left: 4px;
         margin-right: 14px;
     }
+
+    .modal-container-mobile {
+        width: 90vw;
+        max-width: 1200px;
+        height: 60vh;
+        min-height: 460px;
+        max-height: 700px;
+        display: flex;
+        border-radius: 20px ;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        border: solid #5E5E5E;
+        border-width: 1px;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        animation: fadein 0.3s;
+        -moz-animation: fadein 0.3s;
+        -webkit-animation: fadein 0.3s;
+        -o-animation: fadein 0.3s;
+        box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-mobile {
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        border: none;
+        width: 0px;
+        height: 0px;
+        background-size: cover;
+    }
+
+    .modal-title-mobile {
+        position: absolute;
+        width: calc(100% - 70px);
+        font-size: 28px;
+        font-weight: 1000;
+        top: 60px;
+        left: 30px;
+        margin: auto;
+    }
+
+    .card-tag-mobile  {
+        position: absolute;
+        width: calc(100% - 70px);
+        left: 30px;
+        top: 120px;
+        font-size: 18px;
+    }
+
+    .userinfo-mobile {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        height: 40px;
+        width: calc(100% - 70px);
+        left: 30px;
+        top: 160px;
+        font-size: 18px;
+        overflow: auto;
+        white-space: nowrap;
+        ::-webkit-scrollbar {
+        display: none;
+        }
+    }
+
+    .card-description-mobile {
+        position: absolute;
+        width: calc(100% - 70px);
+        font-size: 16px;
+        top: 240px;
+        left: 30px;
+    };
 `    
     
 
@@ -152,6 +242,9 @@ const MainPageModal = styled.div`
 const MainPageCardModal = ({
     
     }) => {
+    const isDesktop = useMediaQuery({ minWidth: 921 })
+    const isTablet = useMediaQuery({ minWidth: 1201 })
+
     const modalCardID = useSelector((state) => state.modal.modalCardID);
     const {cardsData} = useSelector((state) => state.modal.cardsData);
 
@@ -172,12 +265,16 @@ const MainPageCardModal = ({
     return (
         <ModalPortal>
             <MainPageModal ref={modalRef}>
-                <div className="modal-container" >
+                <div className={isDesktop?"modal-container" : "modal-container-mobile" } >
                     <div className="mainPageCard" >
-                        <h4 className=" modal-title">{title}</h4>                      
-                        <div className="card-tag">#태그</div>
-                        <div className="userinfo">
+                        <h4 className={isTablet? " modal-title" : " modal-title-mobile"}>{title}</h4>                      
+                        <div className={isTablet? "card-tag" : "card-tag-mobile"}>#태그</div>
+                        <div className={isTablet? "userinfo" : "userinfo-mobile"}>
                             <div className="username">작성자유저이름<div className="profile-image"/></div>
+                            <div className="username">참가자유저이름<div className="profile-image"/></div>
+                            <div className="username">참가자유저이름<div className="profile-image"/></div>
+                            <div className="username">참가자유저이름<div className="profile-image"/></div>
+                            <div className="username">참가자유저이름<div className="profile-image"/></div>
                             <div className="username">참가자유저이름<div className="profile-image"/></div>
                             <div className="username">참가자유저이름<div className="profile-image"/></div>
                             <div className="username">참가자유저이름<div className="profile-image"/></div>
@@ -190,8 +287,8 @@ const MainPageCardModal = ({
                             dispatch(closeMainPageCardModal())}}>
                             담기 및 참가
                         </button>
-                        <div className="card-img" style={backgroundImageStyle} />
-                        <div className="card-description">{cardtext}</div>
+                        <div className={isTablet?"card-img" : "card-img-mobile"} style={backgroundImageStyle} />
+                        <div className={isTablet? "card-description" : "card-description-mobile"}>{cardtext}</div>
                     </div>
                 </div>
             </MainPageModal>
