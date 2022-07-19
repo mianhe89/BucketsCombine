@@ -1,29 +1,14 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("hashtags", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      username: {
-        type: Sequelize.STRING,
-      },
-      email: {
-        type: Sequelize.STRING,
-      },
-      password: {
-        type: Sequelize.STRING,
-      },
-      usertext: {
-        type: Sequelize.TEXT,
-      },
-      oauthlogin: {
-        type: Sequelize.STRING,
-      },
-      userphotourl: {
+      hashname: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -37,6 +22,8 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("users");
+    await queryInterface
+      .dropTable("hashtags")
+      .then(() => queryInterface.dropTable("cardHashtag", "hashtag_id"));
   },
 };

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const createCard = require("../controller/card/createCard");
 
-const createCard = require("../controller/card/create");
+router.post("/create", createCard);
 
-router.post("/cardcreate", createCard);
 module.exports = router;
