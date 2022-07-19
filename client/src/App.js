@@ -21,6 +21,7 @@ import ConfirmPasswordModal from './components/modals/ConfirmPasswordModal'
 import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
 import WithdrawalCardModal from './components/modals/WithdrawalModal';
 
+
 const App = () => {
   const { isOpenCard } = useSelector((store) => store.modal);
   const { isOpenStamped } = useSelector((store) => store.modal);
@@ -67,3 +68,4 @@ const App = () => {
 };
 
 export default App;
+

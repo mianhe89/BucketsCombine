@@ -8,16 +8,23 @@ const fs = require("fs");
 const app = express();
 const port = 80;
 const indexRouter = require("./router");
+const port = 4000;
+const indexRoute = "./route";
 const mysql = require("mysql");
 // const controllers = require("./controllers");
 const cookieParser = require("cookie-parser");
 const { result } = require("lodash");
 require("dotenv").config();
+
+const indexRouter = require("./router/index");
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(
   cors({
     origin: ["http://localhost:3000", "http://localhost:80"],
+    origin: ["http://localhost:3000"],
+    // origin: true,
     credentials: true,
     methods: ["GET", "POST", "OPTIONS"],
   })
