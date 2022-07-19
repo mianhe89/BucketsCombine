@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { openModal } from "../redux/reducers/ModalReducer.js";
+import { openCardModal } from "../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import {setModalCardID } from '../redux/reducers/ModalReducer'
 
 const RowCardWrap = styled.div`
   .card {
@@ -127,26 +129,27 @@ const RowCardWrap = styled.div`
 `;
 
 export default function RowCard({
-  id,
+  cardID,
+  writerID,
   title,
+  cardtext,
   background,
+  createdAt,
+  completed,
 }) {
   // const tagLine = tags.map((tag) => {
   //   return `#${tag}`;
   // });
   // {tagLine.join(" ")}
   const [isInBucket, setIsInBucket] = useState(false);
-  const cardID = id;
 
   const dispatch = useDispatch();
 
   const putInBucket = (id) => {
-    // dispatch(cardsAction.addToBucket(id))
     id.stopPropagation();
     setIsInBucket(true);
   };
   const pullOutBucket = (id) => {
-    // dispatch(cardsAction.addToBucket(id))
     id.stopPropagation();
     setIsInBucket(false);
   };
@@ -160,7 +163,8 @@ export default function RowCard({
         className="card"
         style={backgroundImageStyle}
         onClick={() => {
-          dispatch(openModal());
+          dispatch(openCardModal());
+          dispatch(setModalCardID(cardID));
         }}
       >
         <div className="card-info">

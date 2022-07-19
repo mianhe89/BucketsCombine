@@ -1,4 +1,4 @@
-import { closeModal } from "../../redux/reducers/ModalReducer.js";
+import { closeMakeCardModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 import React, { useRef } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
@@ -155,7 +155,7 @@ const MakeCardModal = () => {
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
-        dispatch(closeModal())
+        dispatch(closeMakeCardModal())
     };
     useOutSideClick(modalRef, handleClose);
     return (
@@ -165,11 +165,11 @@ const MakeCardModal = () => {
                 <div className="mainPageMakeCard">
                     <div className="modal-title">제목을 입력하세요</div>
                     <button type="button" className="close-btn" onClick={() => {
-                        dispatch(closeModal())
+                        dispatch(closeMakeCardModal())
                     }}>X</button>
                     <Tag></Tag>
                     <button type="button" className="btn-confirm-btn"onClick={()=> {
-                        dispatch(closeModal())}}>카드 만들기</button>
+                        dispatch(closeMakeCardModal())}}>카드 만들기</button>
                     <img className="card-img" src="images/card-img.jpg" alt="card" />
                     <div className="card-info">설명</div>
                     <div className="card-info-text">설명을 입력하세요</div>

@@ -1,7 +1,8 @@
-import { closeModal } from "../../redux/reducers/ModalReducer";
+import { closeConfirmPasswordModal } from "../../redux/reducers/ModalReducer";
 import { useDispatch } from "react-redux";
 import ModalPortal from "./ModalPortal";
-import React from "react";
+import useOutSideClick from "../hook/UseOutSideClick";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
 const ConfirmPasswordModal = styled.div`
@@ -105,17 +106,22 @@ const ConfirmPasswordModal = styled.div`
 
 const ConfirmPasswordCardModal = () => {
     const dispatch = useDispatch();
-    
+    const modalRef = useRef(null);
+    const handleClose = () => {
+        dispatch(closeConfirmPasswordModal())
+    };
+    useOutSideClick(modalRef, handleClose);
     return (
         <ModalPortal>
             <ConfirmPasswordModal>
-                <div className="confirmPasswordCard">
+                <div className="confirmPasswordCard" ref={modalRef}>
                 <button className="close-btn" onClick={() => {
-                    dispatch(closeModal())
+                    dispatch(closeConfirmPasswordModal())
                 }}>X</button>                  
                 <img className="logo_img" src="images/bucketscombine_logo.png" alt="card" />
                 <input className="usingPassword" type='password' placeholder='사용중인 비밀번호'></input>
-                <button className="confirm-btn">확인</button>
+                <button className="confirm-btn" onClick={() => {
+                    dispatch(closeConfirmPasswordModal())}}>확인</button>
                 </div>
             </ConfirmPasswordModal>
         </ModalPortal>

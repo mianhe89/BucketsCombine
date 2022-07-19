@@ -1,4 +1,4 @@
-import { closeModal } from "../../redux/reducers/ModalReducer";
+import { closeWithdrawalModal } from "../../redux/reducers/ModalReducer";
 import { useDispatch } from "react-redux";
 import ModalPortal from "./ModalPortal";
 import React, { useRef } from "react";
@@ -132,7 +132,7 @@ const WithdrawalCardModal = () => {
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
-        dispatch(closeModal())
+        dispatch(closeWithdrawalModal())
     };
     useOutSideClick(modalRef, handleClose);
     return (
@@ -140,15 +140,15 @@ const WithdrawalCardModal = () => {
             <WithdrawalModal ref={modalRef}>
                 <div className="withdrawalCard">
                 <button className="close-btn" onClick={() => {
-                    dispatch(closeModal())
+                    dispatch(closeWithdrawalModal())
                 }}>X</button>                  
                 <img className="logo_img" src="images/bucketscombine_logo.png" alt="card" />
                 <div className="withdrawal-message">만드신 카드는 모두 삭제됩니다. 정말 탈퇴하시겠습니까?ㅜㅜ</div>
                 <button className="cancel-btn" onClick={() => {
-                    dispatch(closeModal())
+                    dispatch(closeWithdrawalModal())
                 }}>돌아가기</button>
                 <button className="withdrawal-btn" onClick={() => {
-                    dispatch(closeModal())
+                    dispatch(closeWithdrawalModal())
                 }}>회원탈퇴</button>
                 </div>
             </WithdrawalModal>

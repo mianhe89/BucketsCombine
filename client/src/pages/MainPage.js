@@ -25,7 +25,6 @@ const MainPageWrap = styled.div`
 `
 
 export default function MainPage() {
-  const { isOpen } = useSelector((store) => store.modal);
   return (
     <MainPageWrap>
       <div className='mainpage'>
@@ -34,10 +33,8 @@ export default function MainPage() {
           <Topmenu />
           <MainSection />
           <CardsSection> 
-            {isOpen && <MainPageCardModal/>}
           </CardsSection>
           <StampedSection>
-            {isOpen && <MainPageStampedCardModal/>}
           </StampedSection>
         </div>
       </div>
