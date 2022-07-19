@@ -7,7 +7,7 @@ const https = require("https");
 const fs = require("fs");
 const app = express();
 const port = 80;
-const indexRoute = require("./router");
+const indexRouter = require("./router");
 const mysql = require("mysql");
 // const controllers = require("./controllers");
 const cookieParser = require("cookie-parser");
@@ -17,14 +17,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://localhost:80"],
+    origin: ["http://localhost:3000", "http://localhost:80"],
     credentials: true,
     methods: ["GET", "POST", "OPTIONS"],
   })
 );
 app.use(cookieParser());
 
-app.use("/", indexRoute);
+app.use("/", indexRouter);
 
 // if (document.location.protocol == "http:") {
 //   document.location.href = document.location.href.replace("http:", "https:");

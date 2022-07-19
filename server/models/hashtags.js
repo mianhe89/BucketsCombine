@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const cards = require("./cards");
 module.exports = (sequelize, DataTypes) => {
   class hashtags extends Model {
     /**
@@ -9,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      hashtags.belongsToMany(models.cards), { through: models.cardHashTag };
     }
   }
   hashtags.init(

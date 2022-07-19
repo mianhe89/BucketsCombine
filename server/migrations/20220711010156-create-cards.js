@@ -1,29 +1,26 @@
 "use strict";
+
+const { sequelize } = require("../models");
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("cards", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      username: {
+      title: {
         type: Sequelize.STRING,
       },
-      email: {
-        type: Sequelize.STRING,
-      },
-      password: {
-        type: Sequelize.STRING,
-      },
-      usertext: {
+      cardtext: {
         type: Sequelize.TEXT,
       },
-      oauthlogin: {
+      background: {
         type: Sequelize.STRING,
       },
-      userphotourl: {
+      completed: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -34,9 +31,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-    });
+      users_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        foreignKey: true,
+        onDelete: "CASCADE",
+        references: { model: "users", key: "id" },
+      },
+    }); // users 의 id 가 삭제되면 삭제
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("cards");
+    await queryInterface.dropTable("cardHashtag");
+    await queryInterface.removeColumn("cards", "user_id");
   },
 };
