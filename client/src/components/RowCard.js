@@ -136,11 +136,17 @@ export default function RowCard({
   background,
   createdAt,
   completed,
+  tags,
+  membersID,
 }) {
-  // const tagLine = tags.map((tag) => {
-  //   return `#${tag}`;
-  // });
-  // {tagLine.join(" ")}
+
+  const tagLine = tags.map((tag) => {
+    return `#${tag}`;
+  });
+  
+
+
+
   const [isInBucket, setIsInBucket] = useState(false);
 
   const dispatch = useDispatch();
@@ -178,10 +184,10 @@ export default function RowCard({
             </button>
           )}
           <div className="card-title">{title}</div>
-          <div className="card-tegs">#태그 #태그</div>
+          <div className="card-tegs">{tagLine.join(" ")}</div>
           <div className="card-footer">
             <div className="card-writer">글쓴이</div>
-            <div className="card-member">0명</div>
+            <div className="card-member">{membersID.length}명</div>
           </div>
         </div>
       </div>

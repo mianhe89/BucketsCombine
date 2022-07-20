@@ -91,7 +91,7 @@ export default function RowList () {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
     .then(res => {
-      const cardsData = res.data.data.cardinfo;
+      const cardsData = res.data;
       dispatch(setCardsData({ cardsData }));
       setCards(
         cardsData.map((card, i) => {
@@ -104,6 +104,8 @@ export default function RowList () {
           background={card.background}
           createdAt={card.createdAt}
           completed={card.completed}
+          tags={card.tag}
+           membersID={card.membersID}
         />;
       }))
     })
@@ -128,6 +130,8 @@ export default function RowList () {
         background={card.background}
         createdAt={card.createdAt}
         completed={card.completed}
+        tags={card.tag}
+        membersID={card.membersID}
       />;
     })
     setCards(searchedCards)
@@ -148,6 +152,8 @@ export default function RowList () {
         background={card.background}
         createdAt={card.createdAt}
         completed={card.completed}
+        tags={card.tag}
+        membersID={card.membersID}
       />;
     })
     setCards(searchedCards)

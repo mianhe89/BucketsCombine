@@ -255,7 +255,12 @@ const MainPageCardModal = ({
     const cardtext = cardData[0].cardtext;
     let backgroundImageStyle = {
         backgroundImage: "url(/images/card-" + cardData[0].background + ".jpg)",
-      };
+    };
+    const tags = cardData[0].tag;
+
+    const tagLine = tags.map((tag) => {
+        return `#${tag}`;
+      });
 
     const dispatch = useDispatch();
     const modalRef = useRef(null);
@@ -269,7 +274,7 @@ const MainPageCardModal = ({
                 <div className={isDesktop?"modal-container" : "modal-container-mobile" } >
                     <div className="mainPageCard" >
                         <h4 className={isTablet? " modal-title" : " modal-title-mobile"}>{title}</h4>                      
-                        <div className={isTablet? "card-tag" : "card-tag-mobile"}>#태그</div>
+                        <div className={isTablet? "card-tag" : "card-tag-mobile"}>{tagLine.join(" ")}</div>
                         <div className={isTablet? "userinfo" : "userinfo-mobile"}>
                             <div className="username">작성자유저이름<div className="profile-image"/></div>
                             <div className="username">참가자유저이름<div className="profile-image"/></div>
