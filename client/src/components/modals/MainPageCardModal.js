@@ -91,6 +91,7 @@ const MainPageModal = styled.div`
         ::-webkit-scrollbar {
         display: none;
         }
+        
     }
 
     .card-description {

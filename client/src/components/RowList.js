@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import { useMediaQuery } from "react-responsive";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
-import {setCardsData } from '../redux/reducers/ModalReducer'
+import { setCardsData } from '../redux/reducers/ModalReducer'
 
 
 const RowListWrap = styled.div`
@@ -74,6 +74,10 @@ const RowListWrap = styled.div`
     width: 400px;
     z-index: 1;
   }
+  .dummyarea {
+    height: 100%;
+    width: calc(100vw - 240px);
+  }
 `;
 
 
@@ -109,6 +113,9 @@ export default function RowList () {
 
   const {cardsData} = useSelector((state) => state.modal.cardsData);
 
+  const dummyarea = document.querySelector('.dummyarea')
+  
+
   const searchCard = () => {
     const searchedData = cardsData.filter((card) => card.title.includes(search))
     const searchedCards = searchedData.map((card, i) => {
@@ -124,6 +131,30 @@ export default function RowList () {
       />;
     })
     setCards(searchedCards)
+    const w = (searchedCards.length * 220) + 240
+    dummyarea.style.width = `calc(100vw - ${w}px)`
+  }
+
+  const enterSearchCard = (e) => {
+    if(e.key === 'Enter'){
+      const searchedData = cardsData.filter((card) => card.title.includes(search))
+    const searchedCards = searchedData.map((card, i) => {
+      return <RowCard
+        key={i}
+        cardID={card.id}
+        writerID={card.users_id}
+        title={card.title}
+        cardtext={card.cardtext}
+        background={card.background}
+        createdAt={card.createdAt}
+        completed={card.completed}
+      />;
+    })
+    setCards(searchedCards)
+    const w = (searchedCards.length * 220) + 240
+    dummyarea.style.width = `calc(100vw - ${w}px)`
+    }
+    
   }
   
 
@@ -131,23 +162,23 @@ export default function RowList () {
     <RowListWrap >
       <div id={isDesktop ? 'card-list' : 'card-list-mobile'} >
         <HorizontalScroll
-          pageLock={true}
+          className='horizontalScroll'
+          pageLock={false}
           reverseScroll={true}
-          style={{}}
+          style={{ height: "100%", width: "100%" }}
         >
           <div className="dummy" />
           {cards}
           <div className="dummy" />
+          <div className="dummyarea"/>
         </HorizontalScroll>
         <div className={isDesktop? 'search-bar' : 'search-bar-mobile'}>
           <input className='search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
             setSearch(e.target.value)
-          }} />
+          }} onKeyUp={enterSearchCard}/>
           <img className='search-icon' src='/images/search-icon.png' onClick={searchCard}/>
         </div>
       </div>
     </RowListWrap>
   );
 };
-
-
