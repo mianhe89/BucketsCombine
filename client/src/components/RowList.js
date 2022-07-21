@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import { useMediaQuery } from "react-responsive";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
-import { setCardsData } from '../redux/reducers/ModalReducer'
+import { setCardsData, setUsersData } from '../redux/reducers/ModalReducer'
 
 
 const RowListWrap = styled.div`
@@ -76,7 +76,7 @@ const RowListWrap = styled.div`
   }
   .dummyarea {
     height: 100%;
-    width: calc(100vw - 240px);
+    width: calc(0vw - 240px);
   }
 `;
 
@@ -84,47 +84,60 @@ const RowListWrap = styled.div`
 export default function RowList () {
   const isDesktop = useMediaQuery({ minWidth: 921 })
 
-  const [cards, setCards] = useState('');
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
-    .then(res => {
-      const cardsData = res.data;
-      dispatch(setCardsData({ cardsData }));
-      setCards(
-        cardsData.map((card, i) => {
-        return <RowCard
-          key={i}
-          cardID={card.id}
-          writerID={card.users_id}
-          title={card.title}
-          cardtext={card.cardtext}
-          background={card.background}
-          createdAt={card.createdAt}
-          completed={card.completed}
-          tags={card.tag}
-           membersID={card.membersID}
-        />;
-      }))
-    })
-  }, []);
+  const [cards, setCards] = useState([]);
+
+  const [users, setUsers] = useState([])
 
   const [search, setSearch] = useState("");
 
-  const {cardsData} = useSelector((state) => state.modal.cardsData);
-
   const dummyarea = document.querySelector('.dummyarea')
+
+  const saveData = (responseCards, responseUsers) => {
+    const cardsData = responseCards.data;
+    const usersData = responseUsers.data;
+    dispatch(setCardsData({ cardsData }));
+    dispatch(setUsersData({ usersData }));
+    setCards(
+      cardsData.map((card, i) => {
+      return <RowCard
+        key={i}
+        cardID={card.id}
+        writername={usersData[card.users_id - 1].username}
+        title={card.title}
+        cardtext={card.cardtext}
+        background={card.background}
+        createdAt={card.createdAt}
+        completed={card.completed}
+        tags={card.tag}
+        membersID={card.membersID}
+      />;
+    }))
+    setUsers(usersData)
+  }
+
+  useEffect(() => {async function fetchData() {
+    const responseCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
+    const responseUsers = await axios.get(`${process.env.REACT_APP_API_URL}/mypage/usersinfo`)
+    const sendData = await saveData(responseCards,responseUsers )
+  } fetchData()}, []);
+
   
+  const {cardsData} = useSelector((state) => state.modal.cardsData);
+  const {usersData} = useSelector((state) => state.modal.usersData);
 
   const searchCard = () => {
-    const searchedData = cardsData.filter((card) => card.title.includes(search))
+    const titleMatchData = cardsData.filter((card) => card.title.includes(search))
+    const tagMatchData = cardsData.filter((card) => card.tag.includes(search))
+    const mergeData = [...titleMatchData, ... tagMatchData]
+    const set = new Set(mergeData)
+    const searchedData = [...set]
     const searchedCards = searchedData.map((card, i) => {
       return <RowCard
         key={i}
         cardID={card.id}
-        writerID={card.users_id}
+        writername={usersData[card.users_id - 1].username}
         title={card.title}
         cardtext={card.cardtext}
         background={card.background}
@@ -141,24 +154,28 @@ export default function RowList () {
 
   const enterSearchCard = (e) => {
     if(e.key === 'Enter'){
-      const searchedData = cardsData.filter((card) => card.title.includes(search))
-    const searchedCards = searchedData.map((card, i) => {
-      return <RowCard
-        key={i}
-        cardID={card.id}
-        writerID={card.users_id}
-        title={card.title}
-        cardtext={card.cardtext}
-        background={card.background}
-        createdAt={card.createdAt}
-        completed={card.completed}
-        tags={card.tag}
-        membersID={card.membersID}
-      />;
-    })
-    setCards(searchedCards)
-    const w = (searchedCards.length * 220) + 240
-    dummyarea.style.width = `calc(100vw - ${w}px)`
+      const titleMatchData = cardsData.filter((card) => card.title.includes(search))
+      const tagMatchData = cardsData.filter((card) => card.tag.includes(search))
+      const mergeData = [...titleMatchData, ... tagMatchData]
+      const set = new Set(mergeData)
+      const searchedData = [...set]
+      const searchedCards = searchedData.map((card, i) => {
+        return <RowCard
+          key={i}
+          cardID={card.id}
+          writername={usersData[card.users_id - 1].username}
+          title={card.title}
+          cardtext={card.cardtext}
+          background={card.background}
+          createdAt={card.createdAt}
+          completed={card.completed}
+          tags={card.tag}
+          membersID={card.membersID}
+        />;
+      })
+      setCards(searchedCards)
+      const w = (searchedCards.length * 220) + 240
+      dummyarea.style.width = `calc(100vw - ${w}px)`
     }
     
   }

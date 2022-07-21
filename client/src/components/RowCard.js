@@ -130,7 +130,7 @@ const RowCardWrap = styled.div`
 
 export default function RowCard({
   cardID,
-  writerID,
+  writername,
   title,
   cardtext,
   background,
@@ -186,7 +186,7 @@ export default function RowCard({
           <div className="card-title">{title}</div>
           <div className="card-tegs">{tagLine.join(" ")}</div>
           <div className="card-footer">
-            <div className="card-writer">글쓴이</div>
+            <div className="card-writer">{writername}</div>
             <div className="card-member">{membersID.length}명</div>
           </div>
         </div>

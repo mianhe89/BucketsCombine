@@ -116,6 +116,33 @@ const TopMenuWrap = styled.div`
     width: 30px;
     height: 30px;
   }
+
+  .username-board-mobile {
+    top: 120px;
+    right: 0px;
+    position: fixed;
+    width: 70px;
+    height: 200px;
+    border-radius: 12px;
+    z-index: 16;
+    background-color: #D9D9D9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .board-button-mobile {
+    border: none;
+    box-shadow: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    font-size: 15px;
+    color: black;
+    background-color: #D9D9D9;
+    margin: 10px;
+  }
 `
 const TopMenuWrapMobile = styled.div`
   
@@ -151,12 +178,17 @@ export default function Topmenu(){
             : <img className='topmenu-button-mobile' src='/images/sign-in-icon.png' onClick={signinClick}/>
           }
       </div>
-      {isBoardOpen ? <div className='username-board'>
+      {isBoardOpen ? isDesktop? <div className='username-board'>
         <button className='board-button'>My Bucket</button>
         <button className='board-button'>My Profile</button>
         <button className='board-button'>Sign Out</button>
-      </div> :
-        <div />}
+      </div> 
+      : <div className='username-board-mobile'>
+      <img className='board-button-mobile' src='/images/bucket-icon.png'/>
+      <img className='board-button-mobile' src='/images/profile-icon.png'/>
+      <img className='board-button-mobile' src='/images/sign-out-icon.png'/>
+    </div> 
+      :  <div />}
     </TopMenuWrap>
   )
 }

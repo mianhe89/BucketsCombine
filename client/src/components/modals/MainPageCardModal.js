@@ -1,4 +1,4 @@
-import { closeMainPageCardModal } from "../../redux/reducers/ModalReducer.js";
+import { closeMainPageCardModal, setUsersData } from "../../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useRef } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
@@ -86,6 +86,24 @@ const MainPageModal = styled.div`
         left: 60px;
         top: 160px;
         font-size: 18px;
+        overflow: auto;
+        white-space: nowrap;
+        ::-webkit-scrollbar {
+        display: none;
+        }
+        
+    }
+
+    .userinfo-message {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        height: 40px;
+        width: calc(100% - 370px);
+        left: 60px;
+        top: 180px;
+        color: grey;
+        font-size: 14px;
         overflow: auto;
         white-space: nowrap;
         ::-webkit-scrollbar {
@@ -236,6 +254,23 @@ const MainPageModal = styled.div`
         top: 240px;
         left: 30px;
     };
+
+    .userinfo-message-mobile {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        height: 40px;
+        width: calc(100% - 70px);
+        left: 30px;
+        top: 180px;
+        color: grey;
+        font-size: 14px;
+        overflow: auto;
+        white-space: nowrap;
+        ::-webkit-scrollbar {
+        display: none;
+        }
+    }
 `    
     
 
@@ -248,6 +283,7 @@ const MainPageCardModal = ({
 
     const modalCardID = useSelector((state) => state.modal.modalCardID);
     const {cardsData} = useSelector((state) => state.modal.cardsData);
+    const {usersData} = useSelector((state) => state.modal.usersData);
 
     const cardData = cardsData.filter(card => card.id === modalCardID);
     
@@ -260,7 +296,10 @@ const MainPageCardModal = ({
 
     const tagLine = tags.map((tag) => {
         return `#${tag}`;
-      });
+    });
+
+    
+    const membersID = cardData[0].membersID;
 
     const dispatch = useDispatch();
     const modalRef = useRef(null);
@@ -275,15 +314,15 @@ const MainPageCardModal = ({
                     <div className="mainPageCard" >
                         <h4 className={isTablet? " modal-title" : " modal-title-mobile"}>{title}</h4>                      
                         <div className={isTablet? "card-tag" : "card-tag-mobile"}>{tagLine.join(" ")}</div>
-                        <div className={isTablet? "userinfo" : "userinfo-mobile"}>
-                            <div className="username">작성자유저이름<div className="profile-image"/></div>
-                            <div className="username">참가자유저이름<div className="profile-image"/></div>
-                            <div className="username">참가자유저이름<div className="profile-image"/></div>
-                            <div className="username">참가자유저이름<div className="profile-image"/></div>
-                            <div className="username">참가자유저이름<div className="profile-image"/></div>
-                            <div className="username">참가자유저이름<div className="profile-image"/></div>
-                            <div className="username">참가자유저이름<div className="profile-image"/></div>
-                            <div className="username">참가자유저이름<div className="profile-image"/></div>
+                        {/* <div className={isTablet? "userinfo" : "userinfo-mobile"}>
+                            {membersID.map((member, i) => {
+                                const username = usersData[member - 1].username;
+                                const userphoto = usersData[member - 1].userphotourl;
+                                return <div key={i} className="username">{username}<img className="profile-image" src={userphoto}/></div>
+                            })}
+                        </div> */}
+                        <div className={isTablet? "userinfo-message" : "userinfo-message-mobile"}>
+                            현재 참여 인원 {membersID.length}명 (참여하시면 참여하신 분들의 정보를 볼 수 있습니다.)
                         </div>
                         <button className="close-btn" onClick={() => {
                             dispatch(closeMainPageCardModal())
@@ -291,7 +330,7 @@ const MainPageCardModal = ({
                         <button type="button" className="btn-confirm-btn"
                             onClick={()=> {
                             dispatch(closeMainPageCardModal())}}>
-                            담기 및 참가
+                            담기 및 참여
                         </button>
                         <div className={isTablet?"card-img" : "card-img-mobile"} style={backgroundImageStyle} />
                         <div className={isTablet? "card-description" : "card-description-mobile"}>{cardtext}</div>
