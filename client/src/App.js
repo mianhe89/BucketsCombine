@@ -32,11 +32,7 @@ const App = () => {
   const { isOpenChangePassword } = useSelector((store) => store.modal);
   const { isOpenConfirmPassword } = useSelector((store) => store.modal);
   const { isOpenWithdrawal } = useSelector((store) => store.modal);
-<<<<<<< HEAD
-  // const { isOpenUserInfo } = useSelector((store) => store.modal);
-=======
   const { isOpenUserInfo } = useSelector((store) => store.modal);
->>>>>>> feature/fix_modal
 
   return (
     <div>
@@ -46,10 +42,6 @@ const App = () => {
             <MainPage />
             {isOpenCard && <MainPageCardModal />}
             {isOpenStamped && <MainPageStampedCardModal />}
-<<<<<<< HEAD
-            {/* {isOpenUserInfo && <UserInfoModal />} */}
-=======
->>>>>>> feature/fix_modal
           </Route>
           <Route exact path="/signin">
             <SignInPage />
@@ -67,7 +59,7 @@ const App = () => {
             {isOpenChangePassword && <ChangePasswordCardModal/>}
             {isOpenConfirmPassword && <ConfirmPasswordModal/>}
             {isOpenWithdrawal && <WithdrawalCardModal/>}
-            {/* {isOpenUserInfo && <UserInfoModal />} */}
+            {isOpenUserInfo && <UserInfoModal />}
             <MyPage />
           </Route>
         </Switch>

@@ -136,12 +136,9 @@ export default function Topmenu(){
     setIsSignIn(true)
   }
 
-  const usernamelick = () => {
+  const usernameclick = () => {
     setIsBoardOpen(!isBoardOpen)
   }
-<<<<<<< HEAD
-  
-=======
 
   const modalRef = useRef(null);
     const handleClose = () => {
@@ -167,36 +164,17 @@ export default function Topmenu(){
   //   };
   // }, []);
 
->>>>>>> feature/fix_modal
   return(
     <TopMenuWrap>
-<<<<<<< HEAD
-      <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
-        {isDesktop ?
-          <div className='topmenu-title' >Buckets Combine</div>
-          : <div />}
-        {isSignIn ? 
-          isDesktop? <button className='topmenu-button' onClick={usernamelick}>유저닉네임</button>
-          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernamelick}/>
-          : isDesktop? <button className='topmenu-button' onClick={signinClick}>Sign In</button>
-            : <img className='topmenu-button-mobile' src='/images/sign-in-icon.png' onClick={signinClick}/>
-          }
-      </div>
-      {isBoardOpen ? <div className='username-board'>
-        <button className='board-button'>My Bucket</button>
-        <button className='board-button'>My Profile</button>
-        <button className='board-button'>Sign Out</button>
-=======
     <div className='topmenu'>
       <div className='topmenu-title' >Buckets Combine</div>
-      {isSignIn?  <button className='top-button' onClick={usernamelick} ref={modalRef}>유저닉네임</button> : 
+      {isSignIn?  <button className='top-button' onClick={usernameclick} ref={modalRef}>유저닉네임</button> : 
       <button className='top-button'onClick={signinClick}>Sign In</button>}
     </div>
     {isBoardOpen? <div className='username-board'>
       <button className='board-button'>My Bucket</button>
       <button className='board-button'>My Profile</button>
       <button className='board-button'>Sign Out</button>
->>>>>>> feature/fix_modal
       </div> :
         <div />}
     </TopMenuWrap>
