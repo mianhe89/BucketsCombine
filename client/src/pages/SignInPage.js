@@ -115,12 +115,13 @@ const SignInPageWrap = styled.div`
   }
 `
 
-export default function SignInPage({ handleResponseSuccess }) {
+export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
   const [logininfo, setLogininfo] = useState({
     email: "",
     password: ""
   });
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errormessage, setErrormessage] = useState('');
+  const [errormessage2, setErrormessage2] = useState('');
   const history = useHistory();
   const handleInputValue = (key) => (e) => {
     setLogininfo({ ...logininfo, [key]: e.target.value });
@@ -128,18 +129,37 @@ export default function SignInPage({ handleResponseSuccess }) {
   const handleLogin = () => {
     // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
     // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
-    if(logininfo.email === "" || logininfo.password === ""){
-      setErrorMessage('이메일과 비밀번호를 입력하세요')
+    if (!logininfo.email || !logininfo.email) {
+      setErrormessage('이메일과 비밀번호를 입력해야 합니다')
     } else {
-      axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
+      setErrormessage('')
+    }
+    if (!errormessage) {
+      axios.post(`${process.env.REACT_APP_API_URL}/users/signin`, {
         email: logininfo.email,
         password: logininfo.password
       })
-      .then((res) => {
-        history.push("/");
-       });
+      // .then((res) => {
+      //   handleResponseSuccess()
+      //   history.push("/");
+      //  });
+
+
+
+      .catch(error => setErrormessage2('비밀번호가 일치하지 않습니다'))
+      .then(res => {
+        sessionStorage.setItem('id', res.data.id);
+        sessionStorage.setItem('email', res.data.email);
+        sessionStorage.setItem('name', res.data.name);
+        sessionStorage.setItem('nickname', res.data.nickname)
+        setIsLogin(true)
+        handleResponseSuccess()
+      })
+      .then(res => history.push("/"))
+      .catch(error => setErrormessage2('비밀번호가 일치하지 않습니다'))
     }
-  };
+  }
+
 
 
 	return (
@@ -162,14 +182,15 @@ src="images/bucketscombine_logo.png" alt="no" width="120px" height="120px"></img
           type="password" 
           placeholder="비밀번호" 
           onChange={handleInputValue("password")}/>
-          <div className='alert-box'>{errorMessage}</div>
+          <div className='alert-box'>{errormessage}</div>
           <li><Link to="/signup">아이디 / 비밀번호찾기</Link></li>
           <div className="login_signupbox">
             <button className="login_box" 
             type="submit" 
             value="로그인"
             onClick={handleLogin}>로그인</button>
-            <div className='alert-box'>{errorMessage}</div>
+            <div className='alert-box'>{errormessage}</div>
+            <div className='alert-box'>{errormessage2}</div>
             <button className="login_google">
               <img src="images/unnamed.webp"
               alt="사진이 없습니다." width="20px" height="20px"></img>
