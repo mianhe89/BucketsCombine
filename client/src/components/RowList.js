@@ -87,9 +87,7 @@ export default function RowList () {
   const dispatch = useDispatch();
 
   const [cards, setCards] = useState([]);
-
   const [users, setUsers] = useState([])
-
   const [search, setSearch] = useState("");
 
   const dummyarea = document.querySelector('.dummyarea')
@@ -177,7 +175,6 @@ export default function RowList () {
       const w = (searchedCards.length * 220) + 240
       dummyarea.style.width = `calc(100vw - ${w}px)`
     }
-    
   }
   
 

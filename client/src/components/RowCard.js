@@ -4,6 +4,7 @@ import { openCardModal } from "../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import {setModalCardID } from '../redux/reducers/ModalReducer'
+import { useMediaQuery } from "react-responsive";
 
 const RowCardWrap = styled.div`
   .card {
@@ -139,13 +140,7 @@ export default function RowCard({
   tags,
   membersID,
 }) {
-
-  const tagLine = tags.map((tag) => {
-    return `#${tag}`;
-  });
-  
-
-
+  const isDesktop = useMediaQuery({ minWidth: 921 })
 
   const [isInBucket, setIsInBucket] = useState(false);
 
@@ -159,6 +154,11 @@ export default function RowCard({
     id.stopPropagation();
     setIsInBucket(false);
   };
+
+  const tagLine = tags.map((tag) => {
+    return `#${tag}`;
+  });
+  
 
   let backgroundImageStyle = {
     backgroundImage: "url(/images/card-" + background + ".jpg)",

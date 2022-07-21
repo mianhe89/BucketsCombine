@@ -12,8 +12,24 @@ const ColumnCardWrap = styled.div`
     width: 100%;
   }
 
-  .ColumnCard-progress {
-    background-color: red;
+  .ColumnCard-progress-0 {
+    background-color: #8A8A8A;
+    height: 80px;
+    width: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  .ColumnCard-progress-1 {
+    background-color: #FFC700;
+    height: 80px;
+    width: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  .ColumnCard-progress-2 {
+    background-color: #FF5C00;
     height: 80px;
     width: 10px;
     border-radius: 10px;
@@ -85,31 +101,47 @@ const ColumnCardWrap = styled.div`
 
 `;
 
-export default function ColumnCard ({title, tags, writer, memberCount, background}) {
+export default function ColumnCard ({
+  cardID,
+  writername,
+  title,
+  cardtext,
+  background,
+  createdAt,
+  completed,
+  tags,
+  membersID,
+}) {
   const isDesktop = useMediaQuery({ minWidth: 921 })
+
   const tagLine = tags.map(tag => {
     return `#${tag}`
  })
  
- let backgroundImageStyle = {
-   backgroundImage: "url(/images/" + background + ".jpg)"
- }
+  let backgroundImageStyle = {
+    backgroundImage: "url(/images/card-" + background + ".jpg)",
+  };
+
 
  const dispatch = useDispatch();
   
   return (
     <ColumnCardWrap>
       <div className="ColumnCard" onClick={() => dispatch(openMyCardModal())}>
-        <div className='ColumnCard-progress'/>
-        <div className={isDesktop?'ColumnCard-info' : 'ColumnCard-info-mobile'}style={backgroundImageStyle} >
+        <div className={
+          completed==='0'? 'ColumnCard-progress-0'
+          : completed==='1'? 'ColumnCard-progress-1'
+          : 'ColumnCard-progress-2'
+        }/>
+        <div className={isDesktop?'ColumnCard-info' : 'ColumnCard-info-mobile' }style={backgroundImageStyle} >
         <div className='ColumnCard-info-text'>
             <div className="ColumnCard-title">{title}</div>
             <div className="ColumnCard-tag">{tagLine.join(' ')}</div>
         </div>
-        <div className="ColumnCard-writer">{writer}</div>
+        <div className="ColumnCard-writer">{writername}</div>
         <img className='ColumnCard-share-icon' src='/images/share-icon.png' />
         <div className='ColumnCard-member-count'>
-        {memberCount}명
+        {membersID.length}명
         </div>
         </div>
       </div>
