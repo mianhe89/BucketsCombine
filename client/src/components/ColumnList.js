@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MakeModal from "./modals/MakeCardModal";
 import { useMediaQuery } from "react-responsive";
 import axios from 'axios'
-import { setCardsData, setUsersData, setBucketData } from '../redux/reducers/ModalReducer'
+import { setCardsData, setUsersData, setAllcardsData, setBucketData } from '../redux/reducers/ModalReducer'
 
 
 const ColumnListWrap = styled.div`
@@ -128,19 +128,19 @@ export default function ColumnList () {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
 
-  const saveData = (responseCards, responseUsers, responseBucketID) => {
-    const cardsData = responseCards.data;
+  const saveData = (responseAllCards, responseUsers, responseBucketID) => {
+    const allCardsData = responseAllCards.data;
     const usersData = responseUsers.data;
     const bucketData = responseBucketID.data;
 
-    const bucketCardsData = cardsData.filter((card) => {
+    const bucketCardsData = allCardsData.filter((card) => {
       for(let i of bucketData){
         if(card.id === i) return true
       }
       return false
     })
 
-    dispatch(setCardsData({ cardsData }));
+    dispatch(setAllcardsData({ allCardsData }));
     dispatch(setUsersData({ usersData }));
     dispatch(setBucketData({ bucketCardsData }))
 
@@ -163,12 +163,12 @@ export default function ColumnList () {
   }
 
   useEffect(() => {async function fetchData() {
-    const responseCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
+    const responseAllCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
     const responseUsers = await axios.get(`${process.env.REACT_APP_API_URL}/mypage/usersinfo`)
     const responseBucketID = await axios.post(`${process.env.REACT_APP_API_URL}/mypage/mycards`,{
       "users_id" : "1"
     })
-    const sendData = await saveData(responseCards, responseUsers, responseBucketID )
+    const sendData = await saveData(responseAllCards, responseUsers, responseBucketID )
   } fetchData()}, []);
 
   const bucketData = useSelector((state) => state.modal.bucketData.bucketCardsData);

@@ -317,21 +317,22 @@ const MainPageCardModal = ({
     const {cardsData} = useSelector((state) => state.modal.cardsData);
     const {usersData} = useSelector((state) => state.modal.usersData);
 
-    const cardData = cardsData.filter(card => card.id === modalCardID);
+    const { allCardsData } = useSelector((state) => state.modal.allCardsData);
+    const allCardData = allCardsData.filter(card => card.id === modalCardID);
     
-    const title = cardData[0].title;
-    const cardtext = cardData[0].cardtext;
+    const title = allCardData[0].title;
+    const cardtext = allCardData[0].cardtext;
     let backgroundImageStyle = {
-        backgroundImage: "url(/images/card-" + cardData[0].background + ".jpg)",
+        backgroundImage: "url(/images/card-" + allCardData[0].background + ".jpg)",
     };
-    const tags = cardData[0].tag;
+    const tags = allCardData[0].tag;
 
     const tagLine = tags.map((tag) => {
         return `#${tag}`;
     });
 
     
-    const membersID = cardData[0].membersID;
+    const membersID = allCardData[0].membersID;
 
     const dispatch = useDispatch();
     const modalRef = useRef(null);

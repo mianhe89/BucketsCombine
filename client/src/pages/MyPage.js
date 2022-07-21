@@ -1,5 +1,5 @@
 import React from 'react';
-import Topmenu from '../components/TopMenu';
+import TopmenuMypage from '../components/TopMenuMypage';
 import SideMenu from '../components/SideMenu';
 import MyBucketSection from '../components/MyBucketSection';
 import MyProfileSection from '../components/MyProfileSection';
@@ -10,7 +10,7 @@ export default function MyPage() {
     <div className='mainpage'>
       <SideMenuMyPage />
       <div>
-        <Topmenu />
+        <TopmenuMypage />
         <MyBucketSection />
         <MyProfileSection />
       </div>

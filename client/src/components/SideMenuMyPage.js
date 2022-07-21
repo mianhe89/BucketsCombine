@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
+import { useHistory } from 'react-router-dom';
 
 const SideMenuWrap = styled.div`
   
@@ -49,6 +50,7 @@ const SideMenuWrap = styled.div`
     display: flex;
     height: 60px;
     margin-top: 10px;
+    z-index: 11;
   }
 
   .logo-part2 {
@@ -59,6 +61,7 @@ const SideMenuWrap = styled.div`
     height: 35px;
     top: 70px;
     transition: all 500ms;
+    z-index: 11;
   }
 
   .sidemenu-mobile {
@@ -177,11 +180,20 @@ export default function SideMenu(){
     window.scrollTo({ left: 0, top: vh, behavior: "smooth" });
   }
 
+  const history = useHistory()
+
+  const goToMain = () => {
+    console.log('d')
+    let vh = window.innerHeight
+    history.push('/')
+    window.scrollTo({ left: 0, top: 0 });
+  }
+
   return(
     <SideMenuWrap>
       <div className={isDesktop? 'sidemenu' : 'sidemenu-mobile'}>
       <img className={isDesktop? 'logo-part2' : 'logo-part2-mobile'} src='images/logo-part.png' />
-          <img className={isDesktop?'logo' : 'logo-mobile'}  src='images/logo-small.png' />
+          <img className={isDesktop?'logo' : 'logo-mobile'}  src='images/logo-small.png' onClick={goToMain} />
           <button className={isDesktop? 'sidemenu-button-mybucket' : 'sidemenu-button-mybucket-mobile'} onClick={moveToBucket}>My Bucket</button>
           <button className={isDesktop? 'sidemenu-button-myprofile' : 'sidemenu-button-myprofile-mobile'} onClick={moveToProfile}>My Profile</button>
       </div>

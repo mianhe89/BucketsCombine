@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
-import { openMyCardModal, openMyStampedModal } from "../redux/reducers/ModalReducer";
+import { openMyCardModal, openMyStampedModal, setModalCardID } from "../redux/reducers/ModalReducer";
 
 const ColumnCardWrap = styled.div`
   .ColumnCard {
@@ -60,6 +60,7 @@ const ColumnCardWrap = styled.div`
 
   .ColumnCard-title {
     font-size: 24px;
+    overflow-x: auto;
   }
 
   .ColumnCard-writer {
@@ -99,6 +100,11 @@ const ColumnCardWrap = styled.div`
     align-items: center;
   }
 
+  .ColumnCard-title-mobile {
+    font-size: 18px;
+    font-weight: bold;
+    overflow-x: auto;
+  }
 `;
 
 export default function ColumnCard ({
@@ -127,7 +133,13 @@ export default function ColumnCard ({
   
   return (
     <ColumnCardWrap>
-      <div className="ColumnCard" onClick={() => dispatch(openMyCardModal())}>
+      <div 
+        className="ColumnCard"
+        onClick={() => {
+          dispatch(openMyCardModal());
+          dispatch(setModalCardID(cardID));
+        }}
+        >
         <div className={
           completed==='0'? 'ColumnCard-progress-0'
           : completed==='1'? 'ColumnCard-progress-1'
@@ -135,11 +147,10 @@ export default function ColumnCard ({
         }/>
         <div className={isDesktop?'ColumnCard-info' : 'ColumnCard-info-mobile' }style={backgroundImageStyle} >
         <div className='ColumnCard-info-text'>
-            <div className="ColumnCard-title">{title}</div>
+            <div className={isDesktop? "ColumnCard-title" : "ColumnCard-title-mobile"}>{title}</div>
             <div className="ColumnCard-tag">{tagLine.join(' ')}</div>
         </div>
         <div className="ColumnCard-writer">{writername}</div>
-        <img className='ColumnCard-share-icon' src='/images/share-icon.png' />
         <div className='ColumnCard-member-count'>
         {membersID.length}명
         </div>

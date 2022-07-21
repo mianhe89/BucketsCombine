@@ -1,13 +1,11 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { changeMode } from "../redux/reducers/ModalReducer";
-import { openStampedModal } from "../redux/reducers/ModalReducer";
-import MainPageCardModal from "./modals/MainPageCardModal";
-import MainPageStampedCardModal from './modals/MainPageStampedModal'
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import {openCardModal, setModalCardID } from '../redux/reducers/ModalReducer'
+import { useMediaQuery } from "react-responsive";
 
 const StampedCardWrap = styled.div`
-
   .card {
     display: flex;
     flex-direction: column;
@@ -16,6 +14,7 @@ const StampedCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
+    z-index: 1;
     transition: box-shadow 0.2s;
   }
 
@@ -27,13 +26,69 @@ const StampedCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
-    box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3) ;
+    z-index: 1;
+    box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.2s;
   }
 
   .card-info {
     margin: 10px;
     color: white;
+  }
+
+  .card-insert-button {
+    width: 70px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 130px;
+    border: none;
+    box-shadow: none;
+    font-size: 13px;
+    background-color: #ffc700;
+    z-index: 10;
+    transition: box-shadow 0.2s;
+  }
+
+  .card-insert-button:hover {
+    width: 70px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 130px;
+    border: none;
+    font-size: 13px;
+    background-color: #ffc700;
+    z-index: 10;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.2s;
+  }
+
+  .card-subtract-button {
+    width: 70px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 130px;
+    border: none;
+    box-shadow: none;
+    font-size: 13px;
+    background-color: #ff5c00;
+    z-index: 10;
+    font-weight: bold;
+    color: white;
+    transition: box-shadow 0.2s;
+  }
+  .card-subtract-button:hover {
+    width: 70px;
+    height: 30px;
+    border-radius: 10px;
+    margin-left: 130px;
+    border: none;
+    font-size: 13px;
+    background-color: #ff5c00;
+    z-index: 10;
+    font-weight: bold;
+    color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.2s;
   }
 
   .card-title {
@@ -70,20 +125,57 @@ const StampedCardWrap = styled.div`
     font-display: flex;
     text-align: center;
     line-height: 60px;
-  }`
+  }
+
+  .complete-stamp {
+    width: 120px;
+    position: relative;
+    transform: rotate(-50deg);
+    left: 120px;
+    top: 200px;
+  }
+`;
+
+export default function StampedCard({
+  cardID,
+  writername,
+  title,
+  cardtext,
+  background,
+  createdAt,
+  completed,
+  tags,
+  membersID,
+}) {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
 
 
-export default function StampedCard ({ background }) {
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
- let backgroundImageStyle = {
-   backgroundImage: "url(https://source.unsplash.com/random)"
- }
 
+  const tagLine = tags.map((tag) => {
+    return `#${tag}`;
+  });
+
+  let backgroundImageStyle = {
+    backgroundImage: "url(/images/card-" + background + ".jpg)",
+  };
   return (
     <StampedCardWrap>
-      <div className='card' style={backgroundImageStyle} onClick={() => {dispatch(openStampedModal())}}>
+      <div
+        className="card"
+        style={backgroundImageStyle}
+        onClick={() => {
+          dispatch(setModalCardID(cardID));
+          dispatch(openCardModal());
+        }}
+      >
+        <div className="card-info">
+          <div className="card-footer">
+          </div>
+        </div>
+        <img className="complete-stamp" src="/images/complete-stamp.png"/>
       </div>
     </StampedCardWrap>
   );
-};
+}

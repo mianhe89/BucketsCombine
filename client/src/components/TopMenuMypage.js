@@ -135,7 +135,8 @@ const TopMenuWrap = styled.div`
     justify-content: space-between;
   }
 
-  .board-button-mobile-mb {
+  
+  .board-button-mobile-c {
     border: none;
     box-shadow: none;
     width: 38px;
@@ -143,15 +144,16 @@ const TopMenuWrap = styled.div`
     border-radius: 8px;
     font-size: 15px;
     color: black;
-    background-image: url('/images/bucket-icon.png');
+    background-image: url('/images/cards-icon.png');
     background-size: cover;
     margin: 10px;
 
     :hover {
-      background-image: url('/images/bucket-icon-hover.png');
+      background-image: url('/images/cards-icon-hover.png');
     }
   }
-  .board-button-mobile-mp {
+
+  .board-button-mobile-s {
     border: none;
     box-shadow: none;
     width: 38px;
@@ -159,14 +161,15 @@ const TopMenuWrap = styled.div`
     border-radius: 8px;
     font-size: 15px;
     color: black;
-    background-image: url('/images/profile-icon.png');
+    background-image: url('/images/stamped-icon.png');
     background-size: cover;
     margin: 10px;
 
     :hover {
-      background-image: url('/images/profile-icon-hover.png');
+      background-image: url('/images/stamped-icon-hover.png');
     }
   }
+
   .board-button-mobile-so {
     border: none;
     box-shadow: none;
@@ -207,21 +210,21 @@ export default function Topmenu({location}){
 
   const history = useHistory()
   
-  const goToMyProfile = async () => {
-    let vh = window.innerHeight
-    await history.push('/mypage')
-    await  window.scrollTo({ left: 0, top: vh });
+ 
+
+  const goToCards = async () => {
+    const vh = window.innerHeight
+    await history.push('/')
+    await window.scrollTo({ left: 0, top: vh });
   }
 
-  const goToMyBucket = async () => {
-    let vh = window.innerHeight
-    await history.push('/mypage')
-    await window.scrollTo({ left: 0, top: 1 });
+  const goToMyStamped = async () => {
+    const vh = window.innerHeight
+    await history.push('/')
+    await window.scrollTo({ left: 0, top: 2 * vh });
   }
 
-  const goToSignIn = async () => {
-    await history.push('/signin')
-  }
+  // ref={modalRef}
 
   return(
     <TopMenuWrap>
@@ -229,21 +232,17 @@ export default function Topmenu({location}){
         {isDesktop ?
           <div className='topmenu-title' >Buckets Combine</div>
           : <div />}
-        {isSignIn ? 
-          isDesktop? <button className='topmenu-button' onClick={usernameclick}>유저닉네임</button>
-          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick} />
-          : isDesktop? <button className='topmenu-button' onClick={goToSignIn}>Sign In</button>
-            : <img className='topmenu-button-mobile' src='/images/sign-in-icon.png' onClick={goToSignIn}/>
-          }
+          {isDesktop? <button className='topmenu-button' onClick={usernameclick} >유저닉네임</button>
+          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick}/>}
       </div>
       {isBoardOpen ? isDesktop? <div className='username-board' ref={modalRef}>
-        <button className='board-button' onClick={goToMyBucket}>My Bucket</button>
-        <button className='board-button' onClick={goToMyProfile}>My Profile</button>
+        <button className='board-button' onClick={goToCards}>Cards</button>
+        <button className='board-button' onClick={goToMyStamped}>Stamped</button>
         <button className='board-button'>Sign Out</button>
       </div> 
       : <div className='username-board-mobile'>
-      <div className='board-button-mobile-mb'onClick={goToMyBucket}/>
-      <div className='board-button-mobile-mp' onClick={goToMyProfile}/>
+      <div className='board-button-mobile-c'onClick={goToCards}/>
+      <div className='board-button-mobile-s' onClick={goToMyStamped}/>
       <div className='board-button-mobile-so'/>
     </div> 
       :  <div />}
