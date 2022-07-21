@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import { useMediaQuery } from "react-responsive";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
-import {setCardsData } from '../redux/reducers/ModalReducer'
+import { setCardsData, setUsersData } from '../redux/reducers/ModalReducer'
 
 
 const RowListWrap = styled.div`
@@ -74,56 +74,107 @@ const RowListWrap = styled.div`
     width: 400px;
     z-index: 1;
   }
+  .dummyarea {
+    height: 100%;
+    width: calc(0vw - 240px);
+  }
 `;
 
 
 export default function RowList () {
   const isDesktop = useMediaQuery({ minWidth: 921 })
 
-  const [cards, setCards] = useState('');
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
-    .then(res => {
-      const cardsData = res.data.data.cardinfo;
-      dispatch(setCardsData({ cardsData }));
-      setCards(
-        cardsData.map((card, i) => {
-        return <RowCard
-          key={i}
-          cardID={card.id}
-          writerID={card.users_id}
-          title={card.title}
-          cardtext={card.cardtext}
-          background={card.background}
-          createdAt={card.createdAt}
-          completed={card.completed}
-        />;
-      }))
-    })
-  }, []);
-
+  const [cards, setCards] = useState([]);
+  const [users, setUsers] = useState([])
   const [search, setSearch] = useState("");
 
-  const {cardsData} = useSelector((state) => state.modal.cardsData);
+  const dummyarea = document.querySelector('.dummyarea')
 
-  const searchCard = () => {
-    const searchedData = cardsData.filter((card) => card.title.includes(search))
-    const searchedCards = searchedData.map((card, i) => {
+  const saveData = (responseCards, responseUsers) => {
+    const cardsData = responseCards.data;
+    const usersData = responseUsers.data;
+    dispatch(setCardsData({ cardsData }));
+    dispatch(setUsersData({ usersData }));
+    setCards(
+      cardsData.map((card, i) => {
       return <RowCard
         key={i}
         cardID={card.id}
-        writerID={card.users_id}
+        writername={usersData[card.users_id - 1].username}
         title={card.title}
         cardtext={card.cardtext}
         background={card.background}
         createdAt={card.createdAt}
         completed={card.completed}
+        tags={card.tag}
+        membersID={card.membersID}
+      />;
+    }))
+    setUsers(usersData)
+  }
+
+  useEffect(() => {async function fetchData() {
+    const responseCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
+    const responseUsers = await axios.get(`${process.env.REACT_APP_API_URL}/mypage/usersinfo`)
+    const sendData = await saveData(responseCards,responseUsers )
+  } fetchData()}, []);
+
+  
+  const {cardsData} = useSelector((state) => state.modal.cardsData);
+  const {usersData} = useSelector((state) => state.modal.usersData);
+
+  const searchCard = () => {
+    const titleMatchData = cardsData.filter((card) => card.title.includes(search))
+    const tagMatchData = cardsData.filter((card) => card.tag.includes(search))
+    const mergeData = [...titleMatchData, ... tagMatchData]
+    const set = new Set(mergeData)
+    const searchedData = [...set]
+    const searchedCards = searchedData.map((card, i) => {
+      return <RowCard
+        key={i}
+        cardID={card.id}
+        writername={usersData[card.users_id - 1].username}
+        title={card.title}
+        cardtext={card.cardtext}
+        background={card.background}
+        createdAt={card.createdAt}
+        completed={card.completed}
+        tags={card.tag}
+        membersID={card.membersID}
       />;
     })
     setCards(searchedCards)
+    const w = (searchedCards.length * 220) + 240
+    dummyarea.style.width = `calc(100vw - ${w}px)`
+  }
+
+  const enterSearchCard = (e) => {
+    if(e.key === 'Enter'){
+      const titleMatchData = cardsData.filter((card) => card.title.includes(search))
+      const tagMatchData = cardsData.filter((card) => card.tag.includes(search))
+      const mergeData = [...titleMatchData, ... tagMatchData]
+      const set = new Set(mergeData)
+      const searchedData = [...set]
+      const searchedCards = searchedData.map((card, i) => {
+        return <RowCard
+          key={i}
+          cardID={card.id}
+          writername={usersData[card.users_id - 1].username}
+          title={card.title}
+          cardtext={card.cardtext}
+          background={card.background}
+          createdAt={card.createdAt}
+          completed={card.completed}
+          tags={card.tag}
+          membersID={card.membersID}
+        />;
+      })
+      setCards(searchedCards)
+      const w = (searchedCards.length * 220) + 240
+      dummyarea.style.width = `calc(100vw - ${w}px)`
+    }
   }
   
 
@@ -131,23 +182,23 @@ export default function RowList () {
     <RowListWrap >
       <div id={isDesktop ? 'card-list' : 'card-list-mobile'} >
         <HorizontalScroll
-          pageLock={true}
+          className='horizontalScroll'
+          pageLock={false}
           reverseScroll={true}
-          style={{}}
+          style={{ height: "100%", width: "100%" }}
         >
           <div className="dummy" />
           {cards}
           <div className="dummy" />
+          <div className="dummyarea"/>
         </HorizontalScroll>
         <div className={isDesktop? 'search-bar' : 'search-bar-mobile'}>
           <input className='search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
             setSearch(e.target.value)
-          }} />
+          }} onKeyUp={enterSearchCard}/>
           <img className='search-icon' src='/images/search-icon.png' onClick={searchCard}/>
         </div>
       </div>
     </RowListWrap>
   );
 };
-
-

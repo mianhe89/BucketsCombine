@@ -13,6 +13,8 @@ const initialState = {
     mode:"",
     cardsData: [],
     modalCardID: 0,
+    usersData: [],
+    bucketData: [],
 };
 
 const modalSlice = createSlice({
@@ -78,7 +80,13 @@ const modalSlice = createSlice({
         },
         setModalCardID: (state, action) => {
             state.modalCardID = action.payload;
-        }
+        },
+        setUsersData: (state, action) => {
+            state.usersData = action.payload;
+        },
+        setBucketData: (state, action) => {
+            state.bucketData = action.payload;
+        },
     }
 });
 export const { 
@@ -101,6 +109,8 @@ export const {
     closeWithdrawalModal,
     closeUserInfoModal,
     setCardsData,
-    setModalCardID
+    setModalCardID,
+    setUsersData,
+    setBucketData,
     } = modalSlice.actions;
 export default modalSlice.reducer;

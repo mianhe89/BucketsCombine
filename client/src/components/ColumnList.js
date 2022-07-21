@@ -6,18 +6,43 @@ import { openMakeCardModal } from "../redux/reducers/ModalReducer.js";
 import { useDispatch, useSelector } from "react-redux";
 import MakeModal from "./modals/MakeCardModal";
 import { useMediaQuery } from "react-responsive";
+import axios from 'axios'
+import { setCardsData, setUsersData, setBucketData } from '../redux/reducers/ModalReducer'
 
 
 const ColumnListWrap = styled.div`
-  width: 100%;
-  height: 100%;
+  #card-list-column {
+  width: 70vw;
+  max-width: 1000px;
+  height: calc(100vh - 400px) ;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  text-align: center;
   align-items: center;
-  overflow-y: auto;
-  padding: 10px;
+  position: relative;
+  bottom: 30px;
+  }
+
+  #card-list-column-mobile {
+  width: 100vw;
+  max-width: 1000px;
+  height: calc(100vh - 400px) ;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  bottom: 30px;
+  }
+
+  #columnList {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    align-items: center;
+    overflow-y: auto;
+    padding: 10px;
+  }
 
   .Target-Element {
     width: 100%;
@@ -60,67 +85,164 @@ const ColumnListWrap = styled.div`
     margin-left: 25px;
     margin-top: 20px;
   }
+
+  .column-search-bar {
+    height: 10px;
+    width: 70%;
+    position: absolute;
+    bottom: -50px;
+  }
+
+  .column-search-input {
+    width: 100%;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .column-search-icon {
+    position : absolute;
+    width: 17px;
+    top: 10px;
+    right: 0px;
+    margin: 0px;
+  }
+
+  .column-search-bar-mobile {
+    height: 10px;
+    width: 70%;
+    position: absolute;
+    bottom: -50px;
+    left: 13%;
+  }
 `;
 
 export default function ColumnList () {
-  const isDesktop = useMediaQuery({ minWidth: 921 })
-  const test = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18']
-  const testmap = test.map(e=>{
-    return {
-      title: 'title'+e,
-      tags: [e,e+e,e+e+e],
-      writer: 'writer'+e,
-      memberCount: 0,
-      background: 'card-' + e,
-    }
-  })
-
-  const [target, setTarget] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [itemLists, setItemLists] = useState(testmap);
-
-  useEffect(() => {
-    console.log(itemLists);
-  }, [itemLists]);
-
-  const getMoreItem = async () => {
-    setIsLoaded(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    let Items = testmap;
-    setItemLists((itemLists) => itemLists.concat(Items));
-    setIsLoaded(false);
-  };
-
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoaded) {
-      observer.unobserve(entry.target);
-      await getMoreItem();
-      observer.observe(entry.target);
-    }
-  };
-
-  useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
-      });
-      observer.observe(target);
-    }
-    return () => observer && observer.disconnect();
-  }, [target  ]);
-
   const dispatch = useDispatch();
+
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+
+
+  const [cards, setCards] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const saveData = (responseCards, responseUsers, responseBucketID) => {
+    const cardsData = responseCards.data;
+    const usersData = responseUsers.data;
+    const bucketData = responseBucketID.data;
+
+    const bucketCardsData = cardsData.filter((card) => {
+      for(let i of bucketData){
+        if(card.id === i) return true
+      }
+      return false
+    })
+
+    dispatch(setCardsData({ cardsData }));
+    dispatch(setUsersData({ usersData }));
+    dispatch(setBucketData({ bucketCardsData }))
+
+    setCards(
+      bucketCardsData.map((card, i) => {
+      return <ColumnCard
+        key={i}
+        cardID={card.id}
+        writername={usersData[card.users_id - 1].username}
+        title={card.title}
+        cardtext={card.cardtext}
+        background={card.background}
+        createdAt={card.createdAt}
+        completed={card.completed}
+        tags={card.tag}
+        membersID={card.membersID}
+      />;
+    }))
+    setUsers(usersData)
+  }
+
+  useEffect(() => {async function fetchData() {
+    const responseCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
+    const responseUsers = await axios.get(`${process.env.REACT_APP_API_URL}/mypage/usersinfo`)
+    const responseBucketID = await axios.post(`${process.env.REACT_APP_API_URL}/mypage/mycards`,{
+      "users_id" : "1"
+    })
+    const sendData = await saveData(responseCards, responseUsers, responseBucketID )
+  } fetchData()}, []);
+
+  const bucketData = useSelector((state) => state.modal.bucketData.bucketCardsData);
+  const {usersData} = useSelector((state) => state.modal.usersData);
+
+  const searchCard = () => {
+    const titleMatchData = bucketData.filter((card) => card.title.includes(search))
+    const tagMatchData = bucketData.filter((card) => card.tag.includes(search))
+    const mergeData = [...titleMatchData, ... tagMatchData]
+    const set = new Set(mergeData)
+    const searchedData = [...set]
+    const searchedCards = searchedData.map((card, i) => {
+      return <ColumnCard
+        key={i}
+        cardID={card.id}
+        writername={usersData[card.users_id - 1].username}
+        title={card.title}
+        cardtext={card.cardtext}
+        background={card.background}
+        createdAt={card.createdAt}
+        completed={card.completed}
+        tags={card.tag}
+        membersID={card.membersID}
+      />;
+    })
+    setCards(searchedCards)
+    const w = (searchedCards.length * 220) + 240
+  }
+
+  const enterSearchCard = (e) => {
+    if(e.key === 'Enter'){
+      const titleMatchData = bucketData.filter((card) => card.title.includes(search))
+      const tagMatchData = bucketData.filter((card) => card.tag.includes(search))
+      const mergeData = [...titleMatchData, ... tagMatchData]
+      const set = new Set(mergeData)
+      const searchedData = [...set]
+      const searchedCards = searchedData.map((card, i) => {
+        return <ColumnCard
+          key={i}
+          cardID={card.id}
+          writername={usersData[card.users_id - 1].username}
+          title={card.title}
+          cardtext={card.cardtext}
+          background={card.background}
+          createdAt={card.createdAt}
+          completed={card.completed}
+          tags={card.tag}
+          membersID={card.membersID}
+        />;
+      })
+      setCards(searchedCards)
+      const w = (searchedCards.length * 220) + 240
+    }
+  }
+
   return (
     <>
       <ColumnListWrap>
-      <button className={isDesktop? 'create-card-button' : 'create-card-button-mobile'} onClick={() => {dispatch(openMakeCardModal())}}>+</button>
-        {itemLists.map((item, i) => {
-          return <ColumnCard title={item.title} tags={item.tags} writer={item.writer} memberCount={item.memberCount} background={item.background} key={i} />;
-        })}
-        <div ref={setTarget} className="Target-Element" >
-          {isLoaded && <Loader />}
+        <div id={isDesktop ? 'card-list-column' : 'card-list-column-mobile'}>
+          <div id="columnList">
+            <button className={isDesktop ? 'create-card-button' : 'create-card-button-mobile'} onClick={() => { dispatch(openMakeCardModal()) }}>+</button>
+            {/* {itemLists.map((item, i) => {
+            return <ColumnCard title={item.title} tags={item.tags} writer={item.writer} memberCount={item.memberCount} background={item.background} key={i} />;
+          })} */}
+            {cards}
+          </div>
+          <div className={isDesktop ? 'column-search-bar' : 'column-search-bar-mobile'}>
+            <input className='column-search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
+            setSearch(e.target.value)
+          }} onKeyUp={enterSearchCard}/>
+            <img className='column-search-icon' src='/images/search-icon.png'onClick={searchCard} />
+          </div>
         </div>
+        
       </ColumnListWrap>
     </>
   );

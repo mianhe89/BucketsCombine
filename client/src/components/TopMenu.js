@@ -118,6 +118,69 @@ const TopMenuWrap = styled.div`
     width: 30px;
     height: 30px;
   }
+
+  .username-board-mobile {
+    top: 120px;
+    right: 0px;
+    position: fixed;
+    width: 70px;
+    height: 200px;
+    border-radius: 12px;
+    z-index: 16;
+    background-color: #D9D9D9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .board-button-mobile-mb {
+    border: none;
+    box-shadow: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    font-size: 15px;
+    color: black;
+    background-image: url('/images/bucket-icon.png');
+    background-size: cover;
+    margin: 10px;
+
+    :hover {
+      background-image: url('/images/bucket-icon-hover.png');
+    }
+  }
+  .board-button-mobile-mp {
+    border: none;
+    box-shadow: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    font-size: 15px;
+    color: black;
+    background-image: url('/images/profile-icon.png');
+    background-size: cover;
+    margin: 10px;
+
+    :hover {
+      background-image: url('/images/profile-icon-hover.png');
+    }
+  }
+  .board-button-mobile-so {
+    border: none;
+    box-shadow: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    font-size: 15px;
+    background-image: url('/images/sign-out-icon.png');
+    background-size: cover;
+    margin: 10px;
+
+    :hover {
+      background-image: url('/images/sign-out-icon-hover.png');
+    }
+  }
 `
 const TopMenuWrapMobile = styled.div`
   
@@ -166,17 +229,28 @@ export default function Topmenu(){
 
   return(
     <TopMenuWrap>
-    <div className='topmenu'>
-      <div className='topmenu-title' >Buckets Combine</div>
-      {isSignIn?  <button className='top-button' onClick={usernameclick} ref={modalRef}>유저닉네임</button> : 
-      <button className='top-button'onClick={signinClick}>Sign In</button>}
-    </div>
-    {isBoardOpen? <div className='username-board'>
-      <button className='board-button'>My Bucket</button>
-      <button className='board-button'>My Profile</button>
-      <button className='board-button'>Sign Out</button>
-      </div> :
-        <div />}
+      <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
+        {isDesktop ?
+          <div className='topmenu-title' >Buckets Combine</div>
+          : <div />}
+        {isSignIn ? 
+          isDesktop? <button className='topmenu-button' onClick={usernameclick} ref={modalRef}>유저닉네임</button>
+          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick} ref={modalRef}/>
+          : isDesktop? <button className='topmenu-button' onClick={signinClick}>Sign In</button>
+            : <img className='topmenu-button-mobile' src='/images/sign-in-icon.png' onClick={signinClick}/>
+          }
+      </div>
+      {isBoardOpen ? isDesktop? <div className='username-board'>
+        <button className='board-button'>My Bucket</button>
+        <button className='board-button'>My Profile</button>
+        <button className='board-button'>Sign Out</button>
+      </div> 
+      : <div className='username-board-mobile'>
+      <div className='board-button-mobile-mb'/>
+      <div className='board-button-mobile-mp'/>
+      <div className='board-button-mobile-so'/>
+    </div> 
+      :  <div />}
     </TopMenuWrap>
   )
 }

@@ -57,15 +57,17 @@ const MyBucketWrap = styled.div `
     max-width: 1000px;
     height: 30px;
     background: -webkit-linear-gradient(top,white 0%,rgba(0,0,0,0) 100%);
+    z-index: 15;
   }
 
   .fog-bottom {
     position: absolute;
-    bottom: 210px;
+    bottom: 230px;
     width: 70vw;
     max-width: 1000px;
     height: 40px;
     background: -webkit-linear-gradient(bottom,white 0%,rgba(0,0,0,0) 100%);
+    z-index: 15;
   }
 
   #mybucket-section-mobile {
@@ -102,6 +104,7 @@ const MyBucketWrap = styled.div `
     width: 100vw;
     height: 30px;
     background: -webkit-linear-gradient(top,white 0%,rgba(0,0,0,0) 100%);
+    z-index: 15;
   }
 
   .fog-bottom-mobile {
@@ -110,6 +113,7 @@ const MyBucketWrap = styled.div `
     width: 100vw;
     height: 40px;
     background: -webkit-linear-gradient(bottom,white 0%,rgba(0,0,0,0) 100%);
+    z-index: 15;
   }
 `
 
@@ -118,17 +122,13 @@ export default function MyBucketSection(){
 
   return(
     <MyBucketWrap>
-    <div id={isDesktop? 'mybucket-section' : 'mybucket-section-mobile'}>
-      <div className={isDesktop?'fog-top' : 'fog-top-mobile'}/>
-      <div className={isDesktop? 'card-list-column' : 'card-list-column-mobile'}>
-      <div className={isDesktop? 'fog-bottom' : 'fog-bottom-mobile'}/>
-        <ColumnList />
+      <div id={isDesktop ? 'mybucket-section' : 'mybucket-section-mobile'}>
+        <div className={isDesktop ? 'fog-top' : 'fog-top-mobile'} />
+        <div className={isDesktop ? 'card-list-column' : 'card-list-column-mobile'}>
+          <div className={isDesktop ? 'fog-bottom' : 'fog-bottom-mobile'} />
+          <ColumnList />
+        </div>
       </div>
-      <div className={isDesktop?'search-bar' : 'search-bar-mobile'}>
-          <input className='search-input' type="text" placeholder="제목 및 태그" />
-          <img className='search-icon' src='/images/search-icon.png' />
-      </div>
-    </div>
     </MyBucketWrap>
   )
 }

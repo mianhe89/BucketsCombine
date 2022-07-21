@@ -4,6 +4,7 @@ import { openCardModal } from "../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import {setModalCardID } from '../redux/reducers/ModalReducer'
+import { useMediaQuery } from "react-responsive";
 
 const RowCardWrap = styled.div`
   .card {
@@ -130,17 +131,17 @@ const RowCardWrap = styled.div`
 
 export default function RowCard({
   cardID,
-  writerID,
+  writername,
   title,
   cardtext,
   background,
   createdAt,
   completed,
+  tags,
+  membersID,
 }) {
-  // const tagLine = tags.map((tag) => {
-  //   return `#${tag}`;
-  // });
-  // {tagLine.join(" ")}
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+
   const [isInBucket, setIsInBucket] = useState(false);
 
   const dispatch = useDispatch();
@@ -153,6 +154,11 @@ export default function RowCard({
     id.stopPropagation();
     setIsInBucket(false);
   };
+
+  const tagLine = tags.map((tag) => {
+    return `#${tag}`;
+  });
+  
 
   let backgroundImageStyle = {
     backgroundImage: "url(/images/card-" + background + ".jpg)",
@@ -178,10 +184,10 @@ export default function RowCard({
             </button>
           )}
           <div className="card-title">{title}</div>
-          <div className="card-tegs">#태그 #태그</div>
+          <div className="card-tegs">{tagLine.join(" ")}</div>
           <div className="card-footer">
-            <div className="card-writer">글쓴이</div>
-            <div className="card-member">0명</div>
+            <div className="card-writer">{writername}</div>
+            <div className="card-member">{membersID.length}명</div>
           </div>
         </div>
       </div>
