@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import useOutSideClick from './hook/UseOutSideClick';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
 
@@ -137,9 +139,38 @@ export default function Topmenu(){
   const usernamelick = () => {
     setIsBoardOpen(!isBoardOpen)
   }
+<<<<<<< HEAD
   
+=======
+
+  const modalRef = useRef(null);
+    const handleClose = () => {
+        setIsBoardOpen(false);
+    };
+    useOutSideClick(modalRef, handleClose);
+  // const dd = document.querySelector(".username-board")
+
+  // const modalEl = useRef();
+  // const handleClickOutside = ({ target }) => {
+    
+  //   if (modalEl.current.contains(dd)){
+  //     setIsBoardOpen(false);
+  //     console.log('dd')
+  //   } else {
+  //     console.log('ee')
+  //   }
+  // };
+  // useEffect(() => {
+  //   window.addEventListener("click", handleClickOutside);
+  //   return () => {
+  //     window.removeEventListener("click", handleClickOutside);
+  //   };
+  // }, []);
+
+>>>>>>> feature/fix_modal
   return(
     <TopMenuWrap>
+<<<<<<< HEAD
       <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
         {isDesktop ?
           <div className='topmenu-title' >Buckets Combine</div>
@@ -155,6 +186,17 @@ export default function Topmenu(){
         <button className='board-button'>My Bucket</button>
         <button className='board-button'>My Profile</button>
         <button className='board-button'>Sign Out</button>
+=======
+    <div className='topmenu'>
+      <div className='topmenu-title' >Buckets Combine</div>
+      {isSignIn?  <button className='top-button' onClick={usernamelick} ref={modalRef}>유저닉네임</button> : 
+      <button className='top-button'onClick={signinClick}>Sign In</button>}
+    </div>
+    {isBoardOpen? <div className='username-board'>
+      <button className='board-button'>My Bucket</button>
+      <button className='board-button'>My Profile</button>
+      <button className='board-button'>Sign Out</button>
+>>>>>>> feature/fix_modal
       </div> :
         <div />}
     </TopMenuWrap>

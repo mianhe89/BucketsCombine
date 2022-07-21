@@ -1,4 +1,4 @@
-import { closeMyStampedModal } from "../../redux/reducers/ModalReducer.js";
+import { closeMyStampedModal, openUserInfoModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
 import React, { useRef } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
@@ -98,7 +98,7 @@ const MainPageStampedModal = styled.div`
         border: none;
         width: 10vw;
         left: 1vw;
-        top: 17vh;
+        top: 20vh;
     }
     
     .card-tag  {
@@ -123,13 +123,6 @@ const MainPageStampedModal = styled.div`
         top: 7vh;
     }
     
-    .card-info {
-        position: absolute;
-        width: 30px;
-        height: 20px;
-        left: 1vw;
-        top: 25vh;
-    }
     
     .card-info-text {
         margin: 5px;
@@ -163,9 +156,11 @@ const MainPageStampedCardModal = () => {
                         dispatch(closeMyStampedModal())
                     }}>X</button>                      
                     <div className="card-tag">#태그</div>
-                    <button className="userInfo-btn">참석한 유저 정보</button>
+                    <button className="userInfo-btn" onClick={() => {
+                        dispatch(openUserInfoModal())
+                        dispatch(closeMyStampedModal())
+                    }}>참석한 유저 정보</button>
                     <img className="card-img" src="images/card-img.jpg" alt="card" />
-                    <div className="card-info">설명</div>
                     <div className="card-info-text">버킷 내용</div>
                     </div>
                 </div>

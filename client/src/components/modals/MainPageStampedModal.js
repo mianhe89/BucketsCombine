@@ -145,6 +145,7 @@ const MainPageStampedModal = styled.div`
     `;
 
 const MainPageStampedCardModal = () => {
+
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
@@ -152,7 +153,6 @@ const MainPageStampedCardModal = () => {
     };
     useOutSideClick(modalRef, handleClose);
     return (
-
             <MainPageStampedModal ref={modalRef}>
                 <div className="blur">
                     <div className="mainPageStampedCard">

@@ -15,11 +15,12 @@ import axios from 'axios';
 import './App.css';
 import MakeCardModal from './components/modals/MakeCardModal';
 import MainPageStampedCardModal from './components/modals/MainPageStampedModal';
-import MyCardModal from './components/modals/MyCardModal'
+import MyPageMyCardModal from './components/modals/MyCardModal'
 import MyPageStampedCard from './components/modals/MyPageStampedCard'
 import ConfirmPasswordModal from './components/modals/ConfirmPasswordModal'
 import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
 import WithdrawalCardModal from './components/modals/WithdrawalModal';
+import UserInfoModal from './components/modals/UserInfoModal'
 
 
 const App = () => {
@@ -31,7 +32,11 @@ const App = () => {
   const { isOpenChangePassword } = useSelector((store) => store.modal);
   const { isOpenConfirmPassword } = useSelector((store) => store.modal);
   const { isOpenWithdrawal } = useSelector((store) => store.modal);
+<<<<<<< HEAD
   // const { isOpenUserInfo } = useSelector((store) => store.modal);
+=======
+  const { isOpenUserInfo } = useSelector((store) => store.modal);
+>>>>>>> feature/fix_modal
 
   return (
     <div>
@@ -41,7 +46,10 @@ const App = () => {
             <MainPage />
             {isOpenCard && <MainPageCardModal />}
             {isOpenStamped && <MainPageStampedCardModal />}
+<<<<<<< HEAD
             {/* {isOpenUserInfo && <UserInfoModal />} */}
+=======
+>>>>>>> feature/fix_modal
           </Route>
           <Route exact path="/signin">
             <SignInPage />
@@ -54,7 +62,7 @@ const App = () => {
           </Route>
           <Route exact path='/mypage'>
             {isOpenMakeCard && <MakeCardModal/>}
-            {isOpenMyCard && <MyCardModal/>}
+            {isOpenMyCard && <MyPageMyCardModal/>}
             {isOpenMyStamped && <MyPageStampedCard/>}
             {isOpenChangePassword && <ChangePasswordCardModal/>}
             {isOpenConfirmPassword && <ConfirmPasswordModal/>}
