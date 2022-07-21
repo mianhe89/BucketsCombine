@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { openWithdrawalModal, openConfirmPasswordModal } from '../redux/reducers/ModalReducer';
+import { openWithdrawalModal, openConfirmPasswordModal, openChangePasswordModal } from '../redux/reducers/ModalReducer';
 import styled from 'styled-components'
 import { useMediaQuery } from "react-responsive";
 import { isDraft } from '@reduxjs/toolkit';
@@ -222,8 +222,8 @@ export default function MyProfileSection() {
           </div>
           <textarea className="profile-introducing" placeholder="소개글을 작성해주세요"/>
           <div className="change-buttons">
-            <button className="withdrawal-button" onClick={() => {dispatch(openWithdrawalModal())}}>{withdrawal}</button>
-            <button className="change-password-button" onClick={() => {dispatch(openConfirmPasswordModal())}} >비밀번호 변경</button>
+            <button className="withdrawal-button" onClick={() => {dispatch(openConfirmPasswordModal())}}>{withdrawal}</button>
+            <button className="change-password-button" onClick={() => {dispatch(openChangePasswordModal())}} >비밀번호 변경</button>
             <button className="change-profile-button">변경</button>
           </div>
         </div>

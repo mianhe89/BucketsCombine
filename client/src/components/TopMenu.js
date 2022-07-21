@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import useOutSideClick from './hook/UseOutSideClick';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
 
@@ -138,6 +140,11 @@ export default function Topmenu(){
     setIsBoardOpen(!isBoardOpen)
   }
 
+  const modalRef = useRef(null);
+    const handleClose = () => {
+        setIsBoardOpen(false);
+    };
+    useOutSideClick(modalRef, handleClose);
   // const dd = document.querySelector(".username-board")
 
   // const modalEl = useRef();
@@ -163,7 +170,7 @@ export default function Topmenu(){
     <TopMenuWrap>
     <div className='topmenu'>
       <div className='topmenu-title' >Buckets Combine</div>
-      {isSignIn?  <button className='top-button' onClick={usernamelick}>유저닉네임</button> : 
+      {isSignIn?  <button className='top-button' onClick={usernamelick} ref={modalRef}>유저닉네임</button> : 
       <button className='top-button'onClick={signinClick}>Sign In</button>}
     </div>
     {isBoardOpen? <div className='username-board'>

@@ -1,9 +1,8 @@
 import { closeMakeCardModal } from "../../redux/reducers/ModalReducer.js";
 import { useDispatch } from "react-redux";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
 import styled from 'styled-components';
-import { Tag, TagsInput } from '../Tag'
 import ModalPortal from "./ModalPortal.js";
 
 const MakeCardModalContainer = styled.div`
@@ -88,19 +87,8 @@ const MakeCardModalContainer = styled.div`
         background: none;
         z-index: 15;
     }
-
-    .card-tag  {
-        width: 50vw;
-        height: 10vh;
-        position: absolute;
-        align-self: center;
-        display: flex;
-        justify-content: center;
-        left: 1vw;
-        top: 5vh;
-    }
     
-    .btn-confirm-btn {
+    .makeCard-btn {
         position: absolute;
         align-self: center;
         display: flex;
@@ -127,52 +115,163 @@ const MakeCardModalContainer = styled.div`
         top: 7vh;
     }
     
-    .card-info {
-        position: absolute;
-        width: 30px;
-        height: 20px;
-        left: 1vw;
-        top: 25vh;
-    }
-    
     .card-info-text {
         margin: 5px;
         padding: 1em;
         text-align: left;
         position: absolute;
         background:none;
-        border: none;
+        border: solid rgb(170, 170, 170 );
         display: flex;
         position: absolute;
-        width: 50vw;
+        width: 45vw;
         height: 20vh;
         left: 1vw;
         top: 30vh;
+    }
+    .failure-message{
+        position: absolute;
+        color: red;
+        left: 10vw;
+        top:55vh;
     }`;
 
+const TagsInput = styled.div`
+    position: absolute;
+    margin: 2px;
+    display: inline-flexbox;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    box-sizing: content-box;
+    width: 40vw;
+    height: 10vh;
+    padding: 0 8px;
+    border: 1px solid rgb(214, 216, 218);
+    border-radius: 6px;
+    left: 3vw;
+    top: 15vh;
+
+    > ul {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 8px 0 0 0;
+
+    > .tag {
+        width: auto;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: black;
+        padding: 0 8px;
+        font-size: 14px;
+        list-style: none;
+        border-radius: 6px;
+        margin: 0 8px 8px 0;
+        background: rgb(255, 255, 255);
+        > .tag-close-icon {
+            display: block;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            text-align: center;
+            font-size: 14px;
+            margin-left: 8px;
+            color: #4000c7;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            }
+        }
+    }
+
+    > input {
+    width: 40vw;
+    height: 5vh;    
+    flex: 1;
+    border: none;
+    border-radius: inherit;
+    height: 46px;
+    font-size: 13px;
+    padding: 4px 0 0 0;
+    background: none;
+        :focus {
+        outline: transparent;
+        background: none;
+        }
+    }
+
+    &:focus-within {
+    border: 1px solid #4000c7;
+    }
+`;
 
 const MakeCardModal = () => {
+    const initialTags = [];
+    const [tags, setTags] = useState(initialTags);
+    const removeTags = (indexToRemove) => {
+        setTags(tags.filter((el) => {
+        return el !== tags[indexToRemove];
+        }))
+    };
+    
+    const addTags = (event) => {
+        let value = event.target.value;
+        if(event.key === 'Enter' && !tags.includes(value) && value){
+        setTags([...tags, value])
+        event.target.value = '';
+        }
+    }
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
         dispatch(closeMakeCardModal())
     };
     useOutSideClick(modalRef, handleClose);
+    const [ inputTitle, setInputTitle ] = useState('');
+    const [ inputInfo, setInputInfo ] = useState('');
+    const [ inputTag, setInputTag ] = useState(tags);
+    console.log(inputTag);
+    const [ message, setMessage ] = useState(false);
+    const buildCard = () => {
+        if(inputTitle === '' || inputInfo === '' || inputTag === tags){
+            setMessage(true);
+        }else{
+            dispatch(closeMakeCardModal());
+        }
+    }
+
     return (
         <ModalPortal>
             <MakeCardModalContainer ref={modalRef}>
                 <div className="blur">
                 <div className="mainPageMakeCard">
-                    <div className="modal-title">제목을 입력하세요</div>
+                    <input className="modal-title" onChange={(e) => {setInputTitle(e.target.value)}} placeholder="제목을 입력하세요"></input>
                     <button type="button" className="close-btn" onClick={() => {
                         dispatch(closeMakeCardModal())
                     }}>X</button>
-                    <Tag></Tag>
-                    <button type="button" className="btn-confirm-btn"onClick={()=> {
-                        dispatch(closeMakeCardModal())}}>카드 만들기</button>
+                    <TagsInput >
+                        <ul id='tags' >
+                        {tags.map((tag, index) => (
+                            <li key={index} className='tag' onChange={(e) => {setInputTag(e.target.value)}}>
+                            <span className='tag-title' >{tag}</span>
+                            <span className='tag-close-icon' onClick={() => removeTags(index)}>x
+                            </span>
+                            </li>
+                        ))}
+                        </ul>
+                        <input
+                        className='tag-input'
+                        type='text'
+                        onKeyUp={(event)=> {addTags(event)}}
+                        placeholder='태그를 입력해 주세요'
+                        />
+                    </TagsInput>
+                    <button type="button" className="makeCard-btn"onClick={buildCard}>카드 만들기</button>
+                    {message?<div className="failure-message">비어있는 부분이 있습니다.</div>:<div></div>}
                     <img className="card-img" src="images/card-img.jpg" alt="card" />
-                    <div className="card-info">설명</div>
-                    <div className="card-info-text">설명을 입력하세요</div>
+                    <textarea className="card-info-text" onChange={(e) => {setInputInfo(e.target.value)}} placeholder="설명을 입력하세요"></textarea>
                 </div>
                 </div>
             </MakeCardModalContainer>

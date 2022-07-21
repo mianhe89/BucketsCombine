@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useMediaQuery } from "react-responsive";
-import { openMyCardModal } from "../redux/reducers/ModalReducer";
+import { openMyCardModal, openMyStampedModal } from "../redux/reducers/ModalReducer";
 
 const ColumnCardWrap = styled.div`
   .ColumnCard {

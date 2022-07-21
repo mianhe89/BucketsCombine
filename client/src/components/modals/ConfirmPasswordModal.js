@@ -2,7 +2,7 @@ import { closeConfirmPasswordModal } from "../../redux/reducers/ModalReducer";
 import { useDispatch } from "react-redux";
 import ModalPortal from "./ModalPortal";
 import useOutSideClick from "../hook/UseOutSideClick";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 const ConfirmPasswordModal = styled.div`
@@ -101,6 +101,13 @@ const ConfirmPasswordModal = styled.div`
         left: 5vw;
         top: 30vh;
     }
+    
+    .check{
+        position: absolute;
+        color: red;
+        left: 7vw;
+        top: 35vh;
+    }
 
 `
 
@@ -111,6 +118,15 @@ const ConfirmPasswordCardModal = () => {
         dispatch(closeConfirmPasswordModal())
     };
     useOutSideClick(modalRef, handleClose);
+    const [ message, setMessage ] = useState(false);
+    const [ inputPassword, setInputPassword ] = useState('');
+    const checkPassword = () => {
+        if(inputPassword === ''){
+            setMessage(true);
+        }else{
+            dispatch(closeConfirmPasswordModal());
+        }
+    }
     return (
         <ModalPortal>
             <ConfirmPasswordModal>
@@ -119,9 +135,9 @@ const ConfirmPasswordCardModal = () => {
                     dispatch(closeConfirmPasswordModal())
                 }}>X</button>                  
                 <img className="logo_img" src="images/bucketscombine_logo.png" alt="card" />
-                <input className="usingPassword" type='password' placeholder='사용중인 비밀번호'></input>
-                <button className="confirm-btn" onClick={() => {
-                    dispatch(closeConfirmPasswordModal())}}>확인</button>
+                <input className="usingPassword" type='password' placeholder='사용중인 비밀번호' onChange={(e) => {setInputPassword(e.target.value)}}></input>
+                {message?<div className="check">비밀번호가 일치하지 않습니다</div>:<div></div>}
+                <button className="confirm-btn" onClick={checkPassword}>확인</button>
                 </div>
             </ConfirmPasswordModal>
         </ModalPortal>

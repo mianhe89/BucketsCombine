@@ -240,7 +240,6 @@ const MainPageModal = styled.div`
 
 
 const MainPageCardModal = ({
-    
     }) => {
     const isDesktop = useMediaQuery({ minWidth: 921 })
     const isTablet = useMediaQuery({ minWidth: 1201 })
@@ -255,7 +254,7 @@ const MainPageCardModal = ({
     let backgroundImageStyle = {
         backgroundImage: "url(/images/card-" + cardData[0].background + ".jpg)",
       };
-
+    
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {

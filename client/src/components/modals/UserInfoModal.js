@@ -1,4 +1,4 @@
-import { closeUserInfoModal } from "../../redux/reducers/ModalReducer";
+import { closeUserInfoModal, openMyCardModal, openMyStampedModal } from "../../redux/reducers/ModalReducer";
 import { useDispatch } from "react-redux";
 import ModalPortal from "./ModalPortal";
 import useOutSideClick from "../hook/UseOutSideClick";
@@ -16,7 +16,7 @@ const UserInfoModal = styled.div`
     position: fixed;
     left: 40vw;
     top: 20vh;
-    z-index: 10;
+    z-index: 30;
     .UserInfoCard{
         position: relative;
         width: 30vw;
@@ -27,7 +27,7 @@ const UserInfoModal = styled.div`
         -moz-animation: fadein 0.5s;
         -webkit-animation: fadein 0.5s;
         -o-animation: fadein 0.5s;
-        
+        z-index: 30;
         @keyframes fadein {
             from {
                 opacity: 0;
@@ -72,7 +72,7 @@ const UserInfoModal = styled.div`
         top: 1vh;
         right: 1vw;
         background: none;
-        z-index: 15;
+        z-index: 50;
     }
 
     .user-img{
@@ -165,7 +165,9 @@ const UserInfoCardModal = () => {
                 <div className="UserInfoCard" ref={modalRef}>
                 <button className="close-btn" onClick={() => {
                     dispatch(closeUserInfoModal())
-                }}>X</button>                  
+                    dispatch(openMyCardModal())
+                    dispatch(openMyStampedModal())
+                }}>X</button>
                 <img className="user-img" src="images/bucketscombine_logo.png" alt="card" />
                 <div className="useremail">유저.email</div>
                 <div className="username">유저 닉네임</div>
