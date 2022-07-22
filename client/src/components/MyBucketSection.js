@@ -57,7 +57,7 @@ const MyBucketWrap = styled.div `
     max-width: 1000px;
     height: 30px;
     background: -webkit-linear-gradient(top,white 0%,rgba(0,0,0,0) 100%);
-    z-index: 15;
+    z-index: 2;
   }
 
   .fog-bottom {
@@ -67,7 +67,7 @@ const MyBucketWrap = styled.div `
     max-width: 1000px;
     height: 40px;
     background: -webkit-linear-gradient(bottom,white 0%,rgba(0,0,0,0) 100%);
-    z-index: 15;
+    z-index: 2;
   }
 
   #mybucket-section-mobile {
@@ -104,7 +104,7 @@ const MyBucketWrap = styled.div `
     width: 100vw;
     height: 30px;
     background: -webkit-linear-gradient(top,white 0%,rgba(0,0,0,0) 100%);
-    z-index: 15;
+    z-index: 2;
   }
 
   .fog-bottom-mobile {
@@ -113,7 +113,7 @@ const MyBucketWrap = styled.div `
     width: 100vw;
     height: 40px;
     background: -webkit-linear-gradient(bottom,white 0%,rgba(0,0,0,0) 100%);
-    z-index: 15;
+    z-index: 2;
   }
 `
 

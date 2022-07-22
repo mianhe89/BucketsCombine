@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import { useMediaQuery } from "react-responsive";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
-import { setCardsData, setUsersData } from '../redux/reducers/ModalReducer'
+import { setCardsData, setAllcardsData, setUsersData } from '../redux/reducers/ModalReducer'
 
 
 const RowListWrap = styled.div`
@@ -92,10 +92,12 @@ export default function RowList () {
 
   const dummyarea = document.querySelector('.dummyarea')
 
-  const saveData = (responseCards, responseUsers) => {
-    const cardsData = responseCards.data;
+  const saveData = (responseAllCards, responseUsers) => {
+    const allCardsData = responseAllCards.data;
     const usersData = responseUsers.data;
+    const cardsData = allCardsData.filter((card) => card.stamped[0] === null)
     dispatch(setCardsData({ cardsData }));
+    dispatch(setAllcardsData({ allCardsData }));
     dispatch(setUsersData({ usersData }));
     setCards(
       cardsData.map((card, i) => {
@@ -116,9 +118,9 @@ export default function RowList () {
   }
 
   useEffect(() => {async function fetchData() {
-    const responseCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
+    const responseAllCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
     const responseUsers = await axios.get(`${process.env.REACT_APP_API_URL}/mypage/usersinfo`)
-    const sendData = await saveData(responseCards,responseUsers )
+    const sendData = await saveData(responseAllCards,responseUsers )
   } fetchData()}, []);
 
   
