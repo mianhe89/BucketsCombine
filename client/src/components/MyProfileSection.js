@@ -1,9 +1,11 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { openWithdrawalModal, openConfirmPasswordModal, openChangePasswordModal } from '../redux/reducers/ModalReducer';
 import styled from 'styled-components'
 import { useMediaQuery } from "react-responsive";
 import { isDraft } from '@reduxjs/toolkit';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 const MyProfileWrap = styled.div`
   #myprofile-section {
@@ -26,6 +28,12 @@ const MyProfileWrap = styled.div`
     max-width: 1000px;
     border-radius: 20px;
   }
+
+  .image-container{
+    width: 20vw;
+    height: 20vw;
+  }
+
   .box-photo {
     background-color: white;
     width: 148px;
@@ -37,7 +45,28 @@ const MyProfileWrap = styled.div`
     font-size: 18px;
     text-align: center;
     line-height: 145px;
-    color: #969696;  
+    color: #969696;
+  }
+
+  .image{
+    position: inherit;
+    background: none;
+    border: none;
+    width: 200px;
+    height: 40px;
+    left: 1vw;
+    top: 2vw;
+  }
+
+  .user-img{
+    position: relative;
+    background: none;
+    border: none;
+    justify-content: center;
+    width: 148px;
+    height: 148px;
+    object-fit: fill;
+    border-radius: 15px;
   }
 
   .partition {
@@ -191,14 +220,67 @@ const MyProfileWrap = styled.div`
 
 export default function MyProfileSection() {
   const isDesktop = useMediaQuery({ minWidth: 921 })
+  const isTablet = useMediaQuery({ minWidth: 1201 })
+
+  const userId = useSelector((state) => state.userId)
+  // const { userData } = useSelector((state) => state.userData)
   const withdrawal = '> 회원탈퇴'
   const dispatch = useDispatch();
+  const [ files, setFiles ] = useState('');
+  const upLoadFile = (e) => {
+    const file = e.target.files;
+    console.log(file);
+    setFiles(file);
+  }
+  const [ imageSrc, setImageSrc ] = useState('');
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+
+  useEffect(() => {
+    preview();
+    return () => preview();
+  });
+
+  const preview = () => {
+    if(!files){
+      return false;
+    }
+  }
+  const imgEl = document.querySelector('box-photo');
+  const reader = new FileReader();
+  reader.onload = () => {
+    (imgEl.style.backgroundImage = `url(${reader.result})`);
+  reader.readAsDataURL(files[0]);
+  }
+  const handleClick = (e) => {
+    const formData = new FormData();
+    formData.append('uploadImage', files[0]);
+    const config = {
+      Headers: {
+        'content-type': 'multipart/form-data',
+      },
+    };
+    axios.post(`api`, formData, config);
+  }
   return (
     <MyProfileWrap>
       <div id={isDesktop? 'myprofile-section' : 'myprofile-section-mobile'}>
         <div className={isDesktop? "myprofile-container" : "myprofile-container-mobile"}>
           <div className='partition'>
-            <div className="box-photo">사진</div>
+            <div className='image-container'>
+            <div className="box-photo" placeholder='사진'>{imageSrc && <img className='user-img'src={imageSrc} alt="user-img" />}</div>
+            <input type='file' className='image' accept='image/*' onChange={(e) => {
+              encodeFileToBase64(e.target.files[0]);
+            }} placeholder='사진'/>
+            </div>
             <div className={isDesktop? "profile-info-section" : "profile-info-section-mobile"}>
                 <div className="profile-info-email">사용자@email</div>
                 <input className="profile-info-nickname" type="text" placeholder="닉네임"/>
@@ -224,7 +306,7 @@ export default function MyProfileSection() {
           <div className="change-buttons">
             <button className="withdrawal-button" onClick={() => {dispatch(openConfirmPasswordModal())}}>{withdrawal}</button>
             <button className="change-password-button" onClick={() => {dispatch(openChangePasswordModal())}} >비밀번호 변경</button>
-            <button className="change-profile-button">변경</button>
+            <button className="change-profile-button" onClick={handleClick}>변경</button>
           </div>
         </div>
       </div>

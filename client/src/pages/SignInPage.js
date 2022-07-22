@@ -133,8 +133,8 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
     // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
     if (!logininfo.email || !logininfo.password) {
       setErrormessage('이메일과 비밀번호를 입력해야 합니다')
-    } else {
-      setErrormessage('')
+    } else if(!logininfo.password === ''){
+      setErrormessage('비밀번호가 일치하지 않습니다.')
     }
     if (!errormessage) {
       await history.push("/")
@@ -172,7 +172,6 @@ src="images/bucketscombine_logo.png" alt="no" width="120px" height="120px"></img
           type="password" 
           placeholder="비밀번호" 
           onChange={handleInputValue("password")}/>
-          <div className='alert-box'>{errormessage}</div>
           <li><Link to="/signup">아이디 / 비밀번호찾기</Link></li>
           <div className="login_signupbox">
             <button className="login_box" 

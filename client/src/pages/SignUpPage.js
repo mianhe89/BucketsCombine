@@ -42,11 +42,14 @@ const SignUpPageWrap = styled.div`
     overflow: hidden;
   }
   .login_title {
+    position: absolute;
     font-weight: bold;
     color: white;
     font-size: 30px;
     margin: 20px;
     border-radius: 5px;
+    justify-content: center;
+    top: 27vh;
   }
   .login_signupbox {
     display: flex;
@@ -83,21 +86,32 @@ const SignUpPageWrap = styled.div`
     margin: 4px;
     border-radius: 5px;
   }
+  .logo{
+    position: absolute;
+    top: 15vh;
+    justify-content: center;
+  }
   .email {
-    width: 246px;
-    height: 32px;
+    position: absolute;
+    width: 25vw;
+    height: 5vh;
     padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
     border: none;
+    left: 34vw;
+    top: 40vh;
   }
   .password {
-    width: 246px;
-    height: 32px;
+    position: absolute;
+    width: 25vw;
+    height: 5vh;
     padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
     border: none;
+    left: 34vw;
+    top: 50vh;
   }
   .signup_container {
     display: flex;
@@ -114,12 +128,15 @@ const SignUpPageWrap = styled.div`
     border: none;
   }
   .username {
-    width: 246px;
-    height: 32px;
+    position: absolute;
+    width: 25vw;
+    height: 5vh;
     padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
     border: none;
+    left: 34vw;
+    top: 60vh;
   }
   .btn_old {
     padding: 5px 40px;
@@ -138,13 +155,30 @@ const SignUpPageWrap = styled.div`
 
   .signup {
     border: none;
-    font-size: 16;
-    height: 40px;
+    
     justify-content: center;
-    margin: 4px;
-    width: 330px;
+    
     background: #ffc700;
     border-radius: 5px;
+    position: absolute;
+    width: 25vw;
+    height: 5vh;
+    padding: 2px;
+    margin: 10px;
+    border-radius: 5px;
+    left: 34vw;
+    top: 70vh;
+  }
+  
+  .alert-box{
+    color: red;
+    position: absolute;
+    left: 45vw;
+    top: 68vh;
+  }
+
+  .errormessage{
+    color: red;
   }
 `
 
@@ -240,6 +274,7 @@ export default function SignUpPage() {
           <button id="login_cancle">취소</button>
           <div className="signin_container">
             <img
+              className="logo"
               src="images/bucketscombine_logo.png"
               alt="no"
               width="120px"

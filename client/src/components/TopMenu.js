@@ -225,7 +225,7 @@ export default function Topmenu({location}){
   }
 
   return(
-    <TopMenuWrap>
+    <TopMenuWrap >
       <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
         {isDesktop ?
           <div className='topmenu-title' >Buckets Combine</div>
