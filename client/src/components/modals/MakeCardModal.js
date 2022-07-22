@@ -1,11 +1,12 @@
 import { closeMakeCardModal, setUsersData, setStampedData } from "../../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
 import styled from 'styled-components';
 import ModalPortal from "./ModalPortal.js";
 import HorizontalScroll from 'react-scroll-horizontal';
 import { useMediaQuery } from "react-responsive";
+import axios from "axios";
 
 const MakeCardeModalWrap = styled.div`
     .modal-container {
@@ -81,16 +82,7 @@ const MakeCardeModalWrap = styled.div`
         align-items: center;
     }
 
-    .card-img {
-        margin-right: 30px;
-        align-items: center;
-        justify-content: center;
-        border-radius: 20px;
-        border: none;
-        width: 260px;
-        height: 390px;
-        background-size: cover;
-    }
+    
 
     .userinfo {
         display: flex;
@@ -212,15 +204,7 @@ const MakeCardeModalWrap = styled.div`
         box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.2);
     }
 
-    .card-img-mobile {
-        align-items: center;
-        justify-content: center;
-        border-radius: 20px;
-        border: none;
-        width: 0px;
-        height: 0px;
-        background-size: cover;
-    }
+    
 
     
     
@@ -264,9 +248,21 @@ const MakeCardeModalWrap = styled.div`
     align-self: flex-end;
     margin-right: auto;
     position: absolute;
-    left: 180px;
+    left: 170px;
     bottom: 34px;
     font-size: 16px;
+    z-index: 2;
+  }
+
+  .failure-message-mobile {
+    color: #FF5C00;
+    align-self: flex-end;
+    margin-right: auto;
+    position: absolute;
+    left: 30px;
+    bottom: 60px;
+    font-size: 16px;
+    z-index: 2;
   }
 
   .card-tags  {
@@ -325,6 +321,9 @@ const MakeCardeModalWrap = styled.div`
     border: none;
     box-shadow: none;
     font-size: 16px;
+    :focus {
+      outline: none;
+    }
   }
 
   .tag-input-mobile {
@@ -337,6 +336,9 @@ const MakeCardeModalWrap = styled.div`
     border: none;
     box-shadow: none;
     font-size: 16px;
+    :focus {
+      outline: none;
+    }
   }
 
   .modal-title {
@@ -350,6 +352,9 @@ const MakeCardeModalWrap = styled.div`
         background-color: transparent;
         border: none;
     box-shadow: none;
+    :focus {
+      outline: none;
+    }
     }
   
   .modal-title-mobile {
@@ -363,6 +368,9 @@ const MakeCardeModalWrap = styled.div`
     background-color: transparent;
     border: none;
     box-shadow: none;
+    :focus {
+      outline: none;
+    }
   }
 
   .card-description {
@@ -376,6 +384,9 @@ const MakeCardeModalWrap = styled.div`
     background-color: transparent;
     border-radius: 10px;
     padding: 10px;
+    :focus {
+      outline: none;
+    }
   };
   .card-description-mobile {
     position: absolute;
@@ -388,7 +399,38 @@ const MakeCardeModalWrap = styled.div`
     background-color: transparent;
     border-radius: 10px;
     padding: 10px;
+    :focus {
+      outline: none;
+    }
   };
+
+  .card-img {
+        margin-right: 30px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        border: none;
+        width: 260px;
+        height: 390px;
+        background-size: cover;
+        color: white;
+        text-align : center;
+        line-height: 350px;
+    }
+
+    .card-img-mobile {
+        position: absolute;
+        border-radius: 20px;
+        border: none;
+        left: 180px;
+        bottom: 30px;
+        width: calc(100% - 220px);
+        height: 30px;
+        background-size: cover;
+        color: white;
+        text-align : center;
+        line-height: 30px;
+    }
 `
 
     
@@ -399,9 +441,6 @@ const MakeCardModal = ({
 
 
   const { usersData } = useSelector((state) => state.modal.usersData);
-  let backgroundImageStyle = {
-    backgroundImage: "url(/images/card-" + "1" + ".jpg)",
-  };
 
   const isDesktop = useMediaQuery({ minWidth: 921 })
   const isTablet = useMediaQuery({ minWidth: 1201 })
@@ -409,46 +448,81 @@ const MakeCardModal = ({
   const modalRef = useRef(null);
 
 
-
-  const initialTags = [];
-  const [tags, setTags] = useState(initialTags);
+  const [inputTitle, setInputTitle] = useState('');
+  const [inputInfo, setInputInfo] = useState('');
+  const [inputTag, setInputTag] = useState([]);
+  const [message, setMessage] = useState(false);
+  const [bgImageStyle, setBgImageStyle] = useState(`${Math.floor(Math.random() * 18) + 1}`)
+  const [tags, setTags] = useState([]);
   const removeTags = (indexToRemove) => {
     setTags(tags.filter((el) => {
       return el !== tags[indexToRemove];
     }))
+    setInputInfo(tags)
   };
 
   const addTags = (event) => {
     const value = event.target.value;
-    const inputTag = value.replace(/\#/g,'').replace(/\ /g,'')
-    if (!tags.includes("#" + inputTag) && value) {
+    const tagforput = value.replace(/\#/g,'').replace(/\ /g,'')
+    if (!tags.includes("#" + tagforput) && value) {
       if(event.key === ' ' || event.key === 'Enter'){
-        setTags([...tags, '#' + inputTag])
+        setTags([...tags, '#' + tagforput])
         event.target.value = '';
       }
       
     }
   }
   const handleClose = () => {
-    dispatch(closeMakeCardModal())
+    confirmClosing()
+    // dispatch(closeMakeCardModal())
   };
   useOutSideClick(modalRef, handleClose);
-  const [inputTitle, setInputTitle] = useState('');
-  const [inputInfo, setInputInfo] = useState('');
-  const [inputTag, setInputTag] = useState(tags);
-  const [message, setMessage] = useState(false);
-  const buildCard = () => {
-    if (inputTitle === '' || inputInfo === '' || inputTag === tags) {
+  
+
+  const buildCard = async () => {
+    if (inputTitle === '' || inputInfo === '' || tags.length === 0) {
       setMessage(true);
     } else {
-      dispatch(closeMakeCardModal());
+      const payload = {
+        "title": inputTitle,
+        "cardtext": inputInfo,
+        "users_id": "1",
+        "background": bgImageStyle,
+        "hashname": tags,
+      }
+      await dispatch(closeMakeCardModal())
+      await axios.post(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`, payload)
+      
+    }
+  }
+
+  const changeBgImage = () => {
+    setBgImageStyle(`${Math.floor(Math.random() * 18) + 1}`)
+    setMent("")
+  }
+
+  useEffect(() => {
+    if(inputTitle!=='' && !inputInfo !==''&& tags.length !== 0){
+      setMessage(false)
+    } 
+    
+  }, [inputTitle, inputInfo, tags])
+
+
+  const [ment, setMent] = useState(`배경을 변경하려면 클릭하세요.`)
+
+  const confirmClosing = () => {
+    if(window.confirm("작성하신 내용이 삭제됩니다. 닫으시겠습니까?") === true){
+      dispatch(closeMakeCardModal())
+    } else {
+      return ;
     }
   }
 
   return (
     <ModalPortal>
       <MakeCardeModalWrap>
-        <div className={isDesktop ? "modal-container" : "modal-container-mobile"} >
+        <div className={isDesktop ? "modal-container" : "modal-container-mobile"} ref={modalRef} >
           <div className="mainPageCard" >
             <input className={isTablet ? " modal-title" : " modal-title-mobile"} onChange={(e) => { setInputTitle(e.target.value) }} placeholder="제목을 입력해 주세요."></input>
               <div className={isTablet ? "card-tags" : "card-tags-mobile"} >
@@ -470,10 +544,14 @@ const MakeCardModal = ({
             <button type="button" className="make-card-button" onClick={buildCard}>
               카드 만들기
             </button>
-            {message ? <div className="failure-message">비어있는 부분이 있습니다.</div> : <div />}
-            <div className={isTablet ? "card-img" : "card-img-mobile"} style={backgroundImageStyle} />
+            {message ? <div className={isTablet? "failure-message" : "failure-message-mobile" }>비어있는 부분이 있습니다.</div> : <div />}
+            <div className={isTablet ? "card-img" : "card-img-mobile"} 
+            style={{backgroundImage: "url(/images/card-" + bgImageStyle + ".jpg)"}} 
+            onClick={changeBgImage}>
+              {ment}
+            </div>
           </div>
-          <textarea className={isTablet ? "card-description" : "card-description-mobile"} onChange={(e) => { setInputInfo(e.target.value) }} placeholder="설명을 입력해 주세요"></textarea>
+          <textarea className={isTablet ? "card-description" : "card-description-mobile"} onChange={(e) => { setInputInfo(e.target.value) }} placeholder="설명을 입력해 주세요."></textarea>
         </div>
       </MakeCardeModalWrap>
     </ModalPortal>
