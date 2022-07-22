@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import {openCardModal, setModalCardID } from '../redux/reducers/ModalReducer'
+import {openStampedModal, setModalCardID } from '../redux/reducers/ModalReducer'
 import { useMediaQuery } from "react-responsive";
 
 const StampedCardWrap = styled.div`
@@ -167,7 +167,7 @@ export default function StampedCard({
         style={backgroundImageStyle}
         onClick={() => {
           dispatch(setModalCardID(cardID));
-          dispatch(openCardModal());
+          dispatch(openStampedModal());
         }}
       >
         <div className="card-info">

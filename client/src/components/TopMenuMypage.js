@@ -240,7 +240,7 @@ export default function Topmenu({location}){
         <button className='board-button' onClick={goToMyStamped}>Stamped</button>
         <button className='board-button'>Sign Out</button>
       </div> 
-      : <div className='username-board-mobile'>
+      : <div className='username-board-mobile' ref={modalRef}>
       <div className='board-button-mobile-c'onClick={goToCards}/>
       <div className='board-button-mobile-s' onClick={goToMyStamped}/>
       <div className='board-button-mobile-so'/>
