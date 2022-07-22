@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import useOutSideClick from './hook/UseOutSideClick';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const TopMenuWrap = styled.div`
   .topmenu {
@@ -208,7 +210,18 @@ export default function Topmenu(){
         setIsBoardOpen(false);
     };
     useOutSideClick(modalRef, handleClose);
-  // const dd = document.querySelector(".username-board")
+
+  //   const [ isLogin, setIsLogin ] = useState(false);
+  //   const [ userInfo, setUserInfo ] = useState(null);
+  //   const history = useHistory();
+  //   const handleLogout = () => {
+  //     axios.post(`${process.env.REACT_APP_API_URL}/users/logout`).then((res) => {
+  //       setUserInfo(null);
+  //       setIsLogin(false);
+  //       history.push('/');
+  //     });
+  //   }
+  // // const dd = document.querySelector(".username-board")
 
   // const modalEl = useRef();
   // const handleClickOutside = ({ target }) => {
@@ -228,23 +241,23 @@ export default function Topmenu(){
   // }, []);
 
   return(
-    <TopMenuWrap>
+    <TopMenuWrap >
       <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
         {isDesktop ?
           <div className='topmenu-title' >Buckets Combine</div>
           : <div />}
         {isSignIn ? 
-          isDesktop? <button className='topmenu-button' onClick={usernameclick} ref={modalRef}>유저닉네임</button>
-          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick} ref={modalRef}/>
+          isDesktop? <button className='topmenu-button' onClick={usernameclick} >유저닉네임</button>
+          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick} />
           : isDesktop? <button className='topmenu-button' onClick={signinClick}>Sign In</button>
             : <img className='topmenu-button-mobile' src='/images/sign-in-icon.png' onClick={signinClick}/>
           }
       </div>
-      {isBoardOpen ? isDesktop? <div className='username-board'>
-        <button className='board-button'>My Bucket</button>
-        <button className='board-button'>My Profile</button>
-        <button className='board-button'>Sign Out</button>
-      </div> 
+      {isBoardOpen ? isDesktop? <div className='username-board' ref={modalRef}>
+        <button className='board-button' onClick={() => {console.log('123')}}>My Bucket</button>
+        <button className='board-button' onClick = {() => {console.log('456')}}>My Profile</button>
+        <button className='board-button' onClick={() => {console.log('789')}}>Sign Out</button>
+      </div>
       : <div className='username-board-mobile'>
       <div className='board-button-mobile-mb'/>
       <div className='board-button-mobile-mp'/>

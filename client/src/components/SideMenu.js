@@ -216,7 +216,7 @@ export default function SideMenu(){
     <SideMenuWrap>
       <div className={isDesktop? 'sidemenu' : 'sidemenu-mobile'}>
       <img className={isDesktop? 'logo-part' : 'logo-part-mobile'} src='images/logo-part.png' />
-          <img className={isDesktop?'logo' : 'logo-mobile'} src='images/logo-small.png' />
+          <img className={isDesktop?'logo' : 'logo-mobile'} src='images/logo-small.png' onClick={() => {console.log('qwe')}}/>
           <button className={isDesktop?'sidemenu-button-main' : 'sidemenu-button-main-mobile'} onClick={moveToMain}>Main</button>
           <button className={isDesktop? 'sidemenu-button-cards' : 'sidemenu-button-cards-mobile'} onClick={moveToCards}>Cards</button>
           <button className={isDesktop? 'sidemenu-button-stamped' : 'sidemenu-button-stamped-mobile' }onClick={moveToStmaped}>Stamped</button>
