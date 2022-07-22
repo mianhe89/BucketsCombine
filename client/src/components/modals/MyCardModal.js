@@ -341,7 +341,6 @@ const MyCardModal = ({
 
     const modalCardID = useSelector((state) => state.modal.modalCardID);
     const cardsData = useSelector((state) => state.modal.bucketData.bucketCardsData);
-    console.log(cardsData)
     const {usersData} = useSelector((state) => state.modal.usersData);
 
     const cardData = cardsData.filter(card => card.id === modalCardID);

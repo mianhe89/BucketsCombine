@@ -1,33 +1,43 @@
-import { closeMakeCardModal } from "../../redux/reducers/ModalReducer.js";
-import { useDispatch } from "react-redux";
+import { closeMakeCardModal, setUsersData, setStampedData } from "../../redux/reducers/ModalReducer.js";
+import { useSelector, useDispatch } from "react-redux";
 import React, { useRef, useState } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
 import styled from 'styled-components';
 import ModalPortal from "./ModalPortal.js";
+import HorizontalScroll from 'react-scroll-horizontal';
+import { useMediaQuery } from "react-responsive";
 
-const MakeCardModalContainer = styled.div`
-    width: 70vw;
-    height: 60vh;
-    display: flex;
-    border-radius: 20px 20px 20px 20px;
-    border: solid rgb(170, 170, 170);
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 20vw;
-    top: 20vh;
-    box-shadow: 3px 3px 5px 5px rgb(194, 194, 194, 0.3);
-    z-index: 10;
-    .mainPageMakeCard{
-        position: relative;
+const MakeCardeModalWrap = styled.div`
+    .modal-container {
         width: 70vw;
+        max-width: 1200px;
         height: 60vh;
+        min-height: 460px;
+        max-height: 700px;
+        display: flex;
+        border-radius: 20px ;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        margin-left: 60px;
+        z-index: 10;
+        border: solid #5E5E5E;
+        border-width: 1px;
         background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 20px 20px 20px 20px;
-        animation: fadein 0.5s;
-        -moz-animation: fadein 0.5s;
-        -webkit-animation: fadein 0.5s;
-        -o-animation: fadein 0.5s;
+        backdrop-filter: blur(10px);
+        animation: fadein 0.3s;
+        -moz-animation: fadein 0.3s;
+        -webkit-animation: fadein 0.3s;
+        -o-animation: fadein 0.3s;
+        box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.2);
+
         @keyframes fadein {
             from {
                 opacity: 0;
@@ -62,18 +72,62 @@ const MakeCardModalContainer = styled.div`
         }
     }
 
-    .blur {
-        border-radius: 20px 20px 20px 20px;
-        backdrop-filter: blur(5px);
+    .mainPageCard {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
     }
 
-    .modal-title {
-        margin: 15px;
-        position: absolute;
-        font-size: calc(10px + 2vmin);
-        top: 1vh;
-        left: 1vw;
+    .card-img {
+        margin-right: 30px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        border: none;
+        width: 260px;
+        height: 390px;
+        background-size: cover;
     }
+
+    .userinfo {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        height: 40px;
+        width: calc(100% - 370px);
+        left: 60px;
+        top: 160px;
+        font-size: 18px;
+        overflow: auto;
+        white-space: nowrap;
+        ::-webkit-scrollbar {
+        display: none;
+        }
+        
+    }
+
+    .userinfo-message {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        height: 40px;
+        width: calc(100% - 370px);
+        left: 60px;
+        top: 180px;
+        color: grey;
+        font-size: 14px;
+        overflow: auto;
+        white-space: nowrap;
+        ::-webkit-scrollbar {
+        display: none;
+        }
+        
+    }
+
+    
 
     .close-btn {
         margin: 1px;
@@ -87,196 +141,343 @@ const MakeCardModalContainer = styled.div`
         background: none;
         z-index: 15;
     }
-    
-    .makeCard-btn {
+
+    .userInfo-btn {
         position: absolute;
-        align-self: center;
-        display: flex;
         justify-content: center;
-        background-color: rgb(251, 255, 0);
-        border-radius: 5px 5px 5px 5px;
-        border: none;
-        width: 8vw;
-        height: 2.5vh;
-        left: 1vw;
-        top: 55vh;
-    }
-    
-    .card-img {
-        margin: 10px;
-        position: absolute;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px 10px 10px 10px;
-        border: none;
-        width: 15vw;
-        height: 40vh;
-        right: 1vw;
-        top: 7vh;
-    }
-    
-    .card-info-text {
-        margin: 5px;
-        padding: 1em;
-        text-align: left;
-        position: absolute;
-        background:none;
-        border: solid rgb(170, 170, 170 );
-        display: flex;
-        position: absolute;
-        width: 45vw;
-        height: 20vh;
-        left: 1vw;
-        top: 30vh;
-    }
-    .failure-message{
-        position: absolute;
-        color: red;
-        left: 10vw;
-        top:55vh;
-    }`;
-
-const TagsInput = styled.div`
-    position: absolute;
-    margin: 2px;
-    display: inline-flexbox;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    box-sizing: content-box;
-    width: 40vw;
-    height: 10vh;
-    padding: 0 8px;
-    border: 1px solid rgb(214, 216, 218);
-    border-radius: 6px;
-    left: 3vw;
-    top: 15vh;
-
-    > ul {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: 8px 0 0 0;
-
-    > .tag {
-        width: auto;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: black;
-        padding: 0 8px;
-        font-size: 14px;
-        list-style: none;
-        border-radius: 6px;
-        margin: 0 8px 8px 0;
-        background: rgb(255, 255, 255);
-        > .tag-close-icon {
-            display: block;
-            width: 16px;
-            height: 16px;
-            line-height: 16px;
-            text-align: center;
-            font-size: 14px;
-            margin-left: 8px;
-            color: #4000c7;
-            border-radius: 50%;
-            background: #fff;
-            cursor: pointer;
-            }
-        }
-    }
-
-    > input {
-    width: 40vw;
-    height: 5vh;    
-    flex: 1;
-    border: none;
-    border-radius: inherit;
-    height: 46px;
-    font-size: 13px;
-    padding: 4px 0 0 0;
-    background: none;
-        :focus {
-        outline: transparent;
         background: none;
-        }
+        border: none;
+        width: 10vw;
+        left: 1vw;
+        top: 17vh;
     }
-
-    &:focus-within {
-    border: 1px solid #4000c7;
-    }
-`;
-
-const MakeCardModal = () => {
-    const initialTags = [];
-    const [tags, setTags] = useState(initialTags);
-    const removeTags = (indexToRemove) => {
-        setTags(tags.filter((el) => {
-        return el !== tags[indexToRemove];
-        }))
-    };
     
-    const addTags = (event) => {
-        let value = event.target.value;
-        if(event.key === 'Enter' && !tags.includes(value) && value){
-        setTags([...tags, value])
-        event.target.value = '';
+    .make-card-button {
+        align-self: flex-end;
+        margin-right: auto;
+        background-color: #FFC700;
+        border-radius: 10px;
+        border: none;
+        width: 120px;
+        height: 30px;
+        position: relative;
+        left: 30px;
+        bottom: 30px;
+        font-size: 14px;
+    }
+
+    .username {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 15px;
+    }
+
+    .profile-image {
+        background-color: #CCCCCC;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        margin-left: 4px;
+        margin-right: 14px;
+    }
+
+    .modal-container-mobile {
+        width: 90vw;
+        max-width: 1200px;
+        height: 60vh;
+        min-height: 460px;
+        max-height: 700px;
+        display: flex;
+        border-radius: 20px ;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        border: solid #5E5E5E;
+        border-width: 1px;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        animation: fadein 0.3s;
+        -moz-animation: fadein 0.3s;
+        -webkit-animation: fadein 0.3s;
+        -o-animation: fadein 0.3s;
+        box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-img-mobile {
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+        border: none;
+        width: 0px;
+        height: 0px;
+        background-size: cover;
+    }
+
+    
+    
+
+    .userinfo-mobile {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        height: 40px;
+        width: calc(100% - 70px);
+        left: 30px;
+        top: 160px;
+        font-size: 18px;
+        overflow: auto;
+        white-space: nowrap;
+        ::-webkit-scrollbar {
+        display: none;
         }
     }
-    const dispatch = useDispatch();
-    const modalRef = useRef(null);
-    const handleClose = () => {
-        dispatch(closeMakeCardModal())
-    };
-    useOutSideClick(modalRef, handleClose);
-    const [ inputTitle, setInputTitle ] = useState('');
-    const [ inputInfo, setInputInfo ] = useState('');
-    const [ inputTag, setInputTag ] = useState(tags);
-    console.log(inputTag);
-    const [ message, setMessage ] = useState(false);
-    const buildCard = () => {
-        if(inputTitle === '' || inputInfo === '' || inputTag === tags){
-            setMessage(true);
-        }else{
-            dispatch(closeMakeCardModal());
+    
+
+    .userinfo-message-mobile {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        height: 40px;
+        width: calc(100% - 70px);
+        left: 30px;
+        top: 180px;
+        color: grey;
+        font-size: 14px;
+        overflow: auto;
+        white-space: nowrap;
+        ::-webkit-scrollbar {
+        display: none;
         }
     }
 
-    return (
-        <ModalPortal>
-            <MakeCardModalContainer ref={modalRef}>
-                <div className="blur">
-                <div className="mainPageMakeCard">
-                    <input className="modal-title" onChange={(e) => {setInputTitle(e.target.value)}} placeholder="제목을 입력하세요"></input>
-                    <button type="button" className="close-btn" onClick={() => {
-                        dispatch(closeMakeCardModal())
-                    }}>X</button>
-                    <TagsInput >
-                        <ul id='tags' >
-                        {tags.map((tag, index) => (
-                            <li key={index} className='tag' onChange={(e) => {setInputTag(e.target.value)}}>
-                            <span className='tag-title' >{tag}</span>
-                            <span className='tag-close-icon' onClick={() => removeTags(index)}>x
-                            </span>
-                            </li>
-                        ))}
-                        </ul>
-                        <input
-                        className='tag-input'
-                        type='text'
-                        onKeyUp={(event)=> {addTags(event)}}
-                        placeholder='태그를 입력해 주세요'
-                        />
-                    </TagsInput>
-                    <button type="button" className="makeCard-btn"onClick={buildCard}>카드 만들기</button>
-                    {message?<div className="failure-message">비어있는 부분이 있습니다.</div>:<div></div>}
-                    <img className="card-img" src="images/card-img.jpg" alt="card" />
-                    <textarea className="card-info-text" onChange={(e) => {setInputInfo(e.target.value)}} placeholder="설명을 입력하세요"></textarea>
-                </div>
-                </div>
-            </MakeCardModalContainer>
-        </ModalPortal>
-    );
+  .failure-message {
+    color: #FF5C00;
+    align-self: flex-end;
+    margin-right: auto;
+    position: absolute;
+    left: 180px;
+    bottom: 34px;
+    font-size: 16px;
+  }
+
+  .card-tags  {
+        position: absolute;
+        width: calc(100% - 370px);
+        height: 40px;
+        left: 60px;
+        top: 120px;
+        font-size: 18px;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        ::-webkit-scrollbar {
+        display: none;
+        }
+    }
+  .card-tags-mobile  {
+      position: absolute;
+      width: calc(100% - 70px);
+      height: 40px;
+      left: 30px;
+      top: 120px;
+      font-size: 18px;
+      display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        ::-webkit-scrollbar {
+        display: none;
+        }
+  }
+  .tag {
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px ;
+    font-size: 16px;
+    color: #323232;
+    padding: 5px 5px 5px 10px;
+    margin-right: 2px;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.2) ;
+  }
+  .x {
+    border: none;
+    box-shadow: none;
+    margin-left: 5px;
+    background-color: transparent;
+  }
+  .tag-input {
+    position: absolute;
+    left: 60px;
+    top: 180px;
+    height: 30px;
+    width: calc(100% - 370px);
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    font-size: 16px;
+  }
+
+  .tag-input-mobile {
+    position: absolute;
+    left: 30px;
+    top: 180px;
+    height: 30px;
+    width: calc(100% - 70px);
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    font-size: 16px;
+  }
+
+  .modal-title {
+        position: absolute;
+        width: calc(100% - 370px);
+        font-size: 28px;
+        font-weight: 1000;
+        top: 60px;
+        left: 60px;
+        margin: auto;
+        background-color: transparent;
+        border: none;
+    box-shadow: none;
+    }
+  
+  .modal-title-mobile {
+    position: absolute;
+    width: calc(100% - 70px);
+    font-size: 28px;
+    font-weight: 1000;
+    top: 60px;
+    left: 30px;
+    margin: auto;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .card-description {
+    position: absolute;
+    width: calc(100% - 390px);
+    height: calc(100% - 350px);
+    font-size: 16px;
+    top: 240px;
+    left: 60px;
+    overflow-y: auto;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 10px;
+  };
+  .card-description-mobile {
+    position: absolute;
+    width: calc(100% - 90px);
+    height: calc(100% - 350px);
+    font-size: 16px;
+    top: 240px;
+    left: 30px;
+    overflow-y: auto;
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 10px;
+  };
+`
+
+    
+
+
+const MakeCardModal = ({
+    }) => {
+
+
+  const { usersData } = useSelector((state) => state.modal.usersData);
+  let backgroundImageStyle = {
+    backgroundImage: "url(/images/card-" + "1" + ".jpg)",
+  };
+
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+  const isTablet = useMediaQuery({ minWidth: 1201 })
+  const dispatch = useDispatch();
+  const modalRef = useRef(null);
+
+
+
+  const initialTags = [];
+  const [tags, setTags] = useState(initialTags);
+  const removeTags = (indexToRemove) => {
+    setTags(tags.filter((el) => {
+      return el !== tags[indexToRemove];
+    }))
+  };
+
+  const addTags = (event) => {
+    const value = event.target.value;
+    const inputTag = value.replace(/\#/g,'').replace(/\ /g,'')
+    if (!tags.includes("#" + inputTag) && value) {
+      if(event.key === ' ' || event.key === 'Enter'){
+        setTags([...tags, '#' + inputTag])
+        event.target.value = '';
+      }
+      
+    }
+  }
+  const handleClose = () => {
+    dispatch(closeMakeCardModal())
+  };
+  useOutSideClick(modalRef, handleClose);
+  const [inputTitle, setInputTitle] = useState('');
+  const [inputInfo, setInputInfo] = useState('');
+  const [inputTag, setInputTag] = useState(tags);
+  const [message, setMessage] = useState(false);
+  const buildCard = () => {
+    if (inputTitle === '' || inputInfo === '' || inputTag === tags) {
+      setMessage(true);
+    } else {
+      dispatch(closeMakeCardModal());
+    }
+  }
+
+  return (
+    <ModalPortal>
+      <MakeCardeModalWrap>
+        <div className={isDesktop ? "modal-container" : "modal-container-mobile"} >
+          <div className="mainPageCard" >
+            <input className={isTablet ? " modal-title" : " modal-title-mobile"} onChange={(e) => { setInputTitle(e.target.value) }} placeholder="제목을 입력해 주세요."></input>
+              <div className={isTablet ? "card-tags" : "card-tags-mobile"} >
+                {tags.map((tag, index) => (
+                  <div key={index} className='tag' onChange={(e) => { setInputTag(e.target.value) }}>
+                    <div>{tag}</div><button className="x"onClick={() => removeTags(index)}>x</button>
+                  </div>
+                ))}
+              </div>
+              <input
+                className={isTablet? 'tag-input' : 'tag-input-mobile'}
+                type='text'
+                onKeyUp={(event) => { addTags(event) }}
+                placeholder='태그를 입력해 주세요.'
+              />
+            <button className="close-btn" onClick={() => {
+              dispatch(closeMakeCardModal())
+            }}>X</button>
+            <button type="button" className="make-card-button" onClick={buildCard}>
+              카드 만들기
+            </button>
+            {message ? <div className="failure-message">비어있는 부분이 있습니다.</div> : <div />}
+            <div className={isTablet ? "card-img" : "card-img-mobile"} style={backgroundImageStyle} />
+          </div>
+          <textarea className={isTablet ? "card-description" : "card-description-mobile"} onChange={(e) => { setInputInfo(e.target.value) }} placeholder="설명을 입력해 주세요"></textarea>
+        </div>
+      </MakeCardeModalWrap>
+    </ModalPortal>
+  );
 }
 
 export default MakeCardModal;
