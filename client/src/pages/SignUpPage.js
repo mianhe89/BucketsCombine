@@ -180,6 +180,21 @@ const SignUpPageWrap = styled.div`
   .errormessage{
     color: red;
   }
+
+  #cancle {
+    position: fixed;
+    top: 20px;
+    right: 0;
+    margin-right: 30px;
+    border: none;
+    box-shadow: none;
+    width: 120px;
+    height: 36px;
+    border-radius: 12px;
+    font-size: 15px;
+    background-color: #FFC700;
+  }
+  
 `
 
 export default function SignUpPage() {
@@ -267,11 +282,16 @@ export default function SignUpPage() {
   //     //   console.log(res)
   //     // });
   // }, [])
+
+  const cancle = () => {
+    history.goBack()
+  }
+
   return (
     <SignUpPageWrap>
       <div className="body">
         <div className="signin_section">
-          <button id="login_cancle">취소</button>
+        <button id="cancle" onClick={cancle}>취소</button>
           <div className="signin_container">
             <img
               className="logo"
