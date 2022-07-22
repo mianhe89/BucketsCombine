@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import useOutSideClick from './hook/UseOutSideClick';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const TopMenuWrap = styled.div`
   .topmenu {
@@ -226,7 +228,12 @@ export default function Topmenu(){
   //     window.removeEventListener("click", handleClickOutside);
   //   };
   // }, []);
-
+  const history = useHistory()
+  const signout = async () => {
+    await console.log('test')
+    await history.push('/')
+    await axios.get(`${process.env.REACT_APP_API_URL}/users/logout`)
+  }
   return(
     <TopMenuWrap>
       <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
@@ -234,8 +241,8 @@ export default function Topmenu(){
           <div className='topmenu-title' >Buckets Combine</div>
           : <div />}
         {isSignIn ? 
-          isDesktop? <button className='topmenu-button' onClick={usernameclick} ref={modalRef}>유저닉네임</button>
-          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick} ref={modalRef}/>
+          isDesktop? <button className='topmenu-button' onClick={usernameclick} >유저닉네임</button>
+          : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick} />
           : isDesktop? <button className='topmenu-button' onClick={signinClick}>Sign In</button>
             : <img className='topmenu-button-mobile' src='/images/sign-in-icon.png' onClick={signinClick}/>
           }
@@ -243,7 +250,7 @@ export default function Topmenu(){
       {isBoardOpen ? isDesktop? <div className='username-board'>
         <button className='board-button'>My Bucket</button>
         <button className='board-button'>My Profile</button>
-        <button className='board-button'>Sign Out</button>
+        <button className='board-button' onClick={signout}>Sign Out</button>
       </div> 
       : <div className='username-board-mobile'>
       <div className='board-button-mobile-mb'/>

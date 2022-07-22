@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
+import { useCookies } from 'react-cookie';
 
 const SignInPageWrap = styled.div`
   .body {
@@ -122,41 +123,30 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
   });
   const [errormessage, setErrormessage] = useState('');
   const [errormessage2, setErrormessage2] = useState('');
+  const [cookies, setCookie] = useCookies(['id']); // 쿠키 훅 
   const history = useHistory();
   const handleInputValue = (key) => (e) => {
     setLogininfo({ ...logininfo, [key]: e.target.value });
   };
-  const handleLogin = () => {
+  const handleLogin = async() => {
     // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
     // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
-    if (!logininfo.email || !logininfo.email) {
+    if (!logininfo.email || !logininfo.password) {
       setErrormessage('이메일과 비밀번호를 입력해야 합니다')
     } else {
       setErrormessage('')
     }
     if (!errormessage) {
-      axios.post(`${process.env.REACT_APP_API_URL}/users/signin`, {
+      await history.push("/")
+      await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
         email: logininfo.email,
         password: logininfo.password
       })
-      // .then((res) => {
-      //   handleResponseSuccess()
-      //   history.push("/");
-      //  });
-
-
-
-      .catch(error => setErrormessage2('비밀번호가 일치하지 않습니다'))
       .then(res => {
-        sessionStorage.setItem('id', res.data.id);
-        sessionStorage.setItem('email', res.data.email);
-        sessionStorage.setItem('name', res.data.name);
-        sessionStorage.setItem('nickname', res.data.nickname)
-        setIsLogin(true)
+        setCookie('email', res.data.token);
+        setLogininfo(true)
         handleResponseSuccess()
       })
-      .then(res => history.push("/"))
-      .catch(error => setErrormessage2('비밀번호가 일치하지 않습니다'))
     }
   }
 
@@ -188,8 +178,7 @@ src="images/bucketscombine_logo.png" alt="no" width="120px" height="120px"></img
             <button className="login_box" 
             type="submit" 
             value="로그인"
-            onClick={handleLogin}>로그인</button>
-            <div className='alert-box'>{errormessage}</div>
+            onClick={handleLogin}>로그인</button>\
             <div className='alert-box'>{errormessage2}</div>
             <button className="login_google">
               <img src="images/unnamed.webp"

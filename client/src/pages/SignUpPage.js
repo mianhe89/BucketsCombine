@@ -173,21 +173,21 @@ export default function SignUpPage() {
       setErrormessage('')
     }
   }
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (errormessage==="" && !(userinfo.email==="") && !(userinfo.username==="") && !(userinfo.password==="")) {
-      axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
+      await history.push("/signin")
+      await axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
         email: userinfo.email,
         password: userinfo.password,
-        username: userinfo.username
+        username: userinfo.username,
       })
-      .then(res => history.push("/signin"))
-      .catch(error => setErrormessage2('이미 생성된 이메일입니다'))
     }
   }
   function validateEmail(email) {
     let re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);
   }
+
 
 
 
@@ -246,7 +246,6 @@ export default function SignUpPage() {
               height="120px"
             ></img>
             <div className="login_title">BucketsCombine</div>
-            <form onSubmit={(e) => e.preventDefault()}>
             <input
               className="email"
               type="email"
@@ -276,7 +275,7 @@ export default function SignUpPage() {
             <div className="alert-box">{errormessage}</div>
         <div className="errormessage">{errormessage2}</div>
         <div className="singup_font_white">이미 아이디가 있으신가요? <a href="/login">login</a></div>
-            </form>
+            
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@
     "create-react-app": "^5.0.1",
     "dotenv": "^16.0.1",
     "react": "^16.14.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^16.14.0",
     "react-horizontal-scrolling-menu": "^3.1.0",
     "react-loading": "^2.0.3",
