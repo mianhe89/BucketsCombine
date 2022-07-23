@@ -16,6 +16,7 @@ import ConfirmPasswordModal from './components/modals/ConfirmPasswordModal'
 import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
 import WithdrawalCardModal from './components/modals/WithdrawalModal';
 import UserInfoModal from './components/modals/UserInfoModal'
+import axios from 'axios';
 
 
 const App = () => {
@@ -28,17 +29,7 @@ const App = () => {
   const { isOpenConfirmPassword } = useSelector((store) => store.modal);
   const { isOpenWithdrawal } = useSelector((store) => store.modal);
   const { isOpenUserInfo } = useSelector((store) => store.modal);
-  
-  const [ isLogin, setIsLogin ] = useState(false);
-  const [ userInfo, setUserInfo ] = useState(null);
-  const history = useHistory();
-  const handleLogout = () => {
-    axios.post(`${process.env.REACT_APP_API_URL}/users/logout`).then((res) => {
-      setUserInfo(null);
-      setIsLogin(false);
-      history.push('/');
-    });
-  }
+
 
   return (
     <div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import {openCardModal, setModalCardID, setIsInBucketModal, setCardIDuserIDModal,setModalUserID } from '../redux/reducers/ModalReducer'
+import {openCardModal, setModalCardID } from '../redux/reducers/ModalReducer'
 import { useMediaQuery } from "react-responsive";
 
 const RowCardWrap = styled.div`
@@ -136,61 +136,16 @@ const RowCardWrap = styled.div`
 export default function RowCard({
   cardID,
   writername,
-  userID,
   title,
-  cardtext,
   background,
   createdAt,
   completed,
   tags,
   membersID,
-  userbucketCardID,
 }) {
-  let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
-  let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
 
-  const isDesktop = useMediaQuery({ minWidth: 921 })
-
-  const init = userbucketCardID.slice().includes(cardID)
-  const [isInBucket, setIsInBucket] = useState(init);
 
   const dispatch = useDispatch();
-
-
-  const isOwn = signInUserInfo.id === userID
-
-  const putInBucket = (id) => {
-    id.stopPropagation();
-    
-    axios.post(`${process.env.REACT_APP_API_URL}/mainpage/userCardJoins`, {
-      cards_id: cardID,
-      users_id: signInUserInfo.id,
-    })
-    .then((res) => {
-      setIsInBucket(true);
-    })
-    .catch((err) => {
-      alert(err)
-    })
-  };
-
-  const pullOutBucket = (id) => {
-    id.stopPropagation();
-
-    axios.delete(`${process.env.REACT_APP_API_URL}/mainpage/userCardJoinsdelete`, {
-    data: {
-      cards_id: cardID,
-      users_id: signInUserInfo.id,
-    },
-    withCredentials: true,
-  })
-    .then((res) => {
-      setIsInBucket(false);
-    })
-    .catch((err) => {
-      alert(err)
-    })
-  };
 
   const tagLine = tags.map((tag) => {
     return `#${tag}`;
@@ -210,24 +165,10 @@ export default function RowCard({
         onClick={() => {
           dispatch(openCardModal());
           dispatch(setModalCardID(cardID));
-          dispatch(setIsInBucketModal(isInBucket));
-          dispatch(setModalUserID(userID))
         }}
       >
         <div className="card-info">
-          {isOwn? (
-            <div className="dummy-button"/>
-          ) : 
-            isInBucket? (
-              <button className="card-subtract-button" onClick={pullOutBucket}>
-                빼기
-              </button>
-            ) : (
-              <button className="card-insert-button" onClick={putInBucket}>
-                담기
-              </button>
-            )
-          }
+          <div className="dummy-button"/>
           <div className="card-title">{title}</div>
           <div className="card-tegs">{tagLine.join(" ")}</div>
           <div className="card-footer">

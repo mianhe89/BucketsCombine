@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import HorizontalScroll from 'react-scroll-horizontal';
-import StampedCard from "./StampedCard";
+import RowCardNotSignIn from"./RowCardNotSignIn";
 import Loader from "./Loader";
 import { useMediaQuery } from "react-responsive";
 import { useSelector, useDispatch } from "react-redux";
 import axios from 'axios'
-import { setStampedData, setUsersData } from '../redux/reducers/ModalReducer'
+import { setCardsData, setAllcardsData, setUsersData } from '../redux/reducers/ModalReducer'
 
 
-const StampedListWrap = styled.div`
+const RowListWrap = styled.div`
   #card-list {
     width: calc(100vw - 240px);
     height: 400px;
@@ -77,49 +77,51 @@ const StampedListWrap = styled.div`
     width: 400px;
     z-index: 1;
   }
-  .dummyarea2 {
+  .dummyarea {
     height: 100%;
-    width: calc(100vw - 240px);
+    width: calc(0vw - 240px);
   }
 `;
 
 
-export default function StampedList () {
+export default function RowList () {
+  
   const isDesktop = useMediaQuery({ minWidth: 921 })
 
   const dispatch = useDispatch();
 
-  const [stamped, setStamped] = useState([]);
+  const [cards, setCards] = useState([]);
   const [users, setUsers] = useState([])
   const [search, setSearch] = useState("");
 
-  const dummyarea2 = document.querySelector('.dummyarea2')
+  const dummyarea = document.querySelector('.dummyarea')
 
   const saveData = (responseAllCards, responseUsers) => {
+    
     const allCardsData = responseAllCards.data;
     const usersData = responseUsers.data;
-    const stampedData = allCardsData.filter((card) => card.stamped[0] !== null)
+    const cardsData = allCardsData.filter((card) => card.stamped[0] === null)
 
-    dispatch(setStampedData({ stampedData }));
+    const reverseCardsData = cardsData.slice().reverse()
+
+    dispatch(setCardsData(reverseCardsData));
+    dispatch(setAllcardsData({ allCardsData }));
     dispatch(setUsersData({ usersData }));
 
-    const reverseStampedData = stampedData.slice().reverse()
-
-    setStamped(
-      reverseStampedData.map((card, i) => {
-      return <StampedCard
-        key={i}
-        cardID={card.id}
-        writername={usersData[card.users_id - 1].username}
-        title={card.title}
-        cardtext={card.cardtext}
-        background={card.background}
-        createdAt={card.createdAt}
-        completed={card.completed}
-        tags={card.tag}
-        membersID={card.membersID}
-      />;
-    }))
+    setCards(
+      reverseCardsData.map((card, i) => {
+        return <RowCardNotSignIn
+          key={i}
+          cardID={card.id}
+          writername={usersData[card.users_id - 1].username}
+          title={card.title}
+          background={card.background}
+          createdAt={card.createdAt}
+          completed={card.completed}
+          tags={card.tag}
+          membersID={card.membersID}
+        />;
+      }))
     setUsers(usersData)
   }
 
@@ -130,64 +132,61 @@ export default function StampedList () {
   } fetchData()}, []);
 
   
-  const {stampedData} = useSelector((state) => state.modal.stampedData);
+  const cardsData = useSelector((state) => state.modal.cardsData);
   const {usersData} = useSelector((state) => state.modal.usersData);
 
   const searchCard = () => {
-    const titleMatchData = stampedData.filter((card) => card.title.includes(search))
-    const tagMatchData = stampedData.filter((card) => card.tag.includes(search))
+    const titleMatchData = cardsData.filter((card) => card.title.includes(search))
+    const tagMatchData = cardsData.filter((card) => card.tag.includes(search))
     const mergeData = [...titleMatchData, ... tagMatchData]
     const set = new Set(mergeData)
     const searchedData = [...set]
     const searchedCards = searchedData.map((card, i) => {
-      return <StampedCard
+      return <RowCardNotSignIn
+      key={i}
+      cardID={card.id}
+      writername={usersData[card.users_id - 1].username}
+      title={card.title}
+      background={card.background}
+      createdAt={card.createdAt}
+      completed={card.completed}
+      tags={card.tag}
+      membersID={card.membersID}
+    />;
+    })
+    setCards(searchedCards)
+    const w = (searchedCards.length * 220) + 240
+    dummyarea.style.width = `calc(100vw - ${w}px)`
+  }
+
+  const enterSearchCard = (e) => {
+    if(e.key === 'Enter'){
+      const titleMatchData = cardsData.filter((card) => card.title.includes(search))
+      const tagMatchData = cardsData.filter((card) => card.tag.includes(search))
+      const mergeData = [...titleMatchData, ... tagMatchData]
+      const set = new Set(mergeData)
+      const searchedData = [...set]
+      const searchedCards = searchedData.map((card, i) => {
+        return <RowCardNotSignIn
         key={i}
         cardID={card.id}
         writername={usersData[card.users_id - 1].username}
         title={card.title}
-        cardtext={card.cardtext}
         background={card.background}
         createdAt={card.createdAt}
         completed={card.completed}
         tags={card.tag}
         membersID={card.membersID}
       />;
-    })
-    setStamped(searchedCards)
-    const w = (searchedCards.length * 220) + 240
-    dummyarea2.style.width = `calc(100vw - ${w}px)`
-  }
-
-  const enterSearchCard = (e) => {
-    if(e.key === 'Enter'){
-      const titleMatchData = stampedData.filter((card) => card.title.includes(search))
-      const tagMatchData = stampedData.filter((card) => card.tag.includes(search))
-      const mergeData = [...titleMatchData, ... tagMatchData]
-      const set = new Set(mergeData)
-      const searchedData = [...set]
-      const searchedCards = searchedData.map((card, i) => {
-        return <StampedCard
-          key={i}
-          cardID={card.id}
-          writername={usersData[card.users_id - 1].username}
-          title={card.title}
-          cardtext={card.cardtext}
-          background={card.background}
-          createdAt={card.createdAt}
-          completed={card.completed}
-          tags={card.tag}
-          membersID={card.membersID}
-        />;
       })
-      setStamped(searchedCards)
+      setCards(searchedCards)
       const w = (searchedCards.length * 220) + 240
-      dummyarea2.style.width = `calc(100vw - ${w}px)`
+      dummyarea.style.width = `calc(100vw - ${w}px)`
     }
   }
-  
 
   return (
-    <StampedListWrap >
+    <RowListWrap >
       <div id={isDesktop ? 'card-list' : 'card-list-mobile'} >
         <HorizontalScroll
           className='horizontalScroll'
@@ -196,9 +195,9 @@ export default function StampedList () {
           style={{ height: "100%", width: "100%" }}
         >
           <div className="dummy" />
-          {stamped}
+          {cards}
           <div className="dummy" />
-          <div className="dummyarea2"/>
+          <div className="dummyarea"/>
         </HorizontalScroll>
         <div className={isDesktop? 'search-bar' : 'search-bar-mobile'}>
           <input className='search-input' type="text" placeholder="제목 및 태그" onChange={(e) => {
@@ -207,7 +206,6 @@ export default function StampedList () {
           <img className='search-icon' src='/images/search-icon.png' onClick={searchCard}/>
         </div>
       </div>
-    </StampedListWrap>
+    </RowListWrap>
   );
 };
-

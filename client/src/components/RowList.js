@@ -48,6 +48,9 @@ const RowListWrap = styled.div`
     border-radius: 8px;
     padding: 10px 12px;
     font-size: 14px;
+    :focus {
+      outline: none;
+    }
   }
 
   .search-icon {
@@ -82,6 +85,20 @@ const RowListWrap = styled.div`
 
 
 export default function RowList () {
+  
+
+  // useEffect(()=> {
+  //   let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
+  //   const responseBucketID = axios.post(`${process.env.REACT_APP_API_URL}/mypage/mycards`,{
+  //     "users_id" : signInUserInfo.id,
+  //   }).then(()=> {
+  //     console.log(responseBucketID)
+  //   })
+  // }, [])
+  
+  let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
+  let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
+
   const isDesktop = useMediaQuery({ minWidth: 921 })
 
   const dispatch = useDispatch();
@@ -89,43 +106,58 @@ export default function RowList () {
   const [cards, setCards] = useState([]);
   const [users, setUsers] = useState([])
   const [search, setSearch] = useState("");
+  const [bucketIDDataS, SetBucketIDDataS] = useState(null)
 
   const dummyarea = document.querySelector('.dummyarea')
 
-  const saveData = (responseAllCards, responseUsers) => {
+  const saveData = (responseAllCards, responseUsers, responseBucketID) => {
+    
     const allCardsData = responseAllCards.data;
     const usersData = responseUsers.data;
+    const bucketIDData = responseBucketID.data;
     const cardsData = allCardsData.filter((card) => card.stamped[0] === null)
-    dispatch(setCardsData({ cardsData }));
+
+    const reverseCardsData = cardsData.slice().reverse()
+
+    SetBucketIDDataS(bucketIDData)
+
+    dispatch(setCardsData(reverseCardsData));
     dispatch(setAllcardsData({ allCardsData }));
     dispatch(setUsersData({ usersData }));
+
     setCards(
-      cardsData.map((card, i) => {
-      return <RowCard
-        key={i}
-        cardID={card.id}
-        writername={usersData[card.users_id - 1].username}
-        title={card.title}
-        cardtext={card.cardtext}
-        background={card.background}
-        createdAt={card.createdAt}
-        completed={card.completed}
-        tags={card.tag}
-        membersID={card.membersID}
-      />;
-    }))
+      reverseCardsData.map((card, i) => {
+        return <RowCard
+          key={i}
+          cardID={card.id}
+          writername={usersData[card.users_id - 1].username}
+          userID={card.users_id}
+          title={card.title}
+          cardtext={card.cardtext}
+          background={card.background}
+          createdAt={card.createdAt}
+          completed={card.completed}
+          tags={card.tag}
+          membersID={card.membersID}
+          userbucketCardID={bucketIDData}
+        />;
+      }))
     setUsers(usersData)
   }
 
   useEffect(() => {async function fetchData() {
     const responseAllCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
     const responseUsers = await axios.get(`${process.env.REACT_APP_API_URL}/mypage/usersinfo`)
-    const sendData = await saveData(responseAllCards,responseUsers )
+    const responseBucketID = await axios.post(`${process.env.REACT_APP_API_URL}/mypage/mycards`,{
+      "users_id" : signInUserInfo.id
+    })
+    const sendData = await saveData(responseAllCards,responseUsers, responseBucketID )
   } fetchData()}, []);
 
   
-  const {cardsData} = useSelector((state) => state.modal.cardsData);
+  const cardsData = useSelector((state) => state.modal.cardsData);
   const {usersData} = useSelector((state) => state.modal.usersData);
+  const signInUserId = useSelector((state) => state.modal.signInUserId);
 
   const searchCard = () => {
     const titleMatchData = cardsData.filter((card) => card.title.includes(search))
@@ -138,6 +170,7 @@ export default function RowList () {
         key={i}
         cardID={card.id}
         writername={usersData[card.users_id - 1].username}
+        userID={card.users_id}
         title={card.title}
         cardtext={card.cardtext}
         background={card.background}
@@ -145,6 +178,7 @@ export default function RowList () {
         completed={card.completed}
         tags={card.tag}
         membersID={card.membersID}
+        userbucketCardID={bucketIDDataS}
       />;
     })
     setCards(searchedCards)
@@ -164,6 +198,7 @@ export default function RowList () {
           key={i}
           cardID={card.id}
           writername={usersData[card.users_id - 1].username}
+          userID={card.users_id}
           title={card.title}
           cardtext={card.cardtext}
           background={card.background}
@@ -171,6 +206,7 @@ export default function RowList () {
           completed={card.completed}
           tags={card.tag}
           membersID={card.membersID}
+          userbucketCardID={bucketIDDataS}
         />;
       })
       setCards(searchedCards)
@@ -178,6 +214,7 @@ export default function RowList () {
       dummyarea.style.width = `calc(100vw - ${w}px)`
     }
   }
+  
   
 
   return (

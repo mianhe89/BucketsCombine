@@ -1,11 +1,12 @@
 import { closeMainPageCardModal, setUsersData } from "../../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
 import styled from 'styled-components';
 import ModalPortal from "./ModalPortal.js";
 import HorizontalScroll from 'react-scroll-horizontal';
 import { useMediaQuery } from "react-responsive";
+import axios from "axios";
 
 const MainPageModal = styled.div`
     .modal-container {
@@ -176,19 +177,7 @@ const MainPageModal = styled.div`
         top: 17vh;
     }
     
-    .btn-confirm-btn {
-        align-self: flex-end;
-        margin-right: auto;
-        background-color: #FFC700;
-        border-radius: 10px;
-        border: none;
-        width: 120px;
-        height: 30px;
-        position: relative;
-        left: 30px;
-        bottom: 30px;
-        font-size: 14px;
-    }
+    
 
     .username {
         display: flex;
@@ -304,18 +293,53 @@ const MainPageModal = styled.div`
         display: none;
         }
     }
+
+    .card-subtract-button {
+        align-self: flex-end;
+        margin-right: auto;
+        background-color: #FF5C00;
+        border-radius: 10px;
+        border: none;
+        width: 120px;
+        height: 30px;
+        position: relative;
+        left: 30px;
+        bottom: 30px;
+        font-size: 14px;
+        color: white;
+    }
+    .card-insert-button {
+        align-self: flex-end;
+        margin-right: auto;
+        background-color: #FFC700;
+        border-radius: 10px;
+        border: none;
+        width: 120px;
+        height: 30px;
+        position: relative;
+        left: 30px;
+        bottom: 30px;
+        font-size: 14px;
+    }
 `    
     
 
 
 const MainPageCardModal = ({
     }) => {
+    const isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
+
     const isDesktop = useMediaQuery({ minWidth: 921 })
     const isTablet = useMediaQuery({ minWidth: 1201 })
 
     const modalCardID = useSelector((state) => state.modal.modalCardID);
+    const modalUserID = useSelector((state) => state.modal.modalUserID);
+
     const {cardsData} = useSelector((state) => state.modal.cardsData);
     const {usersData} = useSelector((state) => state.modal.usersData);
+    const isInBucketModal = useSelector((state) => state.modal.isInBucketModal);
+
+    const [isInBucket, setIsInBucket] = useState(isInBucketModal)
 
     const { allCardsData } = useSelector((state) => state.modal.allCardsData);
     const allCardData = allCardsData.filter(card => card.id === modalCardID);
@@ -340,38 +364,89 @@ const MainPageCardModal = ({
         dispatch(closeMainPageCardModal())
     };
     useOutSideClick(modalRef, handleClose);
-    return (
-        <ModalPortal>
-            <MainPageModal ref={modalRef}>
-                <div className={isDesktop?"modal-container" : "modal-container-mobile" } >
-                    <div className="mainPageCard" >
-                        <h4 className={isTablet? " modal-title" : " modal-title-mobile"}>{title}</h4>                      
-                        <div className={isTablet? "card-tag" : "card-tag-mobile"}>{tagLine.join(" ")}</div>
-                        {/* <div className={isTablet? "userinfo" : "userinfo-mobile"}>
-                            {membersID.map((member, i) => {
-                                const username = usersData[member - 1].username;
-                                const userphoto = usersData[member - 1].userphotourl;
-                                return <div key={i} className="username">{username}<img className="profile-image" src={userphoto}/></div>
-                            })}
-                        </div> */}
-                        <div className={isTablet? "userinfo-message" : "userinfo-message-mobile"}>
-                            현재 참여 인원 {membersID.length}명 (참여하시면 참여하신 분들의 정보를 볼 수 있습니다.)
-                        </div>
-                        <button className="close-btn" onClick={() => {
-                            dispatch(closeMainPageCardModal())
-                        }}>X</button>
-                        <button type="button" className="btn-confirm-btn"
-                            onClick={()=> {
-                            dispatch(closeMainPageCardModal())}}>
-                            담기 및 참여
-                        </button>
-                        <div className={isTablet?"card-img" : "card-img-mobile"} style={backgroundImageStyle} />
-                        <div className={isTablet? "card-description" : "card-description-mobile"}>{cardtext}</div>
-                    </div>
-                </div>
-            </MainPageModal>
-        </ModalPortal>
-    );
+
+
+
+
+    let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
+    const isOwn = signInUserInfo.id === modalUserID
+
+  const putInBucket = (id) => {
+    id.stopPropagation();
+
+    axios.post(`${process.env.REACT_APP_API_URL}/mainpage/userCardJoins`, {
+      cards_id: modalCardID,
+      users_id: signInUserInfo.id,
+    })
+      .then((res) => {
+        setIsInBucket(true);
+      })
+      .catch((err) => {
+        alert(err)
+      })
+  };
+
+  const pullOutBucket = (id) => {
+    id.stopPropagation();
+
+    axios.delete(`${process.env.REACT_APP_API_URL}/mainpage/userCardJoinsdelete`, {
+      data: {
+        cards_id: modalCardID,
+        users_id: signInUserInfo.id,
+      },
+      withCredentials: true,
+    })
+      .then((res) => {
+        setIsInBucket(false);
+      })
+      .catch((err) => {
+        alert(err)
+      })
+  };
+
+
+
+  return (
+    <ModalPortal>
+      <MainPageModal ref={modalRef}>
+        <div className={isDesktop ? "modal-container" : "modal-container-mobile"} >
+          <div className="mainPageCard" >
+            <h4 className={isTablet ? " modal-title" : " modal-title-mobile"}>{title}</h4>
+            <div className={isTablet ? "card-tag" : "card-tag-mobile"}>{tagLine.join(" ")}</div>
+            {/* <div className={isTablet ? "userinfo" : "userinfo-mobile"}>
+              {membersID.map((member, i) => {
+                const username = usersData[member - 1].username;
+                const userphoto = usersData[member - 1].userphotourl;
+                return <div key={i} className="username">{username}<img className="profile-image" src={userphoto} /></div>
+              })}
+            </div> */}
+            <div className={isTablet ? "userinfo-message" : "userinfo-message-mobile"}>
+              현재 참여 인원 {membersID.length}명 (참여하시면 참여하신 분들의 정보를 볼 수 있습니다.)
+            </div>
+            <button className="close-btn" onClick={() => {
+              dispatch(closeMainPageCardModal())
+            }}>X</button>
+            {isSignIn ?
+              isOwn ?
+                <div />
+                : isInBucket ?
+                  <button type="button" className="card-subtract-button"
+                    onClick={pullOutBucket}>
+                    빼기 및 참여취소
+                  </button>
+                  : <button type="button" className="card-insert-button"
+                    onClick={putInBucket}>
+                    담기 및 참여
+                  </button>
+              : <div />
+            }
+            <div className={isTablet ? "card-img" : "card-img-mobile"} style={backgroundImageStyle} />
+            <div className={isTablet ? "card-description" : "card-description-mobile"}>{cardtext}</div>
+          </div>
+        </div>
+      </MainPageModal>
+    </ModalPortal>
+  );
 }
 
 export default MainPageCardModal;

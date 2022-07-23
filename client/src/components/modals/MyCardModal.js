@@ -340,7 +340,7 @@ const MyCardModal = ({
     const isTablet = useMediaQuery({ minWidth: 1201 })
 
     const modalCardID = useSelector((state) => state.modal.modalCardID);
-    const cardsData = useSelector((state) => state.modal.bucketData.bucketCardsData);
+    const cardsData = useSelector((state) => state.modal.bucketData);
     const {usersData} = useSelector((state) => state.modal.usersData);
 
     const cardData = cardsData.filter(card => card.id === modalCardID);

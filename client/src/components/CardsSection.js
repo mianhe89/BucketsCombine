@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import RowList from './RowList'
+import RowListNotSignIn from './RowListNotSignIn'
 import { useMediaQuery } from "react-responsive";
 
 const CardsWrap = styled.div`
@@ -107,6 +108,7 @@ const CardsWrap = styled.div`
 `
 
 export default function CardsSection(){
+  let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
   const isDesktop = useMediaQuery({ minWidth: 921 })
   const [search, setSearch] = useState("");
   
@@ -124,7 +126,7 @@ export default function CardsSection(){
         <div id={isDesktop? 'cards-list-row' : 'cards-list-row-mobile'}>
           <div className={isDesktop? 'fog-left' : 'fog-left-mobile'}/>
           <div className={isDesktop? 'fog-right' : 'fog-right-mobile'}/>
-          <div className='list'><RowList/></div>
+          <div className='list'>{isSignIn? <RowList/> : <RowListNotSignIn/>}</div>
         </div>
       </div>
     </CardsWrap>

@@ -119,6 +119,10 @@ const ColumnListWrap = styled.div`
 `;
 
 export default function ColumnList () {
+
+  let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
+  let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
+
   const dispatch = useDispatch();
 
   const isDesktop = useMediaQuery({ minWidth: 921 })
@@ -131,21 +135,23 @@ export default function ColumnList () {
   const saveData = (responseAllCards, responseUsers, responseBucketID) => {
     const allCardsData = responseAllCards.data;
     const usersData = responseUsers.data;
-    const bucketData = responseBucketID.data;
+    const bucketIDData = responseBucketID.data;
 
     const bucketCardsData = allCardsData.filter((card) => {
-      for(let i of bucketData){
+      for(let i of bucketIDData){
         if(card.id === i) return true
       }
       return false
     })
+    const reverseBucketCardsData = bucketCardsData.slice().reverse()
 
     dispatch(setAllcardsData({ allCardsData }));
     dispatch(setUsersData({ usersData }));
-    dispatch(setBucketData({ bucketCardsData }))
+    dispatch(setBucketData( reverseBucketCardsData ))
 
+    
     setCards(
-      bucketCardsData.map((card, i) => {
+      reverseBucketCardsData.map((card, i) => {
       return <ColumnCard
         key={i}
         cardID={card.id}
@@ -166,12 +172,12 @@ export default function ColumnList () {
     const responseAllCards = await axios.get(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`)
     const responseUsers = await axios.get(`${process.env.REACT_APP_API_URL}/mypage/usersinfo`)
     const responseBucketID = await axios.post(`${process.env.REACT_APP_API_URL}/mypage/mycards`,{
-      "users_id" : "1"
+      "users_id" : signInUserInfo.id
     })
     const sendData = await saveData(responseAllCards, responseUsers, responseBucketID )
   } fetchData()}, []);
 
-  const bucketData = useSelector((state) => state.modal.bucketData.bucketCardsData);
+  const bucketData = useSelector((state) => state.modal.bucketData);
   const {usersData} = useSelector((state) => state.modal.usersData);
 
   const searchCard = () => {

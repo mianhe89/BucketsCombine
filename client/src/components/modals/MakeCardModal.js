@@ -464,12 +464,16 @@ const MakeCardModal = ({
   const addTags = (event) => {
     const value = event.target.value;
     const tagforput = value.replace(/\#/g,'').replace(/\ /g,'')
-    if (!tags.includes("#" + tagforput) && value) {
+    if (!tags.includes(tagforput) && value) {
       if(event.key === ' ' || event.key === 'Enter'){
-        setTags([...tags, '#' + tagforput])
+        setTags([...tags, tagforput])
         event.target.value = '';
       }
       
+    } else {
+      if(event.key === ' '){
+        event.target.value = event.target.value.slice(0, -1);
+      }
     }
   }
   const handleClose = () => {
@@ -479,7 +483,7 @@ const MakeCardModal = ({
   useOutSideClick(modalRef, handleClose);
   
 
-  const buildCard = async () => {
+  const buildCard = () => {
     if (inputTitle === '' || inputInfo === '' || tags.length === 0) {
       setMessage(true);
     } else {
@@ -490,8 +494,8 @@ const MakeCardModal = ({
         "background": bgImageStyle,
         "hashname": tags,
       }
-      await dispatch(closeMakeCardModal())
-      await axios.post(`${process.env.REACT_APP_API_URL}/mainpage/cardinfo`, payload)
+      dispatch(closeMakeCardModal())
+      axios.post(`${process.env.REACT_APP_API_URL}/mypage/create`, payload)
       
     }
   }
@@ -528,7 +532,7 @@ const MakeCardModal = ({
               <div className={isTablet ? "card-tags" : "card-tags-mobile"} >
                 {tags.map((tag, index) => (
                   <div key={index} className='tag' onChange={(e) => { setInputTag(e.target.value) }}>
-                    <div>{tag}</div><button className="x"onClick={() => removeTags(index)}>x</button>
+                    <div>#{tag}</div><button className="x"onClick={() => removeTags(index)}>x</button>
                   </div>
                 ))}
               </div>

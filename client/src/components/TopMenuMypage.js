@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import useOutSideClick from './hook/UseOutSideClick';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 const TopMenuWrap = styled.div`
   .topmenu {
@@ -190,13 +191,8 @@ const TopMenuWrap = styled.div`
 export default function Topmenu({location}){
   // console.log(location)
   const isDesktop = useMediaQuery({ minWidth: 921 })
-
-  const [isSignIn, setIsSignIn] = useState(false)
   const [isBoardOpen, setIsBoardOpen] = useState(false)
 
-  const signinClick = () => {
-    setIsSignIn(true)
-  }
 
   const usernameclick = () => {
     setIsBoardOpen(!isBoardOpen)
@@ -224,26 +220,41 @@ export default function Topmenu({location}){
     await window.scrollTo({ left: 0, top: 2 * vh });
   }
 
-  // ref={modalRef}
+  const dispatch = useDispatch();
+  // const handleLogout = () => {
+  //   axios.post(`${process.env.REACT_APP_API_URL}/users/logout`).then((res) => {
+  //     dispatch(setSignInUserId(0))
+  //     dispatch(setIsSignIn(false))
+  //     history.push('/');
+  //   });
+  // };
+  const handleSignout = () => {
+    localStorage.setItem('signInUserInfo', JSON.stringify(null));
+    localStorage.setItem('isSignIn', JSON.stringify(false));
+    history.push('/');
+  };
+
+  let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
+  let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
 
   return(
     <TopMenuWrap>
       <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
         {isDesktop ?
-          <div className='topmenu-title' >Buckets Combine</div>
+          <div className='topmenu-title'>Buckets Combine</div>
           : <div />}
-          {isDesktop? <button className='topmenu-button' onClick={usernameclick} >유저닉네임</button>
+          {isDesktop? <button className='topmenu-button' onClick={usernameclick}>{signInUserInfo.username}</button>
           : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick}/>}
       </div>
       {isBoardOpen ? isDesktop? <div className='username-board' ref={modalRef}>
         <button className='board-button' onClick={goToCards}>Cards</button>
         <button className='board-button' onClick={goToMyStamped}>Stamped</button>
-        <button className='board-button'>Sign Out</button>
-      </div> 
+        <button className='board-button' onClick={handleSignout}>Sign Out</button>
+      </div>
       : <div className='username-board-mobile' ref={modalRef}>
       <div className='board-button-mobile-c'onClick={goToCards}/>
       <div className='board-button-mobile-s' onClick={goToMyStamped}/>
-      <div className='board-button-mobile-so'/>
+      <div className='board-button-mobile-so'onClick={handleSignout}/>
     </div> 
       :  <div />}
     </TopMenuWrap>

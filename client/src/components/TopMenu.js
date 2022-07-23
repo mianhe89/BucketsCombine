@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import useOutSideClick from './hook/UseOutSideClick';
 import styled from 'styled-components';
 import { useMediaQuery } from "react-responsive";
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const TopMenuWrap = styled.div`
   .topmenu {
@@ -189,12 +189,10 @@ export default function Topmenu({location}){
   // console.log(location)
   const isDesktop = useMediaQuery({ minWidth: 921 })
 
-  const [isSignIn, setIsSignIn] = useState(false)
+  // const [isSignIn, setIsSignIn] = useState(false)
   const [isBoardOpen, setIsBoardOpen] = useState(false)
 
-  const signinClick = () => {
-    setIsSignIn(true)
-  }
+  
 
   const usernameclick = () => {
     setIsBoardOpen(!isBoardOpen)
@@ -224,14 +222,25 @@ export default function Topmenu({location}){
     await history.push('/signin')
   }
 
+
+  const handleSignout = () => {
+    localStorage.setItem('signInUserInfo', JSON.stringify(null));
+    localStorage.setItem('isSignIn', JSON.stringify(false));
+    history.push('/');
+  };
+
+
+  let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
+  let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
+
   return(
     <TopMenuWrap >
       <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
         {isDesktop ?
-          <div className='topmenu-title' >Buckets Combine</div>
+          <div className='topmenu-title'>Buckets Combine</div>
           : <div />}
         {isSignIn ? 
-          isDesktop? <button className='topmenu-button' onClick={usernameclick}>유저닉네임</button>
+          isDesktop? <button className='topmenu-button' onClick={usernameclick}>{signInUserInfo.username}</button>
           : <img className='topmenu-button-mobile' src='/images/menu-icon.png' onClick={usernameclick} />
           : isDesktop? <button className='topmenu-button' onClick={goToSignIn}>Sign In</button>
             : <img className='topmenu-button-mobile' src='/images/sign-in-icon.png' onClick={goToSignIn}/>
@@ -240,12 +249,12 @@ export default function Topmenu({location}){
       {isBoardOpen ? isDesktop? <div className='username-board' ref={modalRef}>
         <button className='board-button' onClick={goToMyBucket}>My Bucket</button>
         <button className='board-button' onClick={goToMyProfile}>My Profile</button>
-        <button className='board-button'>Sign Out</button>
+        <button className='board-button' onClick={handleSignout}>Sign Out</button>
       </div> 
-      : <div className='username-board-mobile'>
+      : <div className='username-board-mobile' ref={modalRef}>
       <div className='board-button-mobile-mb'onClick={goToMyBucket}/>
       <div className='board-button-mobile-mp' onClick={goToMyProfile}/>
-      <div className='board-button-mobile-so'/>
+      <div className='board-button-mobile-so' onClick={handleSignout}/>
     </div> 
       :  <div />}
     </TopMenuWrap>

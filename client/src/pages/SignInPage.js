@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
-import { Link } from 'react-router-dom';
+import { useHistory, Link } from "react-router-dom";
 import axios from 'axios';
 import styled from 'styled-components';
 import { useCookies } from 'react-cookie';
+import { setSignInUserId, setIsSignIn, setCookie } from '../redux/reducers/ModalReducer'
+import { useSelector, useDispatch } from "react-redux";
 
 const SignInPageWrap = styled.div`
   .body {
@@ -162,30 +163,51 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
     password: ""
   });
   const [errormessage, setErrormessage] = useState('');
-  const [errormessage2, setErrormessage2] = useState('');
-  const [cookies, setCookie] = useCookies(['id']); // 쿠키 훅 
+  const [cookies, setCookie] = useCookies(['id']);
   const history = useHistory();
   const handleInputValue = (key) => (e) => {
     setLogininfo({ ...logininfo, [key]: e.target.value });
   };
-  const handleLogin = async() => {
-    // TODO : 서버에 로그인을 요청하고, props로 전달된 callback을 호출합니다.
-    // TODO : 이메일 및 비밀번호를 입력하지 않았을 경우 에러를 표시해야 합니다.
-    if (!logininfo.email || !logininfo.password) {
+  // const handleLogin = async() => {
+  //   if (!logininfo.email || !logininfo.password) {
+  //     setErrormessage('이메일과 비밀번호를 입력해야 합니다')
+  //   } else if(!logininfo.password === ''){
+  //     setErrormessage('비밀번호가 일치하지 않습니다.')
+  //   }
+  //   if (!errormessage) {
+  //     await history.push("/")
+  //     await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
+  //       email: logininfo.email,
+  //       password: logininfo.password
+  //     })
+  //     .then(res => {
+  //       setCookie('email', res.data.token);
+  //       setLogininfo(true)
+  //       handleResponseSuccess()
+  //     })
+  //   }
+  // }
+
+  const dispatch = useDispatch();
+  
+  const signInRequestHandler = () => {
+    if (!logininfo.email || !logininfo.password){
       setErrormessage('이메일과 비밀번호를 입력해야 합니다')
-    } else if(!logininfo.password === ''){
-      setErrormessage('비밀번호가 일치하지 않습니다.')
-    }
-    if (!errormessage) {
-      await history.push("/")
-      await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
+    } else {
+      axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
         email: logininfo.email,
         password: logininfo.password
       })
-      .then(res => {
-        setCookie('email', res.data.token);
-        setLogininfo(true)
-        handleResponseSuccess()
+      .then((res) => {
+        const signInUserInfo = res.data.userInfo
+        // dispatch(setSignInUserId(signInUserId))
+        // dispatch(setIsSignIn(true))
+        localStorage.setItem('signInUserInfo', JSON.stringify(signInUserInfo));
+        localStorage.setItem('isSignIn', JSON.stringify(true));
+        history.push("/")
+      })
+      .catch((err)=> {
+        alert(err)
       })
     }
   }
@@ -220,12 +242,12 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
                   onChange={handleInputValue("password")}
                 />
                 <div className='find'>아이디 / 비밀번호찾기</div>
-                <div className='alert'>{errormessage2}</div>
+                <div className='alert'>{errormessage}</div>
                 <div className="buttons">
                   <button className="login_box"
                     type="submit"
                     value="로그인"
-                    onClick={handleLogin}>로그인
+                    onClick={signInRequestHandler}>로그인
                   </button>
                   <button className="login_google">
                     <img className="google-logo" src="images/unnamed.webp"
