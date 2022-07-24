@@ -287,7 +287,7 @@ export default function MyProfileSection() {
                 <select className="profile-info-age">
                   <option value="DEFAULT" >연령대</option>
                   <option value="teenages">10대</option>
-                  <option value="twenty">20대</option>
+                  <option value="DEFAULT">20대</option>
                   <option value="thirty">30대</option>
                   <option value="forty">40대</option>
                   <option value="fifty">50대</option>

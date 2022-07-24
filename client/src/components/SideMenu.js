@@ -179,19 +179,23 @@ export default function SideMenu(){
   
   window.addEventListener("scroll", (event) => {
     let logo = document.querySelector('.logo-part') || document.querySelector('.logo-part-mobile')
-    let scrollPosition = window.scrollY
-    let vh = window.innerHeight
-    changeLogoPosition(logo, scrollPosition, vh)
+    if(logo){
+      let scrollPosition = window.scrollY
+      let vh = window.innerHeight
+      changeLogoPosition(logo, scrollPosition, vh)
+    }
   });
 
   window.addEventListener("resize", (event) => {
     let logo = document.querySelector('.logo-part') || document.querySelector('.logo-part-mobile')
-    if(isDesktop){
-      logo.style.left = '43px'
-      logo.style.top = '70px'
-    } else {
-      logo.style.top = '70px'
-      logo.style.left = '43px'
+    if(logo){
+      if(isDesktop){
+        logo.style.left = '43px'
+        logo.style.top = '70px'
+      } else {
+        logo.style.top = '70px'
+        logo.style.left = '43px'
+      }
     }
   });
 
