@@ -321,55 +321,59 @@ const MainPageModal = styled.div`
         bottom: 30px;
         font-size: 14px;
     }
-`    
-    
+`
+
 
 
 const MainPageCardModal = ({
-    }) => {
-    const isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
+}) => {
+  const isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
 
-    const isDesktop = useMediaQuery({ minWidth: 921 })
-    const isTablet = useMediaQuery({ minWidth: 1201 })
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+  const isTablet = useMediaQuery({ minWidth: 1201 })
 
-    const modalCardID = useSelector((state) => state.modal.modalCardID);
-    const modalUserID = useSelector((state) => state.modal.modalUserID);
+  const modalCardID = useSelector((state) => state.modal.modalCardID);
+  const modalUserID = useSelector((state) => state.modal.modalUserID);
+  const isInBucketModal = useSelector((state) => state.modal.isInBucketModal);
 
-    const {cardsData} = useSelector((state) => state.modal.cardsData);
-    const {usersData} = useSelector((state) => state.modal.usersData);
-    const isInBucketModal = useSelector((state) => state.modal.isInBucketModal);
+  const [isInBucket, setIsInBucket] = useState(isInBucketModal)
 
-    const [isInBucket, setIsInBucket] = useState(isInBucketModal)
+  const { allCardsData } = useSelector((state) => state.modal.allCardsData);
+  const allCardData = allCardsData.filter(card => card.id === modalCardID);
 
-    const { allCardsData } = useSelector((state) => state.modal.allCardsData);
-    const allCardData = allCardsData.filter(card => card.id === modalCardID);
-    
-    const title = allCardData[0].title;
-    const cardtext = allCardData[0].cardtext;
-    let backgroundImageStyle = {
-        backgroundImage: "url(/images/card-" + allCardData[0].background + ".jpg)",
-    };
-    const tags = allCardData[0].tag;
+  const title = allCardData[0].title;
+  const cardtext = allCardData[0].cardtext;
+  let backgroundImageStyle = {
+    backgroundImage: "url(/images/card-" + allCardData[0].background + ".jpg)",
+  };
+  const tags = allCardData[0].tag;
 
-    const tagLine = tags.map((tag) => {
-        return `#${tag}`;
-    });
+  const tagLine = tags.map((tag) => {
+    return `#${tag}`;
+  });
 
-    
-    const membersID = allCardData[0].membersID;
 
-    const dispatch = useDispatch();
-    const modalRef = useRef(null);
-    const handleClose = () => {
-        dispatch(closeMainPageCardModal())
-    };
-    useOutSideClick(modalRef, handleClose);
+  const membersID = allCardData[0].membersID;
+
+  const dispatch = useDispatch();
+  const modalRef = useRef(null);
+  const handleClose = () => {
+    dispatch(closeMainPageCardModal())
+  };
+  useOutSideClick(modalRef, handleClose);
 
 
 
+  
+  let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
 
-    let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
-    const isOwn = signInUserInfo.id === modalUserID
+  const isOwn = (signInUserInfo, modalUserID) => {
+    if(signInUserInfo.id){
+      return signInUserInfo.id === modalUserID
+    } else {
+      return false
+    }
+  } 
 
   const putInBucket = (id) => {
     id.stopPropagation();
@@ -427,7 +431,7 @@ const MainPageCardModal = ({
               dispatch(closeMainPageCardModal())
             }}>X</button>
             {isSignIn ?
-              isOwn ?
+              isOwn(signInUserInfo, modalUserID) ?
                 <div />
                 : isInBucket ?
                   <button type="button" className="card-subtract-button"

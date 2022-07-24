@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import {openCardModal, setModalCardID } from '../redux/reducers/ModalReducer'
+import {openCardModal, setModalCardID, setIsInBucketModal, setModalUserID } from '../redux/reducers/ModalReducer'
 import { useMediaQuery } from "react-responsive";
 
 const RowCardWrap = styled.div`
@@ -155,7 +155,6 @@ export default function RowCard({
   let backgroundImageStyle = {
     backgroundImage: "url(/images/card-" + background + ".jpg)",
   };
-
   
   return (
     <RowCardWrap>
@@ -163,8 +162,8 @@ export default function RowCard({
         className="card"
         style={backgroundImageStyle}
         onClick={() => {
-          dispatch(openCardModal());
           dispatch(setModalCardID(cardID));
+          dispatch(openCardModal());
         }}
       >
         <div className="card-info">
