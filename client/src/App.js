@@ -16,6 +16,7 @@ import ConfirmPasswordModal from './components/modals/ConfirmPasswordModal'
 import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
 import WithdrawalCardModal from './components/modals/WithdrawalModal';
 import UserInfoModal from './components/modals/UserInfoModal'
+import axios from 'axios';
 
 
 const App = () => {

@@ -2,7 +2,7 @@ import { closeUserInfoModal, openMyCardModal, openMyStampedModal } from "../../r
 import { useDispatch } from "react-redux";
 import ModalPortal from "./ModalPortal";
 import useOutSideClick from "../hook/UseOutSideClick";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 
 const UserInfoModal = styled.div`
@@ -152,6 +152,7 @@ const UserInfoModal = styled.div`
 `
 
 const UserInfoCardModal = () => {
+    const [ isCardForm, setIsCardForm ] = useState()
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
@@ -163,10 +164,11 @@ const UserInfoCardModal = () => {
         <ModalPortal>
             <UserInfoModal>
                 <div className="UserInfoCard" ref={modalRef}>
-                <button className="close-btn" onClick={() => {
+                <button className="close-btn" onClick={() => {isCardForm ?
                     dispatch(closeUserInfoModal())
-                    dispatch(openMyCardModal())
-                    dispatch(openMyStampedModal())
+                    && dispatch(openMyStampedModal())
+                    : dispatch(closeUserInfoModal())
+                    && dispatch(openMyCardModal())
                 }}>X</button>
                 <img className="user-img" src="images/bucketscombine_logo.png" alt="card" />
                 <div className="useremail">유저.email</div>
