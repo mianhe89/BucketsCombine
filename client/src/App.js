@@ -12,10 +12,11 @@ import MakeCardModal from './components/modals/MakeCardModal';
 import MainPageStampedCardModal from './components/modals/MainPageStampedModal';
 import MyPageMyCardModal from './components/modals/MyCardModal'
 import MyPageStampedCard from './components/modals/MyPageStampedCard'
-import ConfirmPasswordModal from './components/modals/ConfirmPasswordModal'
+import ConfirmChangeModal from './components/modals/ConfirmChangeModal'
 import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
 import WithdrawalCardModal from './components/modals/WithdrawalModal';
 import UserInfoModal from './components/modals/UserInfoModal'
+import ConfirmWithdrawal from './components/modals/ConfrimWithdrawal'
 import axios from 'axios';
 
 
@@ -26,9 +27,10 @@ const App = () => {
   const { isOpenMyCard } = useSelector((store) => store.modal);
   const { isOpenMyStamped } = useSelector((store) => store.modal);
   const { isOpenChangePassword } = useSelector((store) => store.modal);
-  const { isOpenConfirmPassword } = useSelector((store) => store.modal);
+  const { isOpenConfirmChange } = useSelector((store) => store.modal);
   const { isOpenWithdrawal } = useSelector((store) => store.modal);
   const { isOpenUserInfo } = useSelector((store) => store.modal);
+  const { isOpenConfirmWithdrawal } = useSelector((store) => store.modal);
 
 
   return (
@@ -54,7 +56,8 @@ const App = () => {
             {isOpenMyCard && <MyPageMyCardModal/>}
             {isOpenMyStamped && <MyPageStampedCard/>}
             {isOpenChangePassword && <ChangePasswordCardModal/>}
-            {isOpenConfirmPassword && <ConfirmPasswordModal/>}
+            {isOpenConfirmChange && <ConfirmChangeModal/>}
+            {isOpenConfirmWithdrawal && <ConfirmWithdrawal/>}
             {isOpenWithdrawal && <WithdrawalCardModal/>}
             {isOpenUserInfo && <UserInfoModal />}
             <MyPage />

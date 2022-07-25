@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { openWithdrawalModal, openConfirmPasswordModal, openChangePasswordModal } from '../redux/reducers/ModalReducer';
+import { openConfirmWithdrawal, openConfirmChangeModal, openChangePasswordModal, setMypageUserInfo } from '../redux/reducers/ModalReducer';
 import styled from 'styled-components'
 import { useMediaQuery } from "react-responsive";
+import { useHistory } from 'react-router-dom';
 import { isDraft } from '@reduxjs/toolkit';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -216,20 +217,66 @@ const MyProfileWrap = styled.div`
     width: 200px;
     height: 200px;
   }
+
+  .failure-message {
+    color: #FF5C00;
+    
+    
+    position: relative;
+    width: 200px;
+    height: 30px;
+    align-items: flex-end;
+    left: 20px;
+    top: 40px;
+    font-size: 16px;
+    z-index: 2;
+  }
 `
 
-export default function MyProfileSection() {
+export default function MyProfileSection() { 
+  let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
+  let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
   const isDesktop = useMediaQuery({ minWidth: 921 })
   const isTablet = useMediaQuery({ minWidth: 1201 })
+  const history = useHistory()
+  
+  const [inputUsername, setInputUsername ] = useState(signInUserInfo.username);
+  const [inputAge, setInputAge] = useState(signInUserInfo.age);
+  const [inputGender, setInputGender] = useState(signInUserInfo.gender);
+  const [inputUsertext, setInputUsertext] = useState(signInUserInfo.usertext);
+  const [ message, setMessage ] = useState(false);
+  const [ isReload, setIsReload ] = useState();
 
   const userId = useSelector((state) => state.userId)
   // const { userData } = useSelector((state) => state.userData)
   const withdrawal = '> 회원탈퇴'
+
+  const reloadPage = () => {
+      window.location.reload();
+  }
+  const updateProfile = () => {
+    if(inputUsername === '' || inputAge === '' || inputGender === '' || inputUsertext === ''){
+      setMessage(true);
+    }else{
+      setMessage(false);
+      const payload = {
+        'email': signInUserInfo.email,
+        'username': inputUsername,
+        'usertext': inputUsertext,
+        'gender': inputGender,
+        'age': inputAge,
+      }
+      axios.patch(`${process.env.REACT_APP_API_URL}/mypage/edit`, payload)
+    }
+    reloadPage();
+  }
+  
+  
+
   const dispatch = useDispatch();
   const [ files, setFiles ] = useState('');
   const upLoadFile = (e) => {
     const file = e.target.files;
-    console.log(file);
     setFiles(file);
   }
   const [ imageSrc, setImageSrc ] = useState('');
@@ -282,31 +329,32 @@ export default function MyProfileSection() {
             }} placeholder='사진'/>
             </div>
             <div className={isDesktop? "profile-info-section" : "profile-info-section-mobile"}>
-                <div className="profile-info-email">사용자@email</div>
-                <input className="profile-info-nickname" type="text" placeholder="닉네임"/>
-                <select className="profile-info-age">
-                  <option value="DEFAULT" >연령대</option>
-                  <option value="teenages">10대</option>
-                  <option value="DEFAULT">20대</option>
-                  <option value="thirty">30대</option>
-                  <option value="forty">40대</option>
-                  <option value="fifty">50대</option>
-                  <option value="sixty">60대</option>
-                  <option value="seventy">70대</option>
+                <div className="profile-info-email">{signInUserInfo.email}</div>
+                <input className="profile-info-nickname" onChange={(e) => {setInputUsername(e.target.value)}} defaultValue={signInUserInfo.username}></input>
+                <select className="profile-info-age" onChange={(e) => {setInputAge(e.target.value)}}>
+                  <option value="DEFAULT" >{signInUserInfo.age}</option>
+                  <option value="10대">10대</option>
+                  <option value="20대">20대</option>
+                  <option value="30대">30대</option>
+                  <option value="40대">40대</option>
+                  <option value="50대">50대</option>
+                  <option value="60대">60대</option>
+                  <option value="70대">70대</option>
                 </select>
-                <select className="profile-info-gender">
-                  <option value="DEFAULT" >성별</option>
-                  <option value="teenages">남자</option>
-                  <option value="twenty">여자</option>
-                  <option value="thirty">선택안함</option>
+                <select className="profile-info-gender" onChange={(e) => {setInputGender(e.target.value)}}>
+                  <option value="DEFAULT">{signInUserInfo.gender}</option>
+                  <option value="남성">남성</option>
+                  <option value="여성">여성</option>
+                  <option value="선택안함">선택안함</option>
                 </select>
             </div>
           </div>
-          <textarea className="profile-introducing" placeholder="소개글을 작성해주세요"/>
+          <textarea className="profile-introducing" onChange={(e) => setInputUsertext(e.target.value)} defaultValue={signInUserInfo.usertext}></textarea>
+          {message ? <div className="failure-message">비어있는 부분이 있습니다.</div> : <div />}
           <div className="change-buttons">
-            <button className="withdrawal-button" onClick={() => {dispatch(openConfirmPasswordModal())}}>{withdrawal}</button>
-            <button className="change-password-button" onClick={() => {dispatch(openChangePasswordModal())}} >비밀번호 변경</button>
-            <button className="change-profile-button" onClick={handleClick}>변경</button>
+            <button className="withdrawal-button" onClick={isSignIn ? () => {dispatch(openConfirmWithdrawal())}: alert('로그인 해주세요')}>{withdrawal}</button>
+            <button className="change-password-button" onClick={isSignIn ? () => {dispatch(openConfirmChangeModal())}: alert('로그인 해주세요')} >비밀번호 변경</button>
+            <button className="change-profile-button" onClick={updateProfile}>변경</button>
           </div>
         </div>
       </div>
