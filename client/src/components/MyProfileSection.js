@@ -296,9 +296,9 @@ export default function MyProfileSection() {
                 </select>
                 <select className="profile-info-gender">
                   <option value="DEFAULT" >성별</option>
-                  <option value="teenages">남자</option>
-                  <option value="twenty">여자</option>
-                  <option value="thirty">선택안함</option>
+                  <option value="male">남자</option>
+                  <option value="female">여자</option>
+                  <option value="nochoice">선택안함</option>
                 </select>
             </div>
           </div>

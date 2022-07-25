@@ -42,14 +42,11 @@ const SignUpPageWrap = styled.div`
     overflow: hidden;
   }
   .login_title {
-    position: absolute;
     font-weight: bold;
     color: white;
     font-size: 30px;
     margin: 20px;
     border-radius: 5px;
-    justify-content: center;
-    top: 27vh;
   }
   .login_signupbox {
     display: flex;
@@ -86,32 +83,11 @@ const SignUpPageWrap = styled.div`
     margin: 4px;
     border-radius: 5px;
   }
-  .logo{
-    position: absolute;
-    top: 15vh;
-    justify-content: center;
-  }
-  .email {
-    position: absolute;
-    width: 25vw;
-    height: 5vh;
-    padding: 2px 40px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    left: 34vw;
-    top: 40vh;
-  }
-  .password {
-    position: absolute;
-    width: 25vw;
-    height: 5vh;
-    padding: 2px 40px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    left: 34vw;
-    top: 50vh;
+  .BC_logo {
+    width: 120px;
+    height: 120px;
+    background-image: url("images/bucketscombine_logo.png");
+    background-size: cover;
   }
   .signup_container {
     display: flex;
@@ -119,62 +95,73 @@ const SignUpPageWrap = styled.div`
     flex-direction: column;
     min-height: 100vh;
   }
-  #repassword {
-    width: 246px;
-    height: 32px;
+  .email {
+    width: 250px;
+    height: 50px;
     padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
     border: none;
+  }
+  .password {
+    width: 250px;
+    height: 50px;
+    padding: 2px 40px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+  }
+  .repassword {
+    width: 250px;
+    height: 50px;
+    padding: 2px 40px;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+
   }
   .username {
-    position: absolute;
-    width: 25vw;
-    height: 5vh;
+    width: 250px;
+    height: 50px;
     padding: 2px 40px;
     margin: 10px;
     border-radius: 5px;
     border: none;
-    left: 34vw;
-    top: 60vh;
   }
   .btn_old {
-    padding: 5px 40px;
+    padding: 2px 40px;
     margin: 10px;
     width: 330px;
-    height: 40px;
+    height: 50px;
     border-radius: 5px;
+    border: none;
+
   }
   .btn_gender {
-    padding: 5px 40px;
+    padding: 2px 40px;
     margin: 10px;
     width: 330px;
-    height: 40px;
+    height: 50px;
     border-radius: 5px;
+    border: none;
   }
-
   .signup {
     border: none;
-    
-    justify-content: center;
-    
     background: #ffc700;
     border-radius: 5px;
-    position: absolute;
-    width: 25vw;
-    height: 5vh;
+    width: 330px;
+    height: 50px;
     padding: 2px;
     margin: 10px;
     border-radius: 5px;
-    left: 34vw;
-    top: 70vh;
   }
   
   .alert-box{
     color: red;
-    position: absolute;
-    left: 45vw;
-    top: 68vh;
+  }
+  a{
+    text-decoration-line : none;
+    color: white;
   }
 
   .errormessage{
@@ -194,15 +181,25 @@ const SignUpPageWrap = styled.div`
     font-size: 15px;
     background-color: #FFC700;
   }
+  .list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .find {
+    color: white;
+    margin: 10px;
+  }
   
 `
-
 export default function SignUpPage() {
 
   const [userinfo, setUserinfo] = useState({
     email: '',
     username: '',
-    password: ''
+    password: '',
+    repassword: '',
+    
   });
   const history = useHistory();
   const [errormessage, setErrormessage] = useState('')
@@ -212,23 +209,32 @@ export default function SignUpPage() {
     validate()
   }
   const validate = () => {
-    if (!validateEmail(userinfo.email) || userinfo.email.length === 0) {
-      setErrormessage('이메일 형식이 유효하지 않습니다')
-    } else if (userinfo.username.length === 0) {
-      setErrormessage('닉네임을 입력하세요')
-    } else if (userinfo.password.length < 6 || userinfo.password.length > 12) {
+    if (userinfo.email.length === ''){
+      setErrormessage('이메일을 입력해 주십시오.')
+    } else if (userinfo.username.length < 1 || userinfo.username.length > 6) {
+      setErrormessage('닉네임은 1자리 이상 6자리 이하입니다')
+    }
+      else if (userinfo.password.length < 6 || userinfo.password.length > 12) {
       setErrormessage('비밀번호는 6자리 이상 12자리 이하입니다')
+    } else if (userinfo.password !== userinfo.repassword) {
+      setErrormessage('비밀번호가 일치하지 않습니다')
     } else {
       setErrormessage('')
     }
   }
   const handleSignup = async () => {
-    if (errormessage==="" && !(userinfo.email==="") && !(userinfo.username==="") && !(userinfo.password==="")) {
+    if (userinfo.email==="" ||
+       userinfo.username===""||
+        userinfo.password==="" ||
+         userinfo.repassword==="") {
+                setErrormessage("모든 항목은 필수입니다");
+    } else {
       await history.push("/signin")
       await axios.post(`${process.env.REACT_APP_API_URL}/users/signup`, {
         email: userinfo.email,
         password: userinfo.password,
         username: userinfo.username,
+        repassword: userinfo.repassword
       })
     }
   }
@@ -286,6 +292,16 @@ export default function SignUpPage() {
   const cancle = () => {
     history.goBack()
   }
+  const btn_old = (target) => {
+    const value = target.value;
+    const text = target.options[target.selectedIndex].text;
+    document.querySelector(`div`).innerHTML = `text: ${text} value: ${value}`;
+  }
+    const btn_gender = (target) => {
+      const value = target.value;
+      const text = target.options[target.selectedIndex].text;
+      document.querySelector(`div`).innerHTML = `text: ${text} value: ${value}`;
+  }
 
   return (
     <SignUpPageWrap>
@@ -294,13 +310,15 @@ export default function SignUpPage() {
         <button id="cancle" onClick={cancle}>취소</button>
           <div className="signin_container">
             <img
-              className="logo"
+              className="BC_logo"
               src="images/bucketscombine_logo.png"
               alt="no"
               width="120px"
               height="120px"
             ></img>
             <div className="login_title">BucketsCombine</div>
+            <form>
+            <div className='list' onSubmit={(e) => e.preventDefault()}>
             <input
               className="email"
               type="email"
@@ -308,18 +326,41 @@ export default function SignUpPage() {
               onChange={handleInputValue("email")}
             />
             <input
-              className="password"
-              type="password"
-              placeholder="비밀번호"
-              onChange={handleInputValue("password")}
-            />
-            <input
               className="username"
               type="username"
               placeholder="닉네임"
               onChange={handleInputValue("username")}
             />
-
+            <input
+              className="password"
+              type="password"
+              placeholder="비밀번호"
+              onChange={handleInputValue("password")}
+              autoComplete="off"
+            />
+            <input
+              className="repassword"
+              type="password"
+              placeholder="비밀번호 재확인"
+              onChange={handleInputValue("repassword")}
+              autoComplete="off"
+            />
+            <select className="btn_old" method="get" required>
+              <option value="DEFAULT" >연령대</option>
+              <option value="teenages">10대</option>
+              <option value="twenty">20대</option>
+              <option value="thirty">30대</option>
+              <option value="forty">40대</option>
+              <option value="fifty">50대</option>
+              <option value="sixty">60대</option>
+              <option value="seventy">70대</option>
+            </select>
+            <select className="btn_gender" method="get" required>
+              <option value="DEFAULT" >성별</option>
+              <option value="male">남자</option>
+              <option value="female">여자</option>
+              <option value="nochoice">선택안함</option>
+		        </select>
             <button
               className="signup"
               type="submit"
@@ -327,10 +368,13 @@ export default function SignUpPage() {
             >
               가입하기
             </button>
+            </div>
+            </form>
+
             <div className="alert-box">{errormessage}</div>
         <div className="errormessage">{errormessage2}</div>
-        <div className="singup_font_white">이미 아이디가 있으신가요? <a href="/login">login</a></div>
-            
+        <div className="find">이미 아이디가 있으신가요? <a href="/login">login</a></div>
+
           </div>
         </div>
       </div>
