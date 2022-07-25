@@ -14,6 +14,7 @@ const StampedCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
+    background-position: center center;
     z-index: 1;
     transition: box-shadow 0.2s;
   }
@@ -26,6 +27,7 @@ const StampedCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
+    background-position: center center;
     z-index: 1;
     box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.2s;

@@ -297,7 +297,7 @@ const MainPageModal = styled.div`
     .card-subtract-button {
         align-self: flex-end;
         margin-right: auto;
-        background-color: #FF5C00;
+        background-color: #8A8A8A;
         border-radius: 10px;
         border: none;
         width: 120px;
@@ -341,6 +341,8 @@ const MainPageCardModal = ({
   const { allCardsData } = useSelector((state) => state.modal.allCardsData);
   const allCardData = allCardsData.filter(card => card.id === modalCardID);
 
+  const [isChanged, setIsChanged] = useState(false)
+
   const title = allCardData[0].title;
   const cardtext = allCardData[0].cardtext;
   let backgroundImageStyle = {
@@ -357,8 +359,12 @@ const MainPageCardModal = ({
 
   const dispatch = useDispatch();
   const modalRef = useRef(null);
+
   const handleClose = () => {
     dispatch(closeMainPageCardModal())
+    if(isChanged){
+      window.location.reload()
+    }
   };
   useOutSideClick(modalRef, handleClose);
 
@@ -377,13 +383,14 @@ const MainPageCardModal = ({
 
   const putInBucket = (id) => {
     id.stopPropagation();
-
+    
     axios.post(`${process.env.REACT_APP_API_URL}/mainpage/userCardJoins`, {
       cards_id: modalCardID,
       users_id: signInUserInfo.id,
     })
       .then((res) => {
         setIsInBucket(true);
+        setIsChanged(!isChanged)
       })
       .catch((err) => {
         alert(err)
@@ -402,13 +409,12 @@ const MainPageCardModal = ({
     })
       .then((res) => {
         setIsInBucket(false);
+        setIsChanged(!isChanged)
       })
       .catch((err) => {
         alert(err)
       })
   };
-
-
 
   return (
     <ModalPortal>
@@ -425,11 +431,9 @@ const MainPageCardModal = ({
               })}
             </div> */}
             <div className={isTablet ? "userinfo-message" : "userinfo-message-mobile"}>
-              현재 참여 인원 {membersID.length}명 (참여하시면 참여하신 분들의 정보를 볼 수 있습니다.)
+              참여 인원 {membersID.length}명 (참여하시면 My Bucket에서 참여하신 분들의 정보를 볼 수 있습니다.)
             </div>
-            <button className="close-btn" onClick={() => {
-              dispatch(closeMainPageCardModal())
-            }}>X</button>
+            <button className="close-btn" onClick={handleClose}>X</button>
             {isSignIn ?
               isOwn(signInUserInfo, modalUserID) ?
                 <div />

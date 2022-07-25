@@ -19,6 +19,8 @@ const initialState = {
     stampedData: [],
     isInBucketModal: false,
     modalUserID: 0,
+    isOpenEditCardModal: false,
+    selectUserID : 0,
 };
 
 const modalSlice = createSlice({
@@ -103,6 +105,15 @@ const modalSlice = createSlice({
         setModalUserID: (state, action) => {
             state.modalUserID = action.payload;
         },
+        openEditCardModal: (state, action) => {
+            state.isOpenEditCardModal = true;
+        },
+        closeEditCardModal: (state, action) => {
+            state.isOpenEditCardModal = false;
+        },
+        setSelectUserID: (state, action) => {
+            state.selectUserID = action.payload;
+        },
     }
 });
 export const { 
@@ -132,5 +143,8 @@ export const {
     setStampedData,
     setIsInBucketModal,
     setModalUserID,
+    openEditCardModal,
+    closeEditCardModal,
+    setSelectUserID,
     } = modalSlice.actions;
 export default modalSlice.reducer;

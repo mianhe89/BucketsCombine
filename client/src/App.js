@@ -11,11 +11,11 @@ import './App.css';
 import MakeCardModal from './components/modals/MakeCardModal';
 import MainPageStampedCardModal from './components/modals/MainPageStampedModal';
 import MyPageMyCardModal from './components/modals/MyCardModal'
-import MyPageStampedCard from './components/modals/MyPageStampedCard'
 import ConfirmPasswordModal from './components/modals/ConfirmPasswordModal'
 import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
 import WithdrawalCardModal from './components/modals/WithdrawalModal';
 import UserInfoModal from './components/modals/UserInfoModal'
+import EditCardModal from './components/modals/EditCardModal'
 import axios from 'axios';
 
 
@@ -29,6 +29,7 @@ const App = () => {
   const { isOpenConfirmPassword } = useSelector((store) => store.modal);
   const { isOpenWithdrawal } = useSelector((store) => store.modal);
   const { isOpenUserInfo } = useSelector((store) => store.modal);
+  const { isOpenEditCardModal } = useSelector((store) => store.modal);
 
 
   return (
@@ -52,11 +53,11 @@ const App = () => {
           <Route exact path='/mypage'>
             {isOpenMakeCard && <MakeCardModal/>}
             {isOpenMyCard && <MyPageMyCardModal/>}
-            {isOpenMyStamped && <MyPageStampedCard/>}
             {isOpenChangePassword && <ChangePasswordCardModal/>}
             {isOpenConfirmPassword && <ConfirmPasswordModal/>}
             {isOpenWithdrawal && <WithdrawalCardModal/>}
             {isOpenUserInfo && <UserInfoModal />}
+            {isOpenEditCardModal && <EditCardModal/>}
             <MyPage />
           </Route>
         </Switch>
