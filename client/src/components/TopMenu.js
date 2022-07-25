@@ -226,7 +226,7 @@ export default function Topmenu({location}){
   const handleSignout = () => {
     localStorage.setItem('signInUserInfo', JSON.stringify(null));
     localStorage.setItem('isSignIn', JSON.stringify(false));
-    history.push('/');
+    window.location.replace("/");
   };
 
 

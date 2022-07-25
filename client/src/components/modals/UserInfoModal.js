@@ -1,33 +1,41 @@
 import { closeUserInfoModal, openMyCardModal, openMyStampedModal } from "../../redux/reducers/ModalReducer";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ModalPortal from "./ModalPortal";
 import useOutSideClick from "../hook/UseOutSideClick";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import { useMediaQuery } from "react-responsive";
 
-const UserInfoModal = styled.div`
-    width: 30vw;
-    height: 60vh;
-    display: flex;
-    border-radius: 20px 20px 20px 20px;
-    border: solid rgb(170, 170, 170);
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    left: 40vw;
-    top: 20vh;
-    z-index: 30;
+const UserInfoModalWrap = styled.div`
     .UserInfoCard{
-        position: relative;
-        width: 30vw;
+        width: 450px;
         height: 60vh;
-        background-color: rgba(255, 255, 255);
-        border-radius: 20px 20px 20px 20px;
-        animation: fadein 0.5s;
-        -moz-animation: fadein 0.5s;
-        -webkit-animation: fadein 0.5s;
-        -o-animation: fadein 0.5s;
-        z-index: 30;
+        min-height: 460px;
+        max-height: 600px;
+        display: flex;
+        border-radius: 20px ;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        margin-left: 60px;
+        z-index: 10;
+        border: solid #5E5E5E;
+        border-width: 1px;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        animation: fadein 0.3s;
+        -moz-animation: fadein 0.3s;
+        -webkit-animation: fadein 0.3s;
+        -o-animation: fadein 0.3s;
+        box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.2);
+
         @keyframes fadein {
             from {
                 opacity: 0;
@@ -62,6 +70,35 @@ const UserInfoModal = styled.div`
         }
     }
 
+    .UserInfoCard-mobile {
+        width: 450px;
+        height: 60vh;
+        min-height: 460px;
+        max-height: 600px;
+        display: flex;
+        border-radius: 20px ;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        border: solid #5E5E5E;
+        border-width: 1px;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        animation: fadein 0.3s;
+        -moz-animation: fadein 0.3s;
+        -webkit-animation: fadein 0.3s;
+        -o-animation: fadein 0.3s;
+        box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.2);
+    }
+
     .close-btn {
         margin: 1px;
         position: absolute;
@@ -77,66 +114,62 @@ const UserInfoModal = styled.div`
 
     .user-img{
         position: absolute;
-        border: solid rgb(170, 170, 170);
-        border-radius: 20px 20px 20px 20px;
-        width: 9vw;
-        height: 15vh;
-        left: 1vw;
-        top: 5vh;
+        border: solid #8A8A8A;
+        border-width: 1px;
+        border-radius: 20px;
+        width: 150px;
+        height: 150px;
+        left: 30px;
+        top: 30px;
+        background-position: center center;
+        background-size: cover;
     }
 
     .useremail{
         position: absolute;
-        left: 11vw;
-        top: 15vh;
-        width: 10vw;
-        height: 5vh;
+        left: 200px;
+        top: 90px;
     }
     
     .username{
         position: absolute;
-        font-size: 25px;
-        left: 2vw;
-        top: 23vh;   
+        font-size: 26px;
+        left: 200px;
+        top: 50px;   
     }
 
     .user-age{
         position: absolute;
         border: solid rgb(170, 170, 170);
-        border-radius: 5px 5px 5px 5px;
-        align-items: center;
+        border-width: 2px;
+        border-radius: 10px;
         text-align: center;
-        width: 4vw;
-        height: 3vh;
-        left: 2vw;
-        top: 30vh;
+        width: 70px;
+        height: 20px;
+        left: 200px;
+        top: 140px;
     }
 
     .user-gender{
         position: absolute;
         border: solid rgb(170, 170, 170);
-        border-radius: 5px 5px 5px 5px;
-        align-items: center;
+        border-width: 2px;
+        border-radius: 10px;
         text-align: center;
-        width: 4vw;
-        height: 3vh;
-        left: 7vw;
-        top: 30vh;
+        width: 70px;
+        height: 20px;
+        left: 280px;
+        top: 140px;
     }
 
-    .userIntroduction{
-        margin: 1px;
-        padding: 1em;
+    .user-introduction{
         text-align: left;
         position: absolute;
-        background:none;
-        border: none;
-        display: flex;
-        position: absolute;
-        width: 20vw;
-        height: 20vh;
-        left: 1vw;
-        top: 33vh;
+        background: transparent;
+        width: calc(100% - 80px);
+        height: calc(100% - 260px);
+        left: 35px;
+        top: 220px;
     }
 
     .exile-btn{
@@ -152,38 +185,37 @@ const UserInfoModal = styled.div`
 `
 
 const UserInfoCardModal = () => {
-    const [ isCardForm, setIsCardForm ] = useState()
+    const isDesktop = useMediaQuery({ minWidth: 921 })
+
+    const {usersData} = useSelector((state) => state.modal.usersData)
+    const selectUserID = useSelector((state) =>state.modal.selectUserID)
+    const [selectUserInfo] = usersData.filter((user) => user.id === selectUserID )
+
+    let backgroundImageStyle = {
+        backgroundImage: `url(${selectUserInfo.userphotourl})`,
+    };
+
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const handleClose = () => {
         dispatch(closeUserInfoModal())
     };
     useOutSideClick(modalRef, handleClose);
-    const exile = '> 카드에서 추방'
     return (
         <ModalPortal>
-            <UserInfoModal>
-                <div className="UserInfoCard" ref={modalRef}>
-                <button className="close-btn" onClick={() => {isCardForm ?
-                    dispatch(closeUserInfoModal())
-                    && dispatch(openMyStampedModal())
-                    : dispatch(closeUserInfoModal())
-                    && dispatch(openMyCardModal())
-                }}>X</button>
-                <img className="user-img" src="images/bucketscombine_logo.png" alt="card" />
-                <div className="useremail">유저.email</div>
-                <div className="username">유저 닉네임</div>
-                <div className="user-age">20대</div>
-                <div className="user-gender">남자</div>
-                <div className="userIntroduction">소개글</div>
-                <button className="exile-btn" onClick={() => {
-                    dispatch(closeUserInfoModal())}}>{exile}</button>
+            <UserInfoModalWrap>
+                <div className={isDesktop? "UserInfoCard" : "UserInfoCard-mobile"} ref={modalRef}>
+                <button className="close-btn" onClick={handleClose}>X</button>
+                <div className="user-img" style={backgroundImageStyle}/>
+                <div className="useremail">{selectUserInfo.email}</div>
+                <div className="username">{selectUserInfo.username}</div>
+                <div className="user-age">{selectUserInfo.age}</div>
+                <div className="user-gender">{selectUserInfo.gender}</div>
+                <div className="user-introduction">{selectUserInfo.usertext}</div>
                 </div>
-            </UserInfoModal>
+            </UserInfoModalWrap>
         </ModalPortal>
     );
 }
 
 export default UserInfoCardModal;
-
-

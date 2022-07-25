@@ -119,7 +119,6 @@ const ColumnListWrap = styled.div`
 `;
 
 export default function ColumnList () {
-
   let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
   let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
 

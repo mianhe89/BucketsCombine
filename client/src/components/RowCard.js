@@ -14,6 +14,7 @@ const RowCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
+    background-position: center center;
     z-index: 1;
     transition: box-shadow 0.2s;
   }
@@ -26,6 +27,7 @@ const RowCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
+    background-position: center center;
     z-index: 1;
     box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.2s;
@@ -70,10 +72,9 @@ const RowCardWrap = styled.div`
     border: none;
     box-shadow: none;
     font-size: 13px;
-    background-color: #ff5c00;
+    background-color: white;
     z-index: 10;
-    font-weight: bold;
-    color: white;
+    color: grey;
     transition: box-shadow 0.2s;
   }
   .card-subtract-button:hover {
@@ -83,7 +84,7 @@ const RowCardWrap = styled.div`
     margin-left: 130px;
     border: none;
     font-size: 13px;
-    background-color: #ff5c00;
+    background-color: #8A8A8A;
     z-index: 10;
     font-weight: bold;
     color: white;

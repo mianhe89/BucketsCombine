@@ -1,4 +1,4 @@
-import { closeMakeCardModal, setUsersData, setStampedData } from "../../redux/reducers/ModalReducer.js";
+import { closeEditCardModal, setUsersData, setStampedData } from "../../redux/reducers/ModalReducer.js";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useRef, useState } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
@@ -8,7 +8,7 @@ import HorizontalScroll from 'react-scroll-horizontal';
 import { useMediaQuery } from "react-responsive";
 import axios from "axios";
 
-const MakeCardeModalWrap = styled.div`
+const EditCardeModalWrap = styled.div`
     .modal-container {
         width: 70vw;
         max-width: 1200px;
@@ -144,19 +144,7 @@ const MakeCardeModalWrap = styled.div`
         top: 17vh;
     }
     
-    .make-card-button {
-        align-self: flex-end;
-        margin-right: auto;
-        background-color: #FFC700;
-        border-radius: 10px;
-        border: none;
-        width: 120px;
-        height: 30px;
-        position: relative;
-        left: 30px;
-        bottom: 30px;
-        font-size: 14px;
-    }
+    
 
     .username {
         display: flex;
@@ -413,7 +401,6 @@ const MakeCardeModalWrap = styled.div`
         width: 260px;
         height: 390px;
         background-size: cover;
-        background-position: center center;
         color: white;
         text-align : center;
         line-height: 350px;
@@ -428,34 +415,49 @@ const MakeCardeModalWrap = styled.div`
         width: calc(100% - 220px);
         height: 30px;
         background-size: cover;
-        background-position: center center;
         color: white;
         text-align : center;
         line-height: 30px;
+    }
+
+    .edit-button {
+        align-self: flex-end;
+        margin-right: auto;
+        background-color: #FFC700;
+        border-radius: 10px;
+        border: none;
+        width: 120px;
+        height: 30px;
+        position: relative;
+        left: 30px;
+        bottom: 30px;
+        font-size: 14px;
     }
 `
 
     
 
 
-const MakeCardModal = ({
-    }) => {
+const EditCardModal = ({
+  }) => {
+  const modalCardID = useSelector((state) => state.modal.modalCardID);
+  const bucketData = useSelector((state) => state.modal.bucketData);
+  const [ modalCardInfo ] = bucketData.filter((card) => card.id === modalCardID)
 
-
-  const signInUserID = JSON.parse(localStorage.getItem('signInUserInfo')).id
 
   const isDesktop = useMediaQuery({ minWidth: 921 })
   const isTablet = useMediaQuery({ minWidth: 1201 })
   const dispatch = useDispatch();
   const modalRef = useRef(null);
+  
 
 
-  const [inputTitle, setInputTitle] = useState('');
-  const [inputInfo, setInputInfo] = useState('');
-  const [inputTag, setInputTag] = useState([]);
+  const [inputTitle, setInputTitle] = useState(modalCardInfo.title);
+  const [inputInfo, setInputInfo] = useState(modalCardInfo.cardtext);
+  const [inputTag, setInputTag] = useState(modalCardInfo.tag);
   const [message, setMessage] = useState(false);
-  const [bgImageStyle, setBgImageStyle] = useState(`${Math.floor(Math.random() * 18) + 1}`)
-  const [tags, setTags] = useState([]);
+  const [bgImageStyle, setBgImageStyle] = useState(modalCardInfo.background)
+  const [tags, setTags] = useState(modalCardInfo.tag);
   const removeTags = (indexToRemove) => {
     setTags(tags.filter((el) => {
       return el !== tags[indexToRemove];
@@ -479,28 +481,35 @@ const MakeCardModal = ({
     }
   }
   const handleClose = () => {
-    confirmClosing()
-    // dispatch(closeMakeCardModal())
+    dispatch(closeEditCardModal())
   };
   useOutSideClick(modalRef, handleClose);
   
 
-  const buildCard = () => {
+  const editCard = () => {
     if (inputTitle === '' || inputInfo === '' || tags.length === 0) {
-      setMessage(true);
+      setMessage(true)
     } else {
-      const payload = {
-        "title": inputTitle,
-        "cardtext": inputInfo,
-        "users_id": signInUserID,
-        "background": bgImageStyle,
-        "hashname": tags,
+      if(inputTitle === modalCardInfo.title && JSON.stringify(tags) === JSON.stringify(modalCardInfo.tag) && inputInfo === modalCardInfo.cardtext){
+        dispatch(closeEditCardModal())
+      } else {
+        const payload = {
+          cards_id: modalCardID,
+          title: inputTitle,
+          cardtext: inputInfo,
+          background: bgImageStyle,
+          hashname: tags,
+          completed: modalCardInfo.completed,
+        }
+        axios.patch(`${process.env.REACT_APP_API_URL}/mypage/cardsedit`, payload)
+        .then((res) => {
+          dispatch(closeEditCardModal())
+          window.location.replace("/mypage")
+        })
+        .catch((error) => {
+          alert(error)
+        })
       }
-      axios.post(`${process.env.REACT_APP_API_URL}/mypage/create`, payload)
-      .then((res) => {
-        dispatch(closeMakeCardModal())
-        window.location.replace("/mypage")
-      })
     }
   }
 
@@ -519,20 +528,15 @@ const MakeCardModal = ({
 
   const [ment, setMent] = useState(`배경을 변경하려면 클릭하세요.`)
 
-  const confirmClosing = () => {
-    if(window.confirm("작성하신 내용이 삭제됩니다. 닫으시겠습니까?") === true){
-      dispatch(closeMakeCardModal())
-    } else {
-      return ;
-    }
-  }
 
   return (
     <ModalPortal>
-      <MakeCardeModalWrap>
+      <EditCardeModalWrap>
         <div className={isDesktop ? "modal-container" : "modal-container-mobile"} ref={modalRef} >
           <div className="mainPageCard" >
-            <input className={isTablet ? " modal-title" : " modal-title-mobile"} onChange={(e) => { setInputTitle(e.target.value) }} placeholder="제목을 입력해 주세요."></input>
+            <input className={isTablet ? " modal-title" : " modal-title-mobile"} 
+            defaultValue={modalCardInfo.title} onChange={(e) => { setInputTitle(e.target.value) }} placeholder="제목을 입력해 주세요.">
+            </input>
               <div className={isTablet ? "card-tags" : "card-tags-mobile"} >
                 {tags.map((tag, index) => (
                   <div key={index} className='tag' onChange={(e) => { setInputTag(e.target.value) }}>
@@ -547,10 +551,10 @@ const MakeCardModal = ({
                 placeholder='태그를 입력해 주세요.'
               />
             <button className="close-btn" onClick={() => {
-              dispatch(closeMakeCardModal())
+              dispatch(closeEditCardModal())
             }}>X</button>
-            <button type="button" className="make-card-button" onClick={buildCard}>
-              카드 만들기
+            <button type="button" className="edit-button" onClick={editCard}>
+              카드 수정 완료
             </button>
             {message ? <div className={isTablet? "failure-message" : "failure-message-mobile" }>비어있는 부분이 있습니다.</div> : <div />}
             <div className={isTablet ? "card-img" : "card-img-mobile"} 
@@ -559,11 +563,11 @@ const MakeCardModal = ({
               {ment}
             </div>
           </div>
-          <textarea className={isTablet ? "card-description" : "card-description-mobile"} onChange={(e) => { setInputInfo(e.target.value) }} placeholder="설명을 입력해 주세요."></textarea>
+          <textarea className={isTablet ? "card-description" : "card-description-mobile"} defaultValue={modalCardInfo.cardtext} onChange={(e) => { setInputInfo(e.target.value) } } placeholder="설명을 입력해 주세요."></textarea>
         </div>
-      </MakeCardeModalWrap>
+      </EditCardeModalWrap>
     </ModalPortal>
   );
 }
 
-export default MakeCardModal;
+export default EditCardModal;

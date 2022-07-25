@@ -1,4 +1,4 @@
-import { closeMyCardModal, setUsersData, setStampedData, openUserInfoModal, setBucketData } from "../../redux/reducers/ModalReducer.js";
+import { closeMyCardModal, openEditCardModal, openUserInfoModal, setSelectUserID, setUsersData, setStampedData } from "../../redux/reducers/ModalReducer";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useRef, useState } from "react";
 import useOutSideClick from "../hook/UseOutSideClick.js";
@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import ModalPortal from "./ModalPortal.js";
 import HorizontalScroll from 'react-scroll-horizontal';
 import { useMediaQuery } from "react-responsive";
-
+import axios from "axios";
 
 const MainPageModal = styled.div`
     .modal-container {
@@ -91,6 +91,7 @@ const MainPageModal = styled.div`
         width: 260px;
         height: 390px;
         background-size: cover;
+        background-position: center center;
     }
 
     .modal-title {
@@ -177,19 +178,7 @@ const MainPageModal = styled.div`
         top: 17vh;
     }
     
-    .btn-confirm-btn {
-        align-self: flex-end;
-        margin-right: auto;
-        background-color: #FFC700;
-        border-radius: 10px;
-        border: none;
-        width: 120px;
-        height: 30px;
-        position: relative;
-        left: 30px;
-        bottom: 30px;
-        font-size: 14px;
-    }
+   
 
     .username {
         display: flex;
@@ -245,6 +234,7 @@ const MainPageModal = styled.div`
         width: 0px;
         height: 0px;
         background-size: cover;
+        background-position: center center;
     }
 
     .modal-title-mobile {
@@ -306,296 +296,514 @@ const MainPageModal = styled.div`
         }
     }
 
-    .state-select{
-        position: absolute;
-        right: 10vw;
-        top: 3vh;
-        width: 8vw;
-        
-    }
-
     .ColumnCard-progress-0 {
+    position: absolute;
     background-color: #8A8A8A;
     height: 80px;
     width: 10px;
     border-radius: 10px;
-    position: absolute;
     top:20px;
     left: 10px;
   }
 
   .ColumnCard-progress-1 {
+    position: absolute;
     background-color: #FFC700;
     height: 80px;
     width: 10px;
     border-radius: 10px;
-    margin: 5px;
+    top:20px;
+    left: 10px;
   }
 
   .ColumnCard-progress-2 {
+    position: absolute;
     background-color: #FF5C00;
     height: 80px;
     width: 10px;
     border-radius: 10px;
-    margin: 5px;
+    top:20px;
+    left: 10px;
   }
 
-  .username-board{
-    top: 10px;
-    right: 70px;
+  .delete-button {
+    height: 30px;
+    width: 80px;
     position: absolute;
-    width: 100px;
-    height: 130px;
+    bottom: 30px;
+    right: 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    color:gray;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 2;
+  }
+
+  .progress-board-0 {
+    background-color: #8A8A8A;
+    height: 24px;
+    width: 120px;
     border-radius: 12px;
-    z-index: 16;
-    background-color: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 50;
-  }
-
-  .state-fix{
     position: absolute;
-    right: 70px;
-    top: 10px;
-    width: 100px;
-    height: 20px;
-    background-color: none;
-    border-radius: 5px;
-  }
-
-  .stand{
-      background-color: #7A7A7A;
-      border-radius: 9px;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: #F4FFFF;
-      width: 100px;
-      height: 20px;
-      display: fixed;
-      cursor: pointer;
-  }
-
-  .progress{
-      background-color: #FFC700;
-      border-radius: 9px;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      width: 100px;
-      color: #F4FFFF;
-      width: 100px;
-      height: 20px;
-      display: fixed;
-      cursor: pointer;
-  }
-
-  .acheivement{
-    background-color: #FF5C00;
-    border-radius: 9px;
-    justify-content: center;
-    align-items: center;
+    top: 30px;
+    right: 30px;
+    color: white;
     text-align: center;
-    display: fixed;
-    width: 100px;
-    color: #F4FFFF;
-    height: 20px;
-    cursor: pointer;
+    line-height: 23px;
   }
 
-  .arrow-down span {
-    position: relative;
-    z-index: 15;
-    
-}
-
-.arrow-down span::after {
-    content: '';
-    width: 5px; /* 사이즈 */
-    height: 5px; /* 사이즈 */
-    border-top: 2px solid #121212; /* 선 두께 */
-    border-right: 2px solid #121212; /* 선 두께 */
-    display: flex;
-    transform: rotate(135deg); /* 각도 */
-    position: absolute;
-    top: 7px; /* 기본 0px 값으로 해주세요 */
-    left: 30px; /* 기본 0px 값으로 해주세요 */
-}
-  
-  .board-button-0 {
-    position: relative;
-    border: none;
-    box-shadow: none;
-    width: 90px;
-    height: 20px;
-    border-radius: 8px;
-    font-size: 15px;
-    color: white;
-    background-color: #7A7A7A;
-    margin: 5px;
-    cursor: pointer;
-  }
-  .board-button-1 {
-      position: inherit;
-    border: none;
-    box-shadow: none;
-    width: 90px;
-    height: 20px;
-    border-radius: 8px;
-    font-size: 15px;
-    color: white;
+  .progress-board-1 {
     background-color: #FFC700;
-    margin: 5px;
-    cursor: pointer;
-  }
-  .board-button-2 {
-      position: inherit;
-    border: none;
-    box-shadow: none;
-    width: 90px;
-    height: 20px;
-    border-radius: 8px;
-    font-size: 15px;
+    height: 24px;
+    width: 120px;
+    border-radius: 12px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
     color: white;
+    text-align: center;
+    line-height: 23px;
+  }
+
+  .progress-board-2 {
     background-color: #FF5C00;
-    margin: 5px 5px 5px 5px;
-    cursor: pointer;
-    }
-    .button-container{
-        position: relative;
-        border: solid 2px black;
-        border-radius: 10px;
-        margin: 5px;
-        width: 100px;
-        height: 90px;
-        margin: 5px;
-        
-    }`    
+    height: 24px;
+    width: 120px;
+    border-radius: 12px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    text-align: center;
+    line-height: 23px;
+  }
+  .switchPrevious {
+    position: absolute;
+    left: 10px;
+    height: 100%;
+    width: 40px;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    color: white;
+  }
+
+  .switchNext {
+    position: absolute;
+    right: 10px;
+    height: 100%;
+    width: 40px;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    color: white;
+  }
+  .imgUploadButton {
+    position: absolute;
+    right: 170px;
+    top: 30px;
+    height: 24px;
+    width: 120px;
+    border-radius: 12px;
+    border: none;
+    color:white;
+    background-color: #FF5C00;
+  }
+
+  .imgUploadButton label {
+    font-size: 16px;
+  }
+
+  .imgUploadButton input[type="file"] { 
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+  }
+
+  .stampedButton {
+    position: absolute;
+    right: 310px;
+    top: 30px;
+    height: 24px;
+    width: 120px;
+    border-radius: 12px;
+    border: none;
+    color:white;
+    text-align: center;
+    line-height: 20px;
+    animation-duration: 3s; animation-name: rainbowLink; animation-iteration-count: infinite; } 
+    @keyframes rainbowLink {     
+    0% { background-color: #eeafaf; }
+    15% { background-color: #f3cda0; }
+    30% { background-color: #afcb3d; }
+    45% { background-color: #d3c0d3; }
+    60% { background-color: #f7e7b1; }
+    75% { background-color: #a9e1ed; }
+    90% { background-color: #fdc4f8; } 
+    100% { background-color: #cb9ffd; }
+  }
+
+  .edit-button {
+    align-self: flex-end;
+    margin-right: auto;
+    background-color: #ffc700;
+    border-radius: 10px;
+    border: none;
+    width: 120px;
+    height: 30px;
+    position: relative;
+    left: 30px;
+    bottom: 30px;
+    font-size: 14px;
+  }
+
+  .subtract-button {
+    align-self: flex-end;
+    margin-right: auto;
+    background-color: #8A8A8A;
+    border-radius: 10px;
+    border: none;
+    width: 120px;
+    height: 30px;
+    position: relative;
+    left: 30px;
+    bottom: 30px;
+    font-size: 14px;
+    color: white;
+  }
+
+  .insert-button {
+    align-self: flex-end;
+    margin-right: auto;
+    background-color: #ffc700;
+    border-radius: 10px;
+    border: none;
+    width: 120px;
+    height: 30px;
+    position: relative;
+    left: 30px;
+    bottom: 30px;
+    font-size: 14px;
+  }
+
+  .complete-stamp {
+    position: absolute;
+    width: 150px;
+    right: 0px;
+    transform: translate(0,250px);
+  }
+
+  .image {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+  }
+`    
     
 
 
 const MyCardModal = ({
-    }) => {
-    const isDesktop = useMediaQuery({ minWidth: 921 })
-    const isTablet = useMediaQuery({ minWidth: 1201 })
-    const [ isCompleted, setIsCompleted ] = useState('');
-    const [ isBoardOpen, setIsBoardOpen ] = useState(true);
-    const [ isMyCard, setIsMyCard ] = useState(false);
-    const [ isLogin , setIsLogin ] = useState(false);
+  }) => {
+  const isDesktop = useMediaQuery({ minWidth: 921 })
+  const isTablet = useMediaQuery({ minWidth: 1201 })
 
-    const modalCardID = useSelector((state) => state.modal.modalCardID);
-    const cardsData = useSelector((state) => state.modal.bucketData);
-    const {usersData} = useSelector((state) => state.modal.usersData);
+  const [isChangeJoin , setIsChangeJoin] = useState(false)
 
-    const cardData = cardsData.filter(card => card.id === modalCardID);
-    const title = cardData[0].title;
-    const completed = cardData[0].completed
-    const cardtext = cardData[0].cardtext;
+  const modalCardID = useSelector((state) => state.modal.modalCardID);
+  const cardsData = useSelector((state) => state.modal.bucketData);
+  const {usersData} = useSelector((state) => state.modal.usersData);
 
-    
-    const userState = () => {
-        setIsMyCard(true);
-    }
-    const selectBoxClick = () => {
-        setIsBoardOpen(!isBoardOpen)
-    }
-    const completeStateCard = () => {
-        setIsCompleted(cardData[0].completed);
-    }
-    let backgroundImageStyle = {
-        backgroundImage: "url(/images/card-" + cardData[0].background + ".jpg)",
-    };
-    const tags = cardData[0].tag;
+  const isOpenUserInfo = useSelector((state) => state.modal.isOpenUserInfo);
 
-    const tagLine = tags.map((tag) => {
-        return `#${tag}`;
-    });
+  const cardData = cardsData.filter(card => card.id === modalCardID);
+  const title = cardData[0].title;
+  const completed = cardData[0].completed
+  const cardtext = cardData[0].cardtext;
+  let backgroundImageStyle = {
+      backgroundImage: "url(/images/card-" + cardData[0].background + ".jpg)",
+  };
+  const tags = cardData[0].tag;
 
-    const changeStand = () => {
-        setIsCompleted('0');
-    }
-    const changeProgress= () => {
-        setIsCompleted('1');
-    }
-    const changeAcheivement = () => {
-        setIsCompleted('2');
-    }
-    
-    const membersID = cardData[0].membersID;
+  const tagLine = tags.map((tag) => {
+      return `#${tag}`;
+  });
 
-    const dispatch = useDispatch();
-    const modalRef = useRef(null);
-    const handleClose = () => {
+  
+  const membersID = cardData[0].membersID;
+
+  const dispatch = useDispatch();
+  
+
+  const cardWriterID = cardData[0].users_id
+  const signInUserID = JSON.parse(localStorage.getItem('signInUserInfo')).id
+
+  const confirmDelete = () => {
+    if(window.confirm("참여 중인 분들도 카드를 잃게 됩니다. 정말 삭제하시겠습니까?") === true){
+      axios.delete(`${process.env.REACT_APP_API_URL}/mypage/deletecard`, {
+        data: {
+          cards_id: modalCardID
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
         dispatch(closeMyCardModal())
-    };
-    useOutSideClick(modalRef, handleClose);
+        window.location.reload()
+      })
+      .catch((error) => {
+        alert(error)
+      })
+    } else {
+      return ;
+    }
+  }
 
-    // const isDesktop = useMediaQuery({minWidth: 921})
-    // const [isBoardOpen, setIsBoardOpen] = useState(false)
+  const [complete, setComplete] = useState(completed)
 
-    // const signinClick = () => {
-    //     setIsSignIn(true)
-    // }
+  const nextlevel = () => {
+    const level = Number(complete) + 1
+    setComplete(String(level))
+  }
+  const previouslevel = () => {
+    const level = Number(complete) - 1
+    setComplete(String(level))
+  }
 
-    // const usernameclick = () => {
-    //     setIsBoardOpen(!isBoardOpen)
-    // }
+  const closeModal = () => {
+    if(isOpenUserInfo){
+      return ;
+    } else {
+      if(complete !== completed){
+        axios.patch(`${process.env.REACT_APP_API_URL}/mypage/cardsedit`, {
+          cards_id: modalCardID,
+          title: title,
+          cardtext: cardtext,
+          background: cardData[0].background,
+          hashname: tags,
+          completed:complete,
+        })
+        .then((res) => {
+          dispatch(closeMyCardModal())
+          window.location.reload()
+        })
+        .catch((error) => {
+          alert(error)
+        })
+      } else {
+        dispatch(closeMyCardModal())
+      }
+    }
+    
+  }
+  
+  const modalRef = useRef(null);
+  useOutSideClick(modalRef, closeModal);
 
-  return (
-    <ModalPortal>
-      <MainPageModal ref={modalRef}>
-        <div className={isDesktop ? "modal-container" : "modal-container-mobile"} >
-          <div className="mainPageCard" >
-            
-            <h4 className={isTablet ? " modal-title" : " modal-title-mobile"}>{title}</h4>
-            <div className={isTablet ? "card-tag" : "card-tag-mobile"}>{tagLine.join(" ")}</div>
-            <div className={isTablet ? "userinfo" : "userinfo-mobile"}>
-              {membersID.map((member, i) => {
-                const username = usersData[member - 1].username;
-                const userphoto = usersData[member - 1].userphotourl;
-                return <div key={i} className="username" onClick={() => {
-                    dispatch(openUserInfoModal())
-                    dispatch(closeMyCardModal())}}>{username}<img className="profile-image" src={userphoto} /></div>
-              })}
+  const [isInBucket, setIsInBucket] = useState(true)
+
+  const putInBucket = (id) => {
+    id.stopPropagation();
+
+    setIsChangeJoin(!isChangeJoin)
+    setIsInBucket(true)
+  };
+
+  const pullOutBucket = (id) => {
+    id.stopPropagation();
+
+    setIsChangeJoin(!isChangeJoin)
+    setIsInBucket(false)
+  };
+
+  const notMyCardModalRef = useRef(null);
+  const closeNotMyCardModal = () => {
+    if(isOpenUserInfo){
+      return ;
+    } else {
+      if(isChangeJoin){
+        axios.delete(`${process.env.REACT_APP_API_URL}/mainpage/userCardJoinsdelete`, {
+          data: {
+            cards_id: modalCardID,
+            users_id: signInUserID,
+          },
+          withCredentials: true,
+        })
+        .then((res) => {
+          dispatch(closeMyCardModal())
+          window.location.reload()
+        })
+      } else {
+        dispatch(closeMyCardModal())
+      }
+    }
+    
+  };
+
+  useOutSideClick(notMyCardModalRef, closeNotMyCardModal);
+
+
+  const editCard = () => {
+    dispatch(openEditCardModal())
+    dispatch(closeMyCardModal())
+  }
+
+  const [ imageSrc, setImageSrc ] = useState('');
+  const encodeFileToBase64 = (fileBlob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(fileBlob);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
+  };
+
+  let backgroundImageStyleUploaded = {
+    backgroundImage: `url(${imageSrc})`,
+    backgroundPosition: 'center center',
+  };
+
+  const makeStamped = async () => {
+    await axios.post(`${process.env.REACT_APP_API_URL}/mypage/addstamps`, {
+      cards_id: modalCardID,
+    })
+    await axios.patch(`${process.env.REACT_APP_API_URL}/mypage/cardsedit`, {
+      cards_id: modalCardID,
+      title: title,
+      cardtext: cardtext,
+      background: imageSrc,
+      hashname: tags,
+      completed:complete,
+    })
+    .then((res) => {
+      dispatch(closeMyCardModal())
+      window.location.reload()
+    })
+  }
+
+  const isStamped = cardData[0].stamped[0] !== null
+
+  const openUserInfo = (seletUserID) => {
+    dispatch(setSelectUserID(seletUserID))
+    dispatch(openUserInfoModal())
+  }
+
+  if(cardWriterID === signInUserID){
+    return (
+      <ModalPortal>
+        <MainPageModal ref={modalRef}>
+          <div className={isDesktop ? "modal-container" : "modal-container-mobile"} >
+            <div className="mainPageCard" >
+              {imageSrc === ''? <div/> : <div className="stampedButton" onClick={makeStamped}>도장 찍기</div>}
+            {isStamped? <div/>
+            : complete === '2'? 
+            <div className="imgUploadButton">
+            <label htmlFor="ex_file">{imageSrc === ""? '사진 올리기' : '사진 변경' }</label>
+            <input type='file' id='ex_file' accept='image/*' onChange={(e) => {
+              encodeFileToBase64(e.target.files[0]);
+            }} placeholder='사진'/>
             </div>
-            <button className="close-btn" onClick={() => {
-              dispatch(closeMyCardModal())
-            }}>X</button>
-            <button type="button" className="btn-confirm-btn">
-              카드 빼기
-            </button>
-            { isMyCard ?
-                <div className='state-fix'>
-                {completed === '0'? <div className='stand'>대기중</div> 
-                : completed === '1'? <div className='progress'>진행중</div> 
-                : completed === '2'?<div className='acheivement'>달성</div>
-                :<div/>}</div>
-            : <div>
-                <div className='username-board' onClick={selectBoxClick} onChange={completeStateCard}>
-                    <div className="arrow-down"><span></span></div>
-                    {isCompleted === '0'? <div className='stand'>대기중</div> 
-                    :  isCompleted === '1' ? <div className='progress'>진행중</div> 
-                    : <div className='acheivement'>달성</div>}
-                    <div>
-                        {isBoardOpen ?<div className="button-container" >
-                                <button className='board-button-0' onClick={changeStand}>대기중 </button>
-                                <button className='board-button-1' onClick={changeProgress}>진행중 </button>
-                                <button className='board-button-2' onClick={changeAcheivement}>달성 </button>
-                            </div>
-                        :<div/>}
-                    </div>
-                </div>
+            : <div/>}
+            <div className={
+                complete === '0' ? 'ColumnCard-progress-0'
+                  : complete === '1' ? 'ColumnCard-progress-1'
+                    : 'ColumnCard-progress-2'
+              } />
+              {/* {complete === '2'? <button className="stampedButton">도장 찍기</button>
+              : <div/>} */}
+              {isStamped? <div/> 
+              : <div className={
+                complete === '0' ? 'progress-board-0'
+                  : complete === '1' ? 'progress-board-1'
+                    : 'progress-board-2'
+              } 
+              >{complete !== '0'? <button className="switchPrevious" onClick={previouslevel}>{'<'}</button> : <div className="switchPrevious"/>}{
+                complete === '0'? '대기중'
+              : complete === '1' ? '진행중'
+              : '달성'
+              }{complete !== '2'? <button className="switchNext" onClick={nextlevel}>{'>'}</button> : <div className="switchNext"/>}
+              </div>}
+              <h4 className={isTablet ? " modal-title" : " modal-title-mobile"}>{title}</h4>
+              <div className={isTablet ? "card-tag" : "card-tag-mobile"}>{tagLine.join(" ")}</div>
+              <div className={isTablet ? "userinfo" : "userinfo-mobile"}>
+                {membersID.map((member, i) => { 
+                  const seletUserID = usersData[member - 1].id
+                  return (
+                    <div key={i} className="username" onClick={() => openUserInfo(seletUserID)}>
+                    {usersData[member - 1].username}
+                    <img className="profile-image" src={usersData[member - 1].userphotourl} />
+                  </div>
+                  )
+                })}
               </div>
-            }
-            <div className={isTablet ? "card-img" : "card-img-mobile"} style={backgroundImageStyle} />
-            <div className={isTablet ? "card-description" : "card-description-mobile"}>{cardtext}</div>
+              <button className="close-btn" onClick={closeModal}>X</button>
+              {isStamped? <div/> 
+              : <button type="button" className="edit-button" onClick={editCard}>
+                카드 수정
+              </button>}
+              <button type="button" className="delete-button" onClick={confirmDelete}>
+                {'카드 삭제 >'}
+              </button>
+               <div className={isTablet ? "card-img" : "card-img-mobile"} style={imageSrc === ''? backgroundImageStyle : backgroundImageStyleUploaded}>
+               {isStamped && isTablet? <img className="complete-stamp" src="images/complete-stamp.png"/> : <div/>}
+               </div>
+              <div className={isTablet ? "card-description" : "card-description-mobile"}>{cardtext}</div>
+            </div>
           </div>
-        </div>
-      </MainPageModal>
-    </ModalPortal>
-  );
+        </MainPageModal>
+      </ModalPortal>
+    );
+  } else {
+    return (
+      <ModalPortal>
+        <MainPageModal ref={notMyCardModalRef}>
+          <div className={isDesktop ? "modal-container" : "modal-container-mobile"} >
+            <div className="mainPageCard" >
+              <div className={
+                completed === '0' ? 'ColumnCard-progress-0'
+                  : completed === '1' ? 'ColumnCard-progress-1'
+                    : 'ColumnCard-progress-2'
+              } />
+              <h4 className={isTablet ? " modal-title" : " modal-title-mobile"}>{title}</h4>
+              <div className={isTablet ? "card-tag" : "card-tag-mobile"}>{tagLine.join(" ")}</div>
+              <div className={isTablet ? "userinfo" : "userinfo-mobile"}>
+              {membersID.map((member, i) => { 
+                  const seletUserID = usersData[member - 1].id
+                  return (
+                    <div key={i} className="username" onClick={() => openUserInfo(seletUserID)}>
+                    {usersData[member - 1].username}
+                    <img className="profile-image" src={usersData[member - 1].userphotourl} />
+                  </div>
+                  )
+                })}
+              </div>
+              <button className="close-btn" onClick={closeNotMyCardModal}>X</button>
+              {isInBucket? 
+              <button type="button" className="subtract-button" onClick={pullOutBucket}>
+              카드 빼기
+              </button>
+              :
+              <button type="button" className="insert-button" onClick={putInBucket}>
+                카드 다시 담기
+              </button>}
+              <div className={isTablet ? "card-img" : "card-img-mobile"} style={backgroundImageStyle}>
+              {isStamped && isTablet? <img className="complete-stamp" src="images/complete-stamp.png"/> : <div/>}
+              </div>
+              <div className={isTablet ? "card-description" : "card-description-mobile"}>{cardtext}</div>
+            </div>
+          </div>
+        </MainPageModal>
+      </ModalPortal>
+    );
+  }
+  
 }
 
 export default MyCardModal;

@@ -165,30 +165,19 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
   const [errormessage, setErrormessage] = useState('');
   const [cookies, setCookie] = useCookies(['id']);
   const history = useHistory();
-  const handleInputValue = (key) => (e) => {
-    setLogininfo({ ...logininfo, [key]: e.target.value });
-  };
-  // const handleLogin = async() => {
-  //   if (!logininfo.email || !logininfo.password) {
-  //     setErrormessage('이메일과 비밀번호를 입력해야 합니다')
-  //   } else if(!logininfo.password === ''){
-  //     setErrormessage('비밀번호가 일치하지 않습니다.')
-  //   }
-  //   if (!errormessage) {
-  //     await history.push("/")
-  //     await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
-  //       email: logininfo.email,
-  //       password: logininfo.password
-  //     })
-  //     .then(res => {
-  //       setCookie('email', res.data.token);
-  //       setLogininfo(true)
-  //       handleResponseSuccess()
-  //     })
-  //   }
-  // }
 
-  const dispatch = useDispatch();
+
+  const handleInputValue = (key) => (event) => {
+    setLogininfo({ ...logininfo, [key]: event.target.value });
+    
+    // if(key === "password" && )
+  };
+
+  const handleInputKey = (event) => {
+    if(event.key === "Enter" ){
+      signInRequestHandler()
+    }
+  };
   
   const signInRequestHandler = () => {
     if (!logininfo.email || !logininfo.password){
@@ -199,9 +188,7 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
         password: logininfo.password
       })
       .then((res) => {
-        const signInUserInfo = res.data.userInfo
-        // dispatch(setSignInUserId(signInUserId))
-        // dispatch(setIsSignIn(true))
+        const signInUserInfo = res.data.userInfo;
         localStorage.setItem('signInUserInfo', JSON.stringify(signInUserInfo));
         localStorage.setItem('isSignIn', JSON.stringify(true));
         history.push("/")
@@ -240,6 +227,7 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
                   type="password"
                   placeholder="비밀번호"
                   onChange={handleInputValue("password")}
+                  onKeyUp={(event) => handleInputKey(event)}
                 />
                 <div className='find'>아이디 / 비밀번호찾기</div>
                 <div className='alert'>{errormessage}</div>
@@ -247,7 +235,8 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
                   <button className="login_box"
                     type="submit"
                     value="로그인"
-                    onClick={signInRequestHandler}>로그인
+                    onClick={signInRequestHandler}
+                    >로그인
                   </button>
                   <button className="login_google">
                     <img className="google-logo" src="images/unnamed.webp"

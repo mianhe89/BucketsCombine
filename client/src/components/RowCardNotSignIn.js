@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import {openCardModal, setModalCardID } from '../redux/reducers/ModalReducer'
+import {openCardModal, setModalCardID, setIsInBucketModal, setModalUserID } from '../redux/reducers/ModalReducer'
 import { useMediaQuery } from "react-responsive";
 
 const RowCardWrap = styled.div`
@@ -14,6 +14,7 @@ const RowCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
+    background-position: center center;
     z-index: 1;
     transition: box-shadow 0.2s;
   }
@@ -26,6 +27,7 @@ const RowCardWrap = styled.div`
     border-radius: 15px;
     margin: 10px;
     background-size: cover;
+    background-position: center center;
     z-index: 1;
     box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.2s;
@@ -70,7 +72,7 @@ const RowCardWrap = styled.div`
     border: none;
     box-shadow: none;
     font-size: 13px;
-    background-color: #ff5c00;
+    background-color: #8A8A8A;
     z-index: 10;
     font-weight: bold;
     color: white;
@@ -83,7 +85,7 @@ const RowCardWrap = styled.div`
     margin-left: 130px;
     border: none;
     font-size: 13px;
-    background-color: #ff5c00;
+    background-color: #8A8A8A;
     z-index: 10;
     font-weight: bold;
     color: white;
@@ -155,7 +157,6 @@ export default function RowCard({
   let backgroundImageStyle = {
     backgroundImage: "url(/images/card-" + background + ".jpg)",
   };
-
   
   return (
     <RowCardWrap>
@@ -163,8 +164,8 @@ export default function RowCard({
         className="card"
         style={backgroundImageStyle}
         onClick={() => {
-          dispatch(openCardModal());
           dispatch(setModalCardID(cardID));
+          dispatch(openCardModal());
         }}
       >
         <div className="card-info">
