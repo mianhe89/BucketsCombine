@@ -11,12 +11,12 @@ import './App.css';
 import MakeCardModal from './components/modals/MakeCardModal';
 import MainPageStampedCardModal from './components/modals/MainPageStampedModal';
 import MyPageMyCardModal from './components/modals/MyCardModal'
-import MyPageStampedCard from './components/modals/MyPageStampedCard'
 import ConfirmChangeModal from './components/modals/ConfirmChangeModal'
 import ChangePasswordCardModal from './components/modals/ChangePasswordModal';
 import WithdrawalCardModal from './components/modals/WithdrawalModal';
 import UserInfoModal from './components/modals/UserInfoModal'
 import ConfirmWithdrawal from './components/modals/ConfrimWithdrawal'
+import EditCardModal from './components/modals/EditCardModal'
 import axios from 'axios';
 
 
