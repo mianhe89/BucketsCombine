@@ -186,10 +186,8 @@ const TopMenuWrap = styled.div`
 `
 
 export default function Topmenu({location}){
-  // console.log(location)
   const isDesktop = useMediaQuery({ minWidth: 921 })
 
-  // const [isSignIn, setIsSignIn] = useState(false)
   const [isBoardOpen, setIsBoardOpen] = useState(false)
 
   
@@ -232,7 +230,6 @@ export default function Topmenu({location}){
 
   let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
   let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
-  console.log(signInUserInfo)
   return(
     <TopMenuWrap >
       <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>

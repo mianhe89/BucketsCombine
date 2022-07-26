@@ -484,7 +484,6 @@ const MakeCardModal = ({
   };
   useOutSideClick(modalRef, handleClose);
   
-
   const buildCard = () => {
     if (inputTitle === '' || inputInfo === '' || tags.length === 0) {
       setMessage(true);
@@ -500,6 +499,9 @@ const MakeCardModal = ({
       .then((res) => {
         dispatch(closeMakeCardModal())
         window.location.replace("/mypage")
+      })
+      .catch((err) => {
+        alert(err)
       })
     }
   }
