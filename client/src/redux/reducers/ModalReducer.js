@@ -7,9 +7,10 @@ const initialState = {
     isOpenMyCard: false,
     isOpenMyStamped: false,
     isOpenChangePassword: false,
-    isOpenConfirmPassword: false,
+    isOpenConfirmChange: false,
     isOpenWithdrawal: false,
     isOpenUserInfo: false,
+    isOpenConfirmWithdrawal: false,
     mode:"",
     cardsData: [],
     modalCardID: 0,
@@ -21,6 +22,7 @@ const initialState = {
     modalUserID: 0,
     isOpenEditCardModal: false,
     selectUserID : 0,
+    userinfo: [],
 };
 
 const modalSlice = createSlice({
@@ -45,14 +47,17 @@ const modalSlice = createSlice({
         openChangePasswordModal: (state, action) => {
             state.isOpenChangePassword = true;
         },
-        openConfirmPasswordModal: (state, action) => {
-            state.isOpenConfirmPassword = true;
+        openConfirmChangeModal: (state, action) => {
+            state.isOpenConfirmChange = true;
         },
         openWithdrawalModal: (state, action) => {
             state.isOpenWithdrawal = true;
         },
         openUserInfoModal: (state, action) => {
             state.isOpenUserInfo = true;
+        },
+        openConfirmWithdrawal: (state, action) => {
+            state.isOpenConfirmWithdrawal = true;
         },
         closeMainPageCardModal: (state, action) => {
             state.isOpenCard = false;
@@ -72,14 +77,17 @@ const modalSlice = createSlice({
         closeChangePasswordModal: (state, action) => {
             state.isOpenChangePassword = false;
         },
-        closeConfirmPasswordModal: (state, action) => {
-            state.isOpenConfirmPassword = false;
+        closeConfirmChangeModal: (state, action) => {
+            state.isOpenConfirmChange = false;
         },
         closeWithdrawalModal: (state, action) => {
             state.isOpenWithdrawal = false;
         },
         closeUserInfoModal: (state, action) => {
             state.isOpenUserInfo = false;
+        },
+        closeConfirmWithdrawal: (state, action) => {
+            state.isOpenConfirmWithdrawal = false;
         },
         setCardsData: (state, action) => {
             state.cardsData = action.payload;
@@ -114,6 +122,7 @@ const modalSlice = createSlice({
         setSelectUserID: (state, action) => {
             state.selectUserID = action.payload;
         },
+        
     }
 });
 export const { 
@@ -123,18 +132,20 @@ export const {
     openMyCardModal,
     openMyStampedModal,
     openChangePasswordModal,
-    openConfirmPasswordModal,
+    openConfirmChangeModal,
     openWithdrawalModal,
     openUserInfoModal,
+    openConfirmWithdrawal,
     closeMainPageCardModal,
     closeMainStampedCardModal,
     closeMakeCardModal,
     closeMyCardModal,
     closeMyStampedModal,
     closeChangePasswordModal,
-    closeConfirmPasswordModal,
+    closeConfirmChangeModal,
     closeWithdrawalModal,
     closeUserInfoModal,
+    closeConfirmWithdrawal,
     setCardsData,
     setModalCardID,
     setUsersData,

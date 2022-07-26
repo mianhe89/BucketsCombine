@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie';
 import { setSignInUserId, setIsSignIn, setCookie } from '../redux/reducers/ModalReducer'
 import { useSelector, useDispatch } from "react-redux";
 
+
 const SignInPageWrap = styled.div`
   .body {
     height: 100%;
@@ -185,7 +186,9 @@ export default function SignInPage({ handleResponseSuccess, setIsLogin }) {
     } else {
       axios.post(`${process.env.REACT_APP_API_URL}/users/login`, {
         email: logininfo.email,
-        password: logininfo.password
+        password: logininfo.password,
+      },{
+        withCredential: true,
       })
       .then((res) => {
         const signInUserInfo = res.data.userInfo;

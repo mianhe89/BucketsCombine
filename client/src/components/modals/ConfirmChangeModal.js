@@ -1,11 +1,12 @@
-import { closeConfirmPasswordModal } from "../../redux/reducers/ModalReducer";
-import { useDispatch } from "react-redux";
+import { closeConfirmChangeModal, openChangePasswordModal, openWithdrawalModal } from "../../redux/reducers/ModalReducer";
+import { useDispatch, useSelector } from "react-redux";
 import ModalPortal from "./ModalPortal";
 import useOutSideClick from "../hook/UseOutSideClick";
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
-const ConfirmPasswordModal = styled.div`
+const ConfirmChangeModal = styled.div`
     width: 30vw;
     height: 60vh;
     display: flex;
@@ -110,38 +111,55 @@ const ConfirmPasswordModal = styled.div`
     }
 
 `
+axios.defaults.withCredentials = true;
 
-const ConfirmPasswordCardModal = () => {
+const ConfirmChangeCardModal = () => {
+    const signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
+    const isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
+    
     const dispatch = useDispatch();
+
     const modalRef = useRef(null);
     const handleClose = () => {
-        dispatch(closeConfirmPasswordModal())
+        dispatch(closeConfirmChangeModal())
     };
     useOutSideClick(modalRef, handleClose);
+
     const [ message, setMessage ] = useState(false);
     const [ inputPassword, setInputPassword ] = useState('');
+    const [ isChange, setIsChange ] = useState();
+    const [ isWithdrawal, setIsdrawal ] = useState(false);
+
+
     const checkPassword = () => {
-        if(inputPassword === ''){
-            setMessage(true);
-        }else{
-            dispatch(closeConfirmPasswordModal());
+        if(isSignIn){
+        const payload = {
+            // 'email': signInUserInfo.email,
+            'password': inputPassword,
+        }
+            axios.get(`${process.env.REACT_APP_API_URL}/mypage/passwordcheck`, payload, {
+                withCredentials: true,
+            })
         }
     }
+    
+
     return (
         <ModalPortal>
-            <ConfirmPasswordModal>
+            <ConfirmChangeModal>
+                
                 <div className="confirmPasswordCard" ref={modalRef}>
                 <button className="close-btn" onClick={() => {
-                    dispatch(closeConfirmPasswordModal())
-                }}>X</button>                  
+                    dispatch(closeConfirmChangeModal())
+                }}>X</button>         
                 <img className="logo_img" src="images/bucketscombine_logo.png" alt="card" />
                 <input className="usingPassword" type='password' placeholder='사용중인 비밀번호' onChange={(e) => {setInputPassword(e.target.value)}}></input>
                 {message?<div className="check">비밀번호가 일치하지 않습니다</div>:<div></div>}
                 <button className="confirm-btn" onClick={checkPassword}>확인</button>
                 </div>
-            </ConfirmPasswordModal>
+            </ConfirmChangeModal>
         </ModalPortal>
     );
 }
 
-export default ConfirmPasswordCardModal;
+export default ConfirmChangeCardModal;

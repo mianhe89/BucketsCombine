@@ -232,7 +232,7 @@ export default function Topmenu({location}){
 
   let signInUserInfo = JSON.parse(localStorage.getItem('signInUserInfo'))
   let isSignIn = JSON.parse(localStorage.getItem('isSignIn'))
-
+  console.log(signInUserInfo)
   return(
     <TopMenuWrap >
       <div className={isDesktop ? 'topmenu' : 'topmenu-mobile'}>
